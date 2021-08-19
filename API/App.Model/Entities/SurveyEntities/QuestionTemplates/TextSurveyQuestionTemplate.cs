@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace App.Model.Entities.SurveyEntities.QuestionTemplates
 {
-    public class TextQuestionTemplate : BaseSurveyQuestionTemplate
+    public class TextSurveyQuestionTemplate : BaseSurveyQuestionTemplate
     {
         public TextQuestionType Type { get; set; }
-        public ICollection<UserTextQuestionAnswer> MyProperty { get; set; }
+        public ICollection<UserTextSurveyQuestionAnswer> MyProperty { get; set; }
     }
 }

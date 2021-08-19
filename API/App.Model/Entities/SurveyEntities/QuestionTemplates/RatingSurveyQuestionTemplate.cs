@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace App.Model.Entities.SurveyEntities.QuestionTemplates
 {
-    public class RatingQuestionTemplate : BaseSurveyQuestionTemplate
+    public class RatingSurveyQuestionTemplate : BaseSurveyQuestionTemplate
     {
         public int MaximalRate { get; set; }
-        public ICollection<UserRatingQuestionAnswer> UsersAnswers { get; set; }
+        public ICollection<UserRatingSurveyQuestionAnswer> UsersAnswers { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace App.Model.Entities.SurveyEntities
+﻿namespace App.Model.Entities
 {
     public abstract class BaseUserAnswer : AuditableEntity
     {

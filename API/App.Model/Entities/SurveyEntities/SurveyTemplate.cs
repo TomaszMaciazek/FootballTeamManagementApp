@@ -4,16 +4,12 @@ using System.Collections.Generic;
 
 namespace App.Model.Entities
 {
-    public class SurveyTemplate : AuditableEntity
+    public class SurveyTemplate : BaseQuestionSetEntity
     {
-        public User Author { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public int PageCount { get; set; }
-        public ICollection<TextQuestionTemplate> TextQuestionTemplates { get; set; }
-        public ICollection<OptionsQuestionTemplate> OptionsQuestionTemplates { get; set; }
-        public ICollection<BooleanQuestionTemplate> BooleanQuestionTemplates { get; set; }
-        public ICollection<RatingQuestionTemplate> RatingQuestionTemplates { get; set; }
-        public ICollection<UserSurveyResult> Respondents { get; set; }
+        public ICollection<TextSurveyQuestionTemplate> TextQuestionTemplates { get; set; }
+        public ICollection<OptionsSurveyQuestionTemplate> OptionsQuestionTemplates { get; set; }
+        public ICollection<BoolSurveyQuestionTemplate> BooleanQuestionTemplates { get; set; }
+        public ICollection<RatingSurveyQuestionTemplate> RatingQuestionTemplates { get; set; }
+        public ICollection<UserSurveyResult> RespondentsResults { get; set; }
     }
 }

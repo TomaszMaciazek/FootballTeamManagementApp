@@ -1,4 +1,6 @@
 ﻿using App.Model.Entities.SurveyEntities.AnswersResults;
+using App.Model.Entities.TestEntities;
+using App.Model.Entities.TestEntities.AnswersResults;
 using App.Model.Enums;
 using System;
 using System.Collections.Generic;
@@ -25,11 +27,15 @@ namespace App.Model.Entities
         public bool IsActive { get; set; }
         public UserRole Role { get; set; }
         public ICollection<SurveyTemplate> UserSurveysTemplates { get; set; }
+        public ICollection<TestTemplate> UserTestsTemplates { get; set; }
         public ICollection<UserSurveyResult> SurveysResults { get; set; }
-        public ICollection<UserBooleanQuestionAnswer> BooleanQuestionAnswers { get; set; }
-        public ICollection<UserTextQuestionAnswer> TextQuestionAnswers { get; set; }
-        public ICollection<UserOptionsQuestionAnswer> OptionsQuestionAnswers { get; set; }
-        public ICollection<UserRatingQuestionAnswer> RatingQuestionAnswers { get; set; }
+        public ICollection<UserTestResult> TestsResults { get; set; }
+        public ICollection<UserBoolSurveyQuestionAnswer> BooleanSurveyQuestionAnswers { get; set; }
+        public ICollection<UserTextSurveyQuestionAnswer> TextSurveyQuestionAnswers { get; set; }
+        public ICollection<UserOptionsSurveyQuestionAnswer> OptionsSurveyQuestionAnswers { get; set; }
+        public ICollection<UserRatingSurveyQuestionAnswer> RatingSurveyQuestionAnswers { get; set; }
+        public ICollection<UserBoolTestQuestionAnswer> BoolTestQuestionAnswers { get; set; }
+        public ICollection<UserOptionsTestQuestionAnswer> OptionsTestQuestionAnswers { get; set; }
         public Player PlayerDetails { get; set; }
         public Coach CoachDetails { get; set; }
     }

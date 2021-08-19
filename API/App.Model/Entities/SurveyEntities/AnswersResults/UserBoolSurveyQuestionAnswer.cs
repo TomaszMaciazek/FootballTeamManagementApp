@@ -2,9 +2,9 @@
 
 namespace App.Model.Entities.SurveyEntities.AnswersResults
 {
-    public class UserBooleanQuestionAnswer : BaseUserAnswer
+    public class UserBoolSurveyQuestionAnswer : BaseUserAnswer
     {
-        public BooleanQuestionTemplate Question { get; set; }
+        public BoolSurveyQuestionTemplate Question { get; set; }
         public bool? Value { get; set; }
     }
 }

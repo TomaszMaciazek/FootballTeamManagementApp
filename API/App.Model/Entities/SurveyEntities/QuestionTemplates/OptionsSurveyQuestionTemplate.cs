@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace App.Model.Entities.SurveyEntities.QuestionTemplates
 {
-    public class OptionsQuestionTemplate : BaseSurveyQuestionTemplate
+    public class OptionsSurveyQuestionTemplate : BaseSurveyQuestionTemplate
     {
         public OptionQuestionType Type { get; set; }
-        public ICollection<UserOptionsQuestionAnswer> UserAnswers { get; set; }
+        public ICollection<UserOptionsSurveyQuestionAnswer> UserAnswers { get; set; }
     }
 }

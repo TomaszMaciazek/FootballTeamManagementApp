@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace App.Model.Entities.SurveyEntities.QuestionTemplates
 {
-    public class BooleanQuestionTemplate : BaseSurveyQuestionTemplate
+    public class BoolSurveyQuestionTemplate : BaseSurveyQuestionTemplate
     {
-        public ICollection<UserBooleanQuestionAnswer> UserAnswers { get; set; }
+        public ICollection<UserBoolSurveyQuestionAnswer> UserAnswers { get; set; }
     }
 }

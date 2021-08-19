@@ -2,9 +2,9 @@
 
 namespace App.Model.Entities.SurveyEntities.AnswersResults
 {
-    public class UserOptionsQuestionAnswer : BaseUserAnswer
+    public class UserOptionsSurveyQuestionAnswer : BaseUserAnswer
     {
-        public OptionsQuestionTemplate Question { get; set; }
+        public OptionsSurveyQuestionTemplate Question { get; set; }
         public int? Value { get; set; }
     }
 }
