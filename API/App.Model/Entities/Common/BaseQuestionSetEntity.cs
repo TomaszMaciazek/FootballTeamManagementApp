@@ -1,4 +1,4 @@
-﻿namespace App.Model.Entities
+﻿namespace App.Model.Entities.Common
 {
     public abstract class BaseQuestionSetEntity : AuditableEntity
     {

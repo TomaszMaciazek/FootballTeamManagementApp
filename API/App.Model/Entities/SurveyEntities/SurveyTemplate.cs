@@ -1,8 +1,9 @@
-﻿using App.Model.Entities.SurveyEntities.QuestionTemplates;
+﻿using App.Model.Entities.Common;
+using App.Model.Entities.SurveyEntities.QuestionTemplates;
 using System;
 using System.Collections.Generic;
 
-namespace App.Model.Entities
+namespace App.Model.Entities.SurveyEntities
 {
     public class SurveyTemplate : BaseQuestionSetEntity
     {

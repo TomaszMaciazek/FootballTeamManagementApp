@@ -1,4 +1,5 @@
-﻿using App.Model.Entities.TestEntities.QuestionTemplates;
+﻿using App.Model.Entities.Common;
+using App.Model.Entities.TestEntities.QuestionTemplates;
 using System.Collections.Generic;
 
 namespace App.Model.Entities.TestEntities

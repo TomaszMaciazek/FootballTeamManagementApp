@@ -1,7 +1,7 @@
 ﻿using App.Model.Enums;
 using System;
 
-namespace App.Model.Entities
+namespace App.Model.Entities.Common
 {
     public class BaseMessage : AuditableEntity
     {

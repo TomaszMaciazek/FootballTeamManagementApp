@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace App.Model.Entities
+namespace App.Model.Entities.Common
 {
-    public abstract class Chat : AuditableEntity
+    public abstract class BaseChat : AuditableEntity
     {
         public bool IsHidden { get; set; }
         public ICollection<User> Users { get; set; }

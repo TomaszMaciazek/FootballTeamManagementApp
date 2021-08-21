@@ -1,4 +1,5 @@
-﻿using System;
+﻿using App.Model.Entities.Common;
+using System;
 using System.Collections.Generic;
 
 namespace App.Model.Entities

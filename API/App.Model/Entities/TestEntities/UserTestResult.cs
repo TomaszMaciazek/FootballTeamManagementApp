@@ -1,4 +1,6 @@
-﻿namespace App.Model.Entities.TestEntities
+﻿using App.Model.Entities.Common;
+
+namespace App.Model.Entities.TestEntities
 {
     public class UserTestResult : AuditableEntity
     {

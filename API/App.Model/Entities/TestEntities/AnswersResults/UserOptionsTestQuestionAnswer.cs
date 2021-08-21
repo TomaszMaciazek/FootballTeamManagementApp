@@ -1,4 +1,5 @@
-﻿using App.Model.Entities.TestEntities.QuestionTemplates;
+﻿using App.Model.Entities.Common;
+using App.Model.Entities.TestEntities.QuestionTemplates;
 
 namespace App.Model.Entities.TestEntities.AnswersResults
 {

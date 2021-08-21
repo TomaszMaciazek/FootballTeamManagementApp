@@ -1,4 +1,5 @@
-﻿using System;
+﻿using App.Model.Entities.Common;
+using System;
 
 namespace App.Model.Entities
 {

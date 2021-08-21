@@ -1,4 +1,7 @@
-﻿namespace App.Model.Entities
+﻿using App.Model.Entities.Common;
+using App.Model.Entities.SurveyEntities;
+
+namespace App.Model.Entities
 {
     public abstract class BaseSurveyQuestionTemplate : BaseQuestionTemplate
     {

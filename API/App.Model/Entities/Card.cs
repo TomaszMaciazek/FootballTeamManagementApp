@@ -1,4 +1,5 @@
-﻿using App.Model.Enums;
+﻿using App.Model.Entities.Common;
+using App.Model.Enums;
 
 namespace App.Model.Entities
 {

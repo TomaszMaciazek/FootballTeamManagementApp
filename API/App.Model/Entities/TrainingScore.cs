@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using App.Model.Entities.Common;
+using System.ComponentModel.DataAnnotations;
 
 namespace App.Model.Entities
 {

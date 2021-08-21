@@ -1,4 +1,5 @@
-﻿using App.Model.Entities.SurveyEntities.AnswersResults;
+﻿using App.Model.Entities.SurveyEntities;
+using App.Model.Entities.SurveyEntities.AnswersResults;
 using App.Model.Entities.TestEntities;
 using App.Model.Entities.TestEntities.AnswersResults;
 using App.Model.Enums;
@@ -26,6 +27,10 @@ namespace App.Model.Entities
         public DateTime? LastPasswordSet { get; set; }
         public bool IsActive { get; set; }
         public UserRole Role { get; set; }
+        public ICollection<IndividualChat> IndividualChats { get; set; }
+        public ICollection<GroupChat> GroupChats { get; set; }
+        public ICollection<IndividualMessage> IndividualMessages { get; set; }
+        public ICollection<GroupMessage> GroupMessages { get; set; }
         public ICollection<SurveyTemplate> UserSurveysTemplates { get; set; }
         public ICollection<TestTemplate> UserTestsTemplates { get; set; }
         public ICollection<UserSurveyResult> SurveysResults { get; set; }

@@ -1,8 +1,9 @@
-﻿using App.Model.Entities.SurveyEntities.QuestionTemplates;
+﻿using App.Model.Entities.Common;
+using App.Model.Entities.SurveyEntities.QuestionTemplates;
 
 namespace App.Model.Entities.SurveyEntities.AnswersTemplates
 {
-    public class SurveyOptionAnswerTemplate : AuditableEntity
+    public class SurveyOptionQuestionAnswerTemplate : AuditableEntity
     {
         public OptionsSurveyQuestionTemplate Question { get; set; }
         public int Value { get; set; }

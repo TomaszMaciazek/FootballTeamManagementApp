@@ -1,4 +1,5 @@
-﻿using App.Model.Entities.SurveyEntities.QuestionTemplates;
+﻿using App.Model.Entities.Common;
+using App.Model.Entities.SurveyEntities.QuestionTemplates;
 
 namespace App.Model.Entities.SurveyEntities.AnswersResults
 {
