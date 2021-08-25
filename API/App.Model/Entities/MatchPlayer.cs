@@ -1,4 +1,6 @@
 ﻿using App.Model.Entities.Common;
+using App.Model.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace App.Model.Entities
 {
@@ -6,6 +8,8 @@ namespace App.Model.Entities
     {
         public Match Match { get; set; }
         public Player Player { get; set; }
-        public string PlayerPosition { get; set; }
+
+        [Required]
+        public PlayerPosition PlayerPosition { get; set; }
     }
 }

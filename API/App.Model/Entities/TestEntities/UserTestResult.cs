@@ -1,4 +1,5 @@
 ﻿using App.Model.Entities.Common;
+using System.ComponentModel.DataAnnotations;
 
 namespace App.Model.Entities.TestEntities
 {
@@ -6,7 +7,11 @@ namespace App.Model.Entities.TestEntities
     {
         public User User { get; set; }
         public TestTemplate Test { get; set; }
+
+        [Required]
         public bool IsCompleated { get; set; }
+
+        [Required]
         public decimal UserScore { get; set; }
     }
 }

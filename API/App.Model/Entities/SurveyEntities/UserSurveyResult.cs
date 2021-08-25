@@ -1,5 +1,6 @@
 ﻿using App.Model.Entities.Common;
 using App.Model.Entities.SurveyEntities;
+using System.ComponentModel.DataAnnotations;
 
 namespace App.Model.Entities
 {
@@ -7,6 +8,8 @@ namespace App.Model.Entities
     {
         public User User { get; set; }
         public SurveyTemplate Survey { get; set; }
+
+        [Required]
         public bool IsCompleated { get; set; }
     }
 }
