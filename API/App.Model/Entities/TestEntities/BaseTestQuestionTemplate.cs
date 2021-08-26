@@ -8,6 +8,6 @@ namespace App.Model.Entities.TestEntities
         public TestTemplate Test { get; set; }
 
         [Required]
-        public decimal PointsToEarn { get; set; }
+        public double PointsToEarn { get; set; }
     }
 }

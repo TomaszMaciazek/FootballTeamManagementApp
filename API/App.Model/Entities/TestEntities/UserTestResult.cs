@@ -12,6 +12,6 @@ namespace App.Model.Entities.TestEntities
         public bool IsCompleated { get; set; }
 
         [Required]
-        public decimal UserScore { get; set; }
+        public double UserScore { get; set; }
     }
 }

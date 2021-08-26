@@ -65,6 +65,7 @@ namespace App.Infrastructure.Configurations
             builder.HasMany(u => u.BoolTestQuestionAnswers)
                 .WithOne(x => x.User);
             #endregion
+
         }
     }
 }

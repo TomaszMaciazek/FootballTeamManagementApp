@@ -21,6 +21,6 @@ namespace App.Model.Entities.TestEntities.AnswersTemplates
         public bool IsCorrect { get; set; }
 
         [Required]
-        public decimal PointsForAnswer { get; set; }
+        public double PointsForAnswer { get; set; }
     }
 }
