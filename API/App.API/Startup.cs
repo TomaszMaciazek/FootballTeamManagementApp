@@ -1,4 +1,5 @@
 using App.Infrastructure;
+using App.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,6 +32,7 @@ namespace App.API
 
             services.AddControllers();
             services.AddInfrastructure(Configuration);
+            services.AddRepositories();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "App.API", Version = "v1" });

@@ -17,6 +17,10 @@ namespace App.Model.Entities
 
         [Required]
         public PlayersGender PlayersGender { get; set; }
+
+        [Required]
+        public bool IsDeleteForbidden { get; set; }
+
         public ICollection<MatchPlayer> Players { get; set; }
         public ICollection<MatchPoint> Points { get; set; }
         public ICollection<Card> Cards { get; set; }

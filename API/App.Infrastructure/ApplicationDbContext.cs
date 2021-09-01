@@ -1,4 +1,6 @@
-﻿using App.Model.Entities;
+﻿using App.DataAccess.Interfaces;
+using App.Model.Entities;
+using App.Model.Entities.Common;
 using App.Model.Entities.SurveyEntities;
 using App.Model.Entities.SurveyEntities.AnswersResults;
 using App.Model.Entities.SurveyEntities.AnswersTemplates;
@@ -8,17 +10,16 @@ using App.Model.Entities.TestEntities.AnswersResults;
 using App.Model.Entities.TestEntities.AnswersTemplates;
 using App.Model.Entities.TestEntities.QuestionTemplates;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace App.Infrastructure
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
+        private readonly IDateTimeService _dateTimeService;
+        private readonly ICurrentUserService _currentUserService;
+
         #region Match Entities
         public DbSet<Card> Cards { get; set; }
         public DbSet<Match> Matches { get; set; }
@@ -71,14 +72,65 @@ namespace App.Infrastructure
         public DbSet<UserTestResult> UsersTestResults { get; set; }
         #endregion
 
-        public ApplicationDbContext([NotNullAttribute] DbContextOptions options) : base(options)
+        public ApplicationDbContext(
+            DbContextOptions<ApplicationDbContext> options,
+            IDateTimeService dateTimeService,
+            ICurrentUserService currentUserService
+            ) : base(options)
         {
+            _dateTimeService = dateTimeService;
+            _currentUserService = currentUserService;
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+        }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        {
+            foreach (Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<AuditableEntity> entry in ChangeTracker.Entries<AuditableEntity>())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.Entity.CreatedBy = _currentUserService.UserId;
+                        entry.Entity.CreatedDate = _dateTimeService.Now;
+                        break;
+
+                    case EntityState.Modified:
+                        entry.Entity.UpdatedBy = _currentUserService.UserId;
+                        entry.Entity.UpdatedDate = _dateTimeService.Now;
+                        break;
+                }
+            }
+
+            var result = await base.SaveChangesAsync(cancellationToken);
+
+            return result;
+        }
+        public override int SaveChanges()
+        {
+            foreach (Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<AuditableEntity> entry in ChangeTracker.Entries<AuditableEntity>())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.Entity.CreatedBy = _currentUserService.UserId;
+                        entry.Entity.CreatedDate = _dateTimeService.Now;
+                        break;
+
+                    case EntityState.Modified:
+                        entry.Entity.UpdatedBy = _currentUserService.UserId;
+                        entry.Entity.UpdatedDate = _dateTimeService.Now;
+                        break;
+                }
+            }
+
+            var result = base.SaveChanges();
+
+            return result;
         }
     }
 }

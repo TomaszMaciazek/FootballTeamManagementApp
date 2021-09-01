@@ -15,6 +15,8 @@ namespace App.Model.Entities.Common
 
         public DateTime UpdatedDate { get; set; }
         public DateTime CreatedDate { get; set; }
+
+        [Required]
         public bool IsActive { get; set; } = true;
     }
 }

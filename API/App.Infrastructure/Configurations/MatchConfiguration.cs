@@ -17,7 +17,8 @@ namespace App.Infrastructure.Configurations
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasMany(x => x.Players)
-                .WithOne(x => x.Match);
+                .WithOne(x => x.Match)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
