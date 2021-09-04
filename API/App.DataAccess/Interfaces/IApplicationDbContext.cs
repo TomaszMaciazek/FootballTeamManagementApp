@@ -8,6 +8,9 @@ using App.Model.Entities.TestEntities.AnswersResults;
 using App.Model.Entities.TestEntities.AnswersTemplates;
 using App.Model.Entities.TestEntities.QuestionTemplates;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -69,8 +72,14 @@ namespace App.DataAccess.Interfaces
          DbSet<UserTestResult> UsersTestResults { get; set; }
         #endregion
 
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+        #region Site Entities
+        DbSet<Language> Languages { get; set; }
+        DbSet<Translation> Translations { get; set; }
+        #endregion
+
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
         int SaveChanges();
         DbSet<TEntity> Set<TEntity>() where TEntity : class;
+        DatabaseFacade Database { get; }
     }
 }

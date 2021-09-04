@@ -74,6 +74,11 @@ namespace App.Infrastructure
         public DbSet<UserTestResult> UsersTestResults { get; set; }
         #endregion
 
+        #region Site Entities
+        public DbSet<Language> Languages { get; set; }
+        public DbSet<Translation> Translations { get; set; }
+        #endregion
+
         public ApplicationDbContext(
             DbContextOptions<ApplicationDbContext> options,
             IDateTimeService dateTimeService,

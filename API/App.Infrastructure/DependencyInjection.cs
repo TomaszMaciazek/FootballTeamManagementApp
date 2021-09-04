@@ -13,7 +13,9 @@ namespace App.Infrastructure
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")),
                     ServiceLifetime.Transient);
+
             services.AddTransient<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
+            services.AddTransient<IDatabaseInitializer, DatabaseInitializer>();
 
             services.AddTransient<IDateTimeService, DateTimeService>();
 

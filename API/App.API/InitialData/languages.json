@@ -1,0 +1,106 @@
+[
+  {
+    "Name": "Polski",
+    "Code": "PL",
+    "IsActive": true,
+    "Translations": [
+      {
+        "Key": "admin",
+        "Value": "Administrator",
+        "IsActive": true
+      },
+      {
+        "Key": "coach",
+        "Value": "Trener",
+        "IsActive": true
+      },
+      {
+        "Key": "player",
+        "Value": "Zawodnik",
+        "IsActive": true
+      },
+      {
+        "Key": "matches",
+        "Value": "Mecze",
+        "IsActive": true
+      },
+      {
+        "Key": "trainings",
+        "Value": "Treningi",
+        "IsActive": true
+      },
+      {
+        "Key": "cards",
+        "Value": "Kartki",
+        "IsActive": true
+      },
+      {
+        "Key": "points",
+        "Value": "Zdobyte punkty",
+        "IsActive": true
+      },
+      {
+        "Key": "surveys",
+        "Value": "Ankiety",
+        "IsActive": true
+      },
+      {
+        "Key": "tests",
+        "Value": "Testy",
+        "IsActive": true
+      }
+    ]
+  },
+  {
+    "Name": "English",
+    "Code": "EN",
+    "IsActive": true,
+    "Translations": [
+      {
+        "Key": "admin",
+        "Value": "Administrator",
+        "IsActive": true
+      },
+      {
+        "Key": "coach",
+        "Value": "Coach",
+        "IsActive": true
+      },
+      {
+        "Key": "player",
+        "Value": "Player",
+        "IsActive": true
+      },
+      {
+        "Key": "matches",
+        "Value": "Matches",
+        "IsActive": true
+      },
+      {
+        "Key": "trainings",
+        "Value": "Trainings",
+        "IsActive": true
+      },
+      {
+        "Key": "cards",
+        "Value": "Cards",
+        "IsActive": true
+      },
+      {
+        "Key": "points",
+        "Value": "Gained points",
+        "IsActive": true
+      },
+      {
+        "Key": "surveys",
+        "Value": "Surveys",
+        "IsActive": true
+      },
+      {
+        "Key": "tests",
+        "Value": "Tests",
+        "IsActive": true
+      }
+    ]
+  }
+]
