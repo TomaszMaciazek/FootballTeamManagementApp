@@ -15,6 +15,10 @@ namespace App.Infrastructure.Configurations
             builder.HasOne(x => x.Image)
                 .WithOne(x => x.Chat)
                 .HasForeignKey<GroupChatImage>(x => x.ChatId);
+
+            builder.HasMany(x => x.ChatOwners)
+                .WithMany(x => x.OwnedGroupChats)
+                .UsingEntity(join => join.ToTable("GroupChatOwners"));
         }
     }
 }

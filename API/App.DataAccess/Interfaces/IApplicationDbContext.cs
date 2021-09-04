@@ -30,11 +30,13 @@ namespace App.DataAccess.Interfaces
          DbSet<IndividualMessage> IndividualMessages { get; set; }
         #endregion
 
-        #region User Entites
+        #region Identity Entites
          DbSet<User> Users { get; set; }
          DbSet<Coach> Coaches { get; set; }
          DbSet<Player> Players { get; set; }
          DbSet<UserImage> UserImages { get; set; }
+         DbSet<Role> Roles { get; set; }
+         DbSet<RoleClaim> RoleClaims { get; set; }
         #endregion
 
         #region Training Entities

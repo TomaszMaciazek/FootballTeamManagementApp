@@ -35,11 +35,13 @@ namespace App.Infrastructure
         public DbSet<IndividualMessage> IndividualMessages { get; set; }
         #endregion
 
-        #region User Entites
+        #region Identity Entites
         public DbSet<User> Users { get; set; }
         public DbSet<Coach> Coaches { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<UserImage> UserImages { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<RoleClaim> RoleClaims { get; set; }
         #endregion
 
         #region Training Entities

@@ -28,7 +28,8 @@ namespace App.Infrastructure.Configurations
                 .WithMany(chat => chat.Users);
 
             builder.HasMany(u => u.GroupChats)
-                .WithMany(chat => chat.Users);
+                .WithMany(chat => chat.Users)
+                .UsingEntity(join => join.ToTable("GroupChatsMembers"));
 
             builder.HasMany(u => u.IndividualMessages)
                 .WithOne(m => m.Sender);
@@ -65,6 +66,9 @@ namespace App.Infrastructure.Configurations
             builder.HasMany(u => u.BoolTestQuestionAnswers)
                 .WithOne(x => x.User);
             #endregion
+
+            builder.HasIndex(u => u.Email).IsUnique();
+            builder.HasIndex(u => u.Username).IsUnique();
 
         }
     }
