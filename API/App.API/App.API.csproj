@@ -19,6 +19,7 @@
     <ProjectReference Include="..\App.Infrastructure\App.Infrastructure.csproj" />
     <ProjectReference Include="..\App.Model\App.Model.csproj" />
     <ProjectReference Include="..\App.Repository\App.Repository.csproj" />
+    <ProjectReference Include="..\App.ServiceLayer\App.ServiceLayer.csproj" />
   </ItemGroup>
 
   <ItemGroup>

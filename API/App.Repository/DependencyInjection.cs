@@ -7,7 +7,10 @@ namespace App.Repository
     {
         public static IServiceCollection AddRepositories(this IServiceCollection service)
         {
-            service.AddScoped<ICardRepository, CardRepository>();
+            service.AddScoped<IUserRepository, UserRepository>();
+
+            service.AddScoped<IPlayerCardRepository, PlayerCardRepository>();
+            service.AddScoped<ICoachCardRepository, CoachCardRepository>();
             service.AddScoped<ICoachRepository, CoachRepository>();
             service.AddScoped<IGroupChatRepository, GroupChatRepository>();
             service.AddScoped<IGroupChatImageRepository, GroupChatImageRepository>();
@@ -46,7 +49,11 @@ namespace App.Repository
 
             service.AddScoped<IUserBoolTestQuestionAnswerRepository, UserBoolTestQuestionAnswerRepository>();
             service.AddScoped<IUserOptionsTestQuestionAnswerRepository, UserOptionsTestQuestionAnswerRepository>();
-            
+
+            service.AddScoped<IRoleRepository, RoleRepository>();
+
+            service.AddScoped<ILanguageRepository, LanguageRepository>();
+
             return service;
         }
     }
