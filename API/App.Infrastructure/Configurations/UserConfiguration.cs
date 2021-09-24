@@ -25,7 +25,8 @@ namespace App.Infrastructure.Configurations
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasMany(u => u.IndividualChats)
-                .WithMany(chat => chat.Users);
+                .WithMany(chat => chat.Users)
+                .UsingEntity(join => join.ToTable("IndividualChatsMembers"));
 
             builder.HasMany(u => u.GroupChats)
                 .WithMany(chat => chat.Users)

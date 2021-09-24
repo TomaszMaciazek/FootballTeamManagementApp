@@ -4,14 +4,16 @@ using App.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace App.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210904201134_RemovedUnusedMessageProperties")]
+    partial class RemovedUnusedMessageProperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,18 +21,52 @@ namespace App.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("App.Model.Entities.Coach", b =>
+            modelBuilder.Entity("App.Model.Entities.Card", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("BirthDate")
+                    b.Property<int>("Color")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("MatchId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("PlayerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MatchId");
+
+                    b.HasIndex("PlayerId");
+
+                    b.ToTable("Cards");
+                });
+
+            modelBuilder.Entity("App.Model.Entities.Coach", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(256)
@@ -67,47 +103,6 @@ namespace App.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Coaches");
-                });
-
-            modelBuilder.Entity("App.Model.Entities.CoachCard", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CoachId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Color")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid?>("MatchId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CoachId");
-
-                    b.HasIndex("MatchId");
-
-                    b.ToTable("CoachesCards");
                 });
 
             modelBuilder.Entity("App.Model.Entities.GroupChat", b =>
@@ -352,6 +347,9 @@ namespace App.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("CoachId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -365,14 +363,10 @@ namespace App.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsModificationForbidden")
+                    b.Property<bool>("IsDeleteForbidden")
                         .HasColumnType("bit");
 
                     b.Property<string>("Location")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OpponentsClubName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -390,6 +384,8 @@ namespace App.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CoachId");
 
                     b.ToTable("Matches");
                 });
@@ -485,13 +481,6 @@ namespace App.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("BirthDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -540,47 +529,6 @@ namespace App.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Players");
-                });
-
-            modelBuilder.Entity("App.Model.Entities.PlayerCard", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Color")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid?>("MatchId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("PlayerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MatchId");
-
-                    b.HasIndex("PlayerId");
-
-                    b.ToTable("PlayersCards");
                 });
 
             modelBuilder.Entity("App.Model.Entities.Role", b =>
@@ -1446,14 +1394,6 @@ namespace App.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Localization")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("UpdatedBy")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -1560,6 +1500,12 @@ namespace App.Infrastructure.Migrations
                     b.Property<int>("BadLogonCount")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("BirthDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(450)");
 
@@ -1579,7 +1525,6 @@ namespace App.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
@@ -1587,7 +1532,6 @@ namespace App.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Surname")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")
@@ -1684,21 +1628,6 @@ namespace App.Infrastructure.Migrations
                     b.ToTable("UsersSurveyResults");
                 });
 
-            modelBuilder.Entity("CoachMatch", b =>
-                {
-                    b.Property<Guid>("CoachesId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("MatchesId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("CoachesId", "MatchesId");
-
-                    b.HasIndex("MatchesId");
-
-                    b.ToTable("CoachesMatches");
-                });
-
             modelBuilder.Entity("CoachTraining", b =>
                 {
                     b.Property<Guid>("CoachesId")
@@ -1711,7 +1640,7 @@ namespace App.Infrastructure.Migrations
 
                     b.HasIndex("TrainingsId");
 
-                    b.ToTable("CoachesTrainings");
+                    b.ToTable("CoachTraining");
                 });
 
             modelBuilder.Entity("GroupChatUser", b =>
@@ -1756,7 +1685,7 @@ namespace App.Infrastructure.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("IndividualChatsMembers");
+                    b.ToTable("IndividualChatUser");
                 });
 
             modelBuilder.Entity("RoleUser", b =>
@@ -1771,7 +1700,24 @@ namespace App.Infrastructure.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("UserRoles");
+                    b.ToTable("RoleUser");
+                });
+
+            modelBuilder.Entity("App.Model.Entities.Card", b =>
+                {
+                    b.HasOne("App.Model.Entities.Match", "Match")
+                        .WithMany("Cards")
+                        .HasForeignKey("MatchId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("App.Model.Entities.Player", "Player")
+                        .WithMany("Cards")
+                        .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Match");
+
+                    b.Navigation("Player");
                 });
 
             modelBuilder.Entity("App.Model.Entities.Coach", b =>
@@ -1783,23 +1729,6 @@ namespace App.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("App.Model.Entities.CoachCard", b =>
-                {
-                    b.HasOne("App.Model.Entities.Coach", "Coach")
-                        .WithMany("Cards")
-                        .HasForeignKey("CoachId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("App.Model.Entities.Match", "Match")
-                        .WithMany("CoachesCards")
-                        .HasForeignKey("MatchId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Coach");
-
-                    b.Navigation("Match");
                 });
 
             modelBuilder.Entity("App.Model.Entities.GroupChatImage", b =>
@@ -1843,6 +1772,16 @@ namespace App.Infrastructure.Migrations
                     b.Navigation("Chat");
 
                     b.Navigation("Sender");
+                });
+
+            modelBuilder.Entity("App.Model.Entities.Match", b =>
+                {
+                    b.HasOne("App.Model.Entities.Coach", "Coach")
+                        .WithMany("Matches")
+                        .HasForeignKey("CoachId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Coach");
                 });
 
             modelBuilder.Entity("App.Model.Entities.MatchPlayer", b =>
@@ -1899,23 +1838,6 @@ namespace App.Infrastructure.Migrations
                     b.Navigation("Team");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("App.Model.Entities.PlayerCard", b =>
-                {
-                    b.HasOne("App.Model.Entities.Match", "Match")
-                        .WithMany("PlayersCards")
-                        .HasForeignKey("MatchId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("App.Model.Entities.Player", "Player")
-                        .WithMany("Cards")
-                        .HasForeignKey("PlayerId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Match");
-
-                    b.Navigation("Player");
                 });
 
             modelBuilder.Entity("App.Model.Entities.RoleClaim", b =>
@@ -2182,21 +2104,6 @@ namespace App.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("CoachMatch", b =>
-                {
-                    b.HasOne("App.Model.Entities.Coach", null)
-                        .WithMany()
-                        .HasForeignKey("CoachesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("App.Model.Entities.Match", null)
-                        .WithMany()
-                        .HasForeignKey("MatchesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("CoachTraining", b =>
                 {
                     b.HasOne("App.Model.Entities.Coach", null)
@@ -2274,7 +2181,7 @@ namespace App.Infrastructure.Migrations
 
             modelBuilder.Entity("App.Model.Entities.Coach", b =>
                 {
-                    b.Navigation("Cards");
+                    b.Navigation("Matches");
 
                     b.Navigation("Teams");
                 });
@@ -2298,11 +2205,9 @@ namespace App.Infrastructure.Migrations
 
             modelBuilder.Entity("App.Model.Entities.Match", b =>
                 {
-                    b.Navigation("CoachesCards");
+                    b.Navigation("Cards");
 
                     b.Navigation("Players");
-
-                    b.Navigation("PlayersCards");
 
                     b.Navigation("Points");
                 });

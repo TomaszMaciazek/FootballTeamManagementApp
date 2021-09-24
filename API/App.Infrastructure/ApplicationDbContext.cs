@@ -21,7 +21,8 @@ namespace App.Infrastructure
         private readonly ICurrentUserService _currentUserService;
 
         #region Match Entities
-        public DbSet<Card> Cards { get; set; }
+        public DbSet<PlayerCard> PlayersCards { get; set; }
+        public DbSet<CoachCard> CoachesCards { get; set; }
         public DbSet<Match> Matches { get; set; }
         public DbSet<MatchPoint> MatchPoints { get; set; }
         public DbSet<MatchPlayer> MatchPlayers { get; set; }

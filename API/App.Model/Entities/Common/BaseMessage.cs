@@ -16,12 +16,6 @@ namespace App.Model.Entities.Common
         public bool IsHidden { get; set; }
 
         [Required]
-        public MessageType Type { get; set; }
-
-        [Required]
-        public MessageStatus Status { get; set; }
-
-        [Required]
         public DateTime Sended { get; set; }
     }
 }

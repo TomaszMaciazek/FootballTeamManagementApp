@@ -8,9 +8,7 @@ using App.Model.Entities.TestEntities.AnswersResults;
 using App.Model.Entities.TestEntities.AnswersTemplates;
 using App.Model.Entities.TestEntities.QuestionTemplates;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,7 +17,8 @@ namespace App.DataAccess.Interfaces
     public interface IApplicationDbContext
     {
         #region Match Entities
-         DbSet<Card> Cards { get; set; }
+         DbSet<PlayerCard> PlayersCards { get; set; }
+         DbSet<CoachCard> CoachesCards { get; set; }
          DbSet<Match> Matches { get; set; }
          DbSet<MatchPoint> MatchPoints { get; set; }
          DbSet<MatchPlayer> MatchPlayers { get; set; }

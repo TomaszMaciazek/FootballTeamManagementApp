@@ -12,7 +12,11 @@ namespace App.Infrastructure.Configurations
                 .WithOne(x => x.Match)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasMany(x => x.Cards)
+            builder.HasMany(x => x.PlayersCards)
+                .WithOne(x => x.Match)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(x => x.CoachesCards)
                 .WithOne(x => x.Match)
                 .OnDelete(DeleteBehavior.Restrict);
 

@@ -10,6 +10,9 @@ namespace App.Model.Entities
     {
         [Required]
         public DateTime Date { get; set; }
+
+        [Required(AllowEmptyStrings = false)]
+        public string OpponentsClubName { get; set; }
         public int? OpponentsScore { get; set; }
 
         [Required]
@@ -19,11 +22,12 @@ namespace App.Model.Entities
         public PlayersGender PlayersGender { get; set; }
 
         [Required]
-        public bool IsDeleteForbidden { get; set; }
+        public bool IsModificationForbidden { get; set; }
 
         public ICollection<MatchPlayer> Players { get; set; }
         public ICollection<MatchPoint> Points { get; set; }
-        public ICollection<Card> Cards { get; set; }
-        public Coach Coach { get; set; }
+        public ICollection<PlayerCard> PlayersCards { get; set; }
+        public ICollection<CoachCard> CoachesCards { get; set; }
+        public ICollection<Coach> Coaches { get; set; }
     }
 }

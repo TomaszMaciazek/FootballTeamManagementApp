@@ -19,11 +19,17 @@ namespace App.Model.Entities
         public Gender Gender { get; set; }
 
         [Required]
+        public DateTime BirthDate { get; set; }
+
+        [Required]
+        public string Country { get; set; }
+
+        [Required]
         public PlayerPosition PrefferedPosition { get; set; }
 
         public ICollection<MatchPlayer> Matches { get; set; }
         public ICollection<MatchPoint> MatchPoints { get; set; }
-        public ICollection<Card> Cards { get; set; }
+        public ICollection<PlayerCard> Cards { get; set; }
         public ICollection<TrainingScore> TrainingScores { get; set; }
 
     }

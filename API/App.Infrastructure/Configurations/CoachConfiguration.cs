@@ -15,14 +15,19 @@ namespace App.Infrastructure.Configurations
         {
 
             builder.HasMany(p => p.Matches)
-                .WithOne(m => m.Coach)
-                .OnDelete(DeleteBehavior.Restrict);
+                .WithMany(m => m.Coaches)
+                .UsingEntity(join => join.ToTable("CoachesMatches"));
 
             builder.HasMany(x => x.Trainings)
-                .WithMany(x => x.Coaches);
+                .WithMany(x => x.Coaches)
+                .UsingEntity(join => join.ToTable("CoachesTrainings"));
 
             builder.HasMany(x => x.Teams)
                 .WithOne(x => x.MainCoach);
+
+            builder.HasMany(p => p.Cards)
+                .WithOne(c => c.Coach)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
