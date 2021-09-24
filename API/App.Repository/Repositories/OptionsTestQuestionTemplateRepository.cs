@@ -18,7 +18,7 @@ namespace App.Repository.Repositories
 
         public IQueryable<OptionsTestQuestionTemplate> GetAllEager() => _dbSet
             .AsNoTracking()
-            .Include(x => x.Test)
+            .Include(x => x.Test).ThenInclude(x => x.OptionsTestQuestions)
             .Include(x => x.UserAnswers).ThenInclude(x => x.User);
     }
 }

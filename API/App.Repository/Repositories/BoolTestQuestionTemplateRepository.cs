@@ -11,17 +11,16 @@ namespace App.Repository.Repositories
 {
     public interface IBoolTestQuestionTemplateRepository : IRepository<BoolTestQuestionTemplate>
     {
-        IEnumerable<BoolTestQuestionTemplate> GetAllFromTestTemplate(Guid testTemplateId);
+        IQueryable<BoolTestQuestionTemplate> GetAllEager();
     }
 
     public class BoolTestQuestionTemplateRepository : BaseRepository<BoolTestQuestionTemplate>, IBoolTestQuestionTemplateRepository
     {
         public BoolTestQuestionTemplateRepository(IApplicationDbContext dbContext) : base(dbContext){}
 
-        public IEnumerable<BoolTestQuestionTemplate> GetAllFromTestTemplate(Guid testTemplateId) => _dbSet
+        public IQueryable<BoolTestQuestionTemplate> GetAllEager() => _dbSet
             .AsNoTracking()
-            .Include(x => x.Test)
-            .Where(x => x.Test.Id == testTemplateId)
-            .ToList();
+            .Include(x => x.Test).ThenInclude(x => x.OptionsTestQuestions).ThenInclude(x => x.Answers)
+            .Include(x => x.Test).ThenInclude(x => x.BoolTestQuestions);
     }
 }

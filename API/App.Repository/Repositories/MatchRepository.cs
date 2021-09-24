@@ -10,7 +10,6 @@ namespace App.Repository.Repositories
 {
     public interface IMatchRepository: IRepository<Match>
     {
-        Match GetByIdEager(Guid id);
         IQueryable<Match> GetAllEager();
     }
 
@@ -20,31 +19,29 @@ namespace App.Repository.Repositories
 
         public IQueryable<Match> GetAllEager() => _dbSet
             .AsNoTracking()
-            .Include(x => x.Cards).ThenInclude(x => x.Player)
-            .Include(x => x.Points).ThenInclude(x => x.GoalScorer)
-            .Include(x => x.Coach)
-            .Include(x => x.Players).ThenInclude(x => x.Player);
-
-        public Match GetByIdEager(Guid id) => _dbSet
-            .AsNoTracking()
-            .Include(x => x.Cards).ThenInclude(x => x.Player)
-            .Include(x => x.Points).ThenInclude(x => x.GoalScorer)
-            .Include(x => x.Coach)
-            .Include(x => x.Players).ThenInclude(x => x.Player)
-            .FirstOrDefault(x => x.Id == id);
+            .Include(x => x.Players).ThenInclude(x => x.Player).ThenInclude(x => x.User)
+            .Include(x => x.PlayersCards).ThenInclude(x => x.Player).ThenInclude(x => x.User)
+            .Include(x => x.CoachesCards).ThenInclude(x => x.Coach).ThenInclude(x => x.User)
+            .Include(x => x.Points).ThenInclude(x => x.GoalScorer).ThenInclude(x => x.User)
+            .Include(x => x.Coaches).ThenInclude(x => x.User)
+            .Include(x => x.Players).ThenInclude(x => x.Player).ThenInclude(x => x.User)
+            .Include(x => x.Players).ThenInclude(x => x.Player).ThenInclude(x => x.Team);
 
         public new void Update(Match entity)
         {
-            var matchPlayers = _dbContext.MatchPlayers.Where(x => x.Match.Id == entity.Id);
-            var matchPoints = _dbContext.MatchPoints.Where(x => x.Match.Id == entity.Id);
-            var matchCards = _dbContext.Cards.Where(x => x.Match.Id == entity.Id);
+            var matchPlayers = _dbContext.MatchPlayers.Include(x => x.Match).Where(x => x.Match.Id == entity.Id);
+            var matchPoints = _dbContext.MatchPoints.Include(x => x.Match).Where(x => x.Match.Id == entity.Id);
+            var playersCards = _dbContext.PlayersCards.Include(x => x.Match).Where(x => x.Match.Id == entity.Id);
+            var coachCards = _dbContext.CoachesCards.Include(x => x.Match).Where(x => x.Match.Id == entity.Id);
             _dbContext.MatchPlayers.RemoveRange(matchPlayers);
             _dbContext.MatchPoints.RemoveRange(matchPoints);
-            _dbContext.Cards.RemoveRange(matchCards);
+            _dbContext.PlayersCards.RemoveRange(playersCards);
+            _dbContext.CoachesCards.RemoveRange(coachCards);
             _dbContext.SaveChanges();
             _dbContext.MatchPlayers.AddRange(entity.Players);
             _dbContext.MatchPoints.AddRange(entity.Points);
-            _dbContext.Cards.AddRange(entity.Cards);
+            _dbContext.PlayersCards.AddRange(entity.PlayersCards);
+            _dbContext.CoachesCards.AddRange(entity.CoachesCards);
             base.Update(entity);
         }
 
@@ -54,11 +51,11 @@ namespace App.Repository.Repositories
                 .AsNoTracking()
                 .Include(match => match.Points)
                 .Include(match => match.Players)
-                .Include(match => match.Cards)
+                .Include(match => match.PlayersCards)
                 .FirstOrDefault(match => match.Id == id);
             if (match != null)
             {
-                if(match.IsDeleteForbidden)
+                if(match.IsModificationForbidden)
                 {
                     throw new InvalidOperationException("Delete operation is forbiden for this match");
                 }
@@ -70,9 +67,9 @@ namespace App.Repository.Repositories
                 {
                     _dbContext.MatchPlayers.RemoveRange(match.Players);
                 }
-                if (match.Cards.Any())
+                if (match.PlayersCards.Any())
                 {
-                    _dbContext.Cards.RemoveRange(match.Cards);
+                    _dbContext.PlayersCards.RemoveRange(match.PlayersCards);
                 }
                 _dbSet.Remove(match);
             }

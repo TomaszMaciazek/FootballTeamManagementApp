@@ -12,7 +12,7 @@ namespace App.Repository.Repositories
     public interface ITeamRepository : IRepository<Team>
     {
         IQueryable<Team> GetAllEager();
-        IEnumerable<Team> GetAllFromCoach(Guid coachId);
+        IQueryable<Team> GetAllFromCoach(Guid coachId);
     }
     public class TeamRepository : BaseRepository<Team>, ITeamRepository
     {
@@ -23,10 +23,9 @@ namespace App.Repository.Repositories
             .Include(x => x.MainCoach)
             .Include(x => x.Players);
 
-        public IEnumerable<Team> GetAllFromCoach(Guid coachId) => _dbSet
+        public IQueryable<Team> GetAllFromCoach(Guid coachId) => _dbSet
                 .AsNoTracking()
                 .Include(x => x.MainCoach)
-                .Where(x => x.MainCoach.Id == coachId)
-                .ToList();
+                .Where(x => x.MainCoach.Id == coachId && x.IsActive);
     }
 }

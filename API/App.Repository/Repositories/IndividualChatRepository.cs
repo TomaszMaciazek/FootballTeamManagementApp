@@ -11,7 +11,7 @@ namespace App.Repository.Repositories
     public interface IIndividualChatRepository : IRepository<IndividualChat>
     {
         IQueryable<IndividualChat> GetAllEager();
-        IndividualChat GetByIdEager(Guid id);
+        IQueryable<IndividualChat> GetByIdEager(Guid id);
     }
     public class IndividualChatRepository : BaseRepository<IndividualChat>, IIndividualChatRepository
     {
@@ -22,10 +22,10 @@ namespace App.Repository.Repositories
             .Include(x => x.Messages).ThenInclude(x => x.Sender)
             .Include(x => x.Users);
 
-        public IndividualChat GetByIdEager(Guid id) => _dbSet
+        public IQueryable<IndividualChat> GetByIdEager(Guid id) => _dbSet
             .AsNoTracking()
             .Include(x => x.Messages).ThenInclude(x => x.Sender)
             .Include(x => x.Users)
-            .FirstOrDefault(x => x.Id == id);
+            .Where(x => x.Id == id);
     }
 }

@@ -10,7 +10,7 @@ namespace App.Repository.Repositories
 {
     public interface IGroupChatRepository : IRepository<GroupChat> {
         IQueryable<GroupChat> GetAllEager();
-        GroupChat GetByIdEager(Guid id);
+        IQueryable<GroupChat> GetByIdEager(Guid id);
     }
     public class GroupChatRepository : BaseRepository<GroupChat>, IGroupChatRepository
     {
@@ -24,11 +24,28 @@ namespace App.Repository.Repositories
             .Include(x => x.Messages).ThenInclude(x => x.Sender)
             .Include(x => x.Users);
 
-        public GroupChat GetByIdEager(Guid id) => _dbSet
+        public IQueryable<GroupChat> GetByIdEager(Guid id) => _dbSet
             .AsNoTracking()
             .Include(x => x.Image)
             .Include(x => x.Messages).ThenInclude(x => x.Sender)
             .Include(x => x.Users)
-            .FirstOrDefault(x => x.Id == id);
+            .Where(x => x.Id == id);
+
+        public new void Remove(Guid id)
+        {
+            var chatToDelete = _dbSet
+                .Include(x => x.Messages)
+                .Include(x => x.Image).SingleOrDefault(entity => entity.Id == id);
+            if (chatToDelete != null)
+            {
+                _dbContext.GroupMessages.RemoveRange(chatToDelete.Messages);
+                _dbContext.GroupChatImages.Remove(chatToDelete.Image);
+                _dbSet.Remove(chatToDelete);
+            }
+            else
+            {
+                throw new InvalidOperationException("There is no object with designated Id");
+            }
+        }
     }
 }

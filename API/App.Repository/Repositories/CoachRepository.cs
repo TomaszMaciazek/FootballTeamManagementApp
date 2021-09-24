@@ -11,8 +11,8 @@ namespace App.Repository.Repositories
     public interface ICoachRepository : IRepository<Coach>
     {
         IQueryable<Coach> GetAllEager();
-        Coach GetByIdEager(Guid id);
-        Coach GetByUserIdEager(Guid userId);
+        IQueryable<Coach> GetByIdEager(Guid id);
+        IQueryable<Coach> GetByUserIdEager(Guid userId);
     }
 
     public class CoachRepository : BaseRepository<Coach>, ICoachRepository
@@ -26,20 +26,20 @@ namespace App.Repository.Repositories
             .Include(x => x.User)
             .Include(x => x.Trainings);
 
-        public Coach GetByIdEager(Guid id) => _dbSet
+        public IQueryable<Coach> GetByIdEager(Guid id) => _dbSet
             .AsNoTracking()
             .Include(x => x.Matches)
             .Include(x => x.Teams)
             .Include(x => x.User)
             .Include(x => x.Trainings)
-            .FirstOrDefault(x => x.Id == id);
+            .Where(x => x.Id == id);
 
-        public Coach GetByUserIdEager(Guid userId) => _dbSet
+        public IQueryable<Coach> GetByUserIdEager(Guid userId) => _dbSet
             .AsNoTracking()
             .Include(x => x.Matches)
             .Include(x => x.Teams)
             .Include(x => x.User)
             .Include(x => x.Trainings)
-            .FirstOrDefault(x => x.UserId == userId);
+            .Where(x => x.UserId == userId);
     }
 }
