@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace App.Authentication
+namespace App.UserMiddleware
 {
     public static class Permissions
     {
@@ -183,6 +183,11 @@ namespace App.Authentication
         public override string ToString()
         {
             return Value;
+        }
+
+        public static implicit operator string(Permission permission)
+        {
+            return permission.Value;
         }
     }
 }

@@ -11,10 +11,9 @@ namespace App.Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")),
-                    ServiceLifetime.Transient);
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddTransient<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
+            services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
             services.AddTransient<IDatabaseInitializer, DatabaseInitializer>();
 
             services.AddTransient<IDateTimeService, DateTimeService>();

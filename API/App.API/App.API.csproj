@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.9">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -17,9 +19,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\App.Infrastructure\App.Infrastructure.csproj" />
+    <ProjectReference Include="..\App.Mappings\App.Mappings.csproj" />
     <ProjectReference Include="..\App.Model\App.Model.csproj" />
     <ProjectReference Include="..\App.Repository\App.Repository.csproj" />
     <ProjectReference Include="..\App.ServiceLayer\App.ServiceLayer.csproj" />
+    <ProjectReference Include="..\App.UserMiddleware\App.UserMiddleware.csproj" />
   </ItemGroup>
 
   <ItemGroup>

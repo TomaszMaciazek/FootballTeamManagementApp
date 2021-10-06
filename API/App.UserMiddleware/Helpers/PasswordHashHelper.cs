@@ -1,7 +1,7 @@
 ﻿using BC = BCrypt.Net.BCrypt;
 
 
-namespace App.Authentication.Helpers
+namespace App.UserMiddleware.Helpers
 {
     public static class PasswordHashHelper
     {

@@ -1,9 +1,11 @@
 ﻿using App.DataAccess.Interfaces;
 using App.Model.Entities;
+using App.Model.Enums;
 using App.Repository.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace App.ServiceLayer.Services
@@ -13,7 +15,8 @@ namespace App.ServiceLayer.Services
         Task AddAsync(Role role);
         Task<IEnumerable<Role>> GetAllAsync();
         Task<IEnumerable<Role>> GetAllWithClaimsAsync();
-        Task<IEnumerable<Role>> GetByIdAsync(Guid id);
+        Task<Role> GetByIdAsync(Guid id);
+        Task<Role> GetRole(UserRole role);
         Task RemoveAsync(Guid id);
         Task UpdateAsync(Role role);
     }
@@ -39,7 +42,15 @@ namespace App.ServiceLayer.Services
 
         public async Task<IEnumerable<Role>> GetAllWithClaimsAsync() => await _roleRepository.GetAllWithClaims().ToListAsync();
 
-        public async Task<IEnumerable<Role>> GetByIdAsync(Guid id) => await _roleRepository.GetByIdWithClaims(id).ToListAsync();
+        public async Task<Role> GetByIdAsync(Guid id) => await _roleRepository.GetByIdWithClaims(id).FirstOrDefaultAsync();
+
+        public async Task<Role> GetRole(UserRole role) => role switch
+        {
+            UserRole.Administrator => await _roleRepository.GetAll().FirstOrDefaultAsync(x => x.Name == "admin"),
+            UserRole.Coach => await _roleRepository.GetAll().FirstOrDefaultAsync(x => x.Name == "coach"),
+            UserRole.Player => await _roleRepository.GetAll().FirstOrDefaultAsync(x => x.Name == "player"),
+            _ => null
+        };
 
         public async Task UpdateAsync(Role role)
         {

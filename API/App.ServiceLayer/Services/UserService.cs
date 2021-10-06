@@ -1,9 +1,11 @@
 ﻿using App.DataAccess.Interfaces;
 using App.Model.Entities;
+using App.Model.ViewModels.Commands;
 using App.Repository.Repositories;
 using App.ServiceLayer.Extenstions;
 using App.ServiceLayer.Models;
 using App.ServiceLayer.Queries;
+using App.UserMiddleware.Helpers;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -21,7 +23,7 @@ namespace App.ServiceLayer.Services
         Task<User> GetByEmailOrUsername(string searchString);
         Task<User> GetById(Guid id);
         Task Remove(Guid id);
-        Task Update(User entity);
+        Task Update(UpdateUserCommandVM command);
     }
 
     public class UserService : IUserService
@@ -79,10 +81,29 @@ namespace App.ServiceLayer.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task Update(User entity)
+        public async Task Update(UpdateUserCommandVM command)
         {
-            _userRepository.Update(entity);
-            await _context.SaveChangesAsync();
+            var user = await _userRepository.GetById(command.Id).SingleOrDefaultAsync();
+            if(user != null)
+            {
+                user.Email = !string.IsNullOrEmpty(command.Email) ? command.Email : user.Email;
+                user.Username = !string.IsNullOrEmpty(command.Email) ? command.Email.ToLower() : user.Username;
+                user.PasswordHash = !string.IsNullOrEmpty(command.Password) ? PasswordHashHelper.HashPassword(command.Password) : user.PasswordHash;
+                user.Name = !string.IsNullOrEmpty(command.Name) ? command.Name : user.Name;
+                user.MiddleName = !string.IsNullOrEmpty(command.MiddleName) ? command.MiddleName : user.MiddleName;
+                user.Surname = !string.IsNullOrEmpty(command.Surname) ? command.Surname : user.Surname;
+                user.BadLogonCount = command.BadLogonCount ?? user.BadLogonCount;
+                user.AccountLockoutTime = command.AccountLockoutTime ?? user.AccountLockoutTime;
+                user.LastLogon = command.LastLogon ?? user.LastLogon;
+                user.LastPasswordSet = command.LastPasswordSet ?? user.LastPasswordSet;
+                user.IsActive = command.IsActive ?? user.IsActive;
+                _userRepository.Update(user);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new InvalidOperationException("There is no user with designated Id");
+            }
         }
 
         public async Task<PaginatedList<User>> GetUsers(UserQuery query)

@@ -1,10 +1,15 @@
 ﻿using App.DataAccess.Interfaces;
 using App.Model.Entities;
+using App.Model.ViewModels.Commands;
 using App.Repository.Repositories;
 using App.ServiceLayer.Common;
+using App.ServiceLayer.Extenstions;
+using App.ServiceLayer.Models;
+using App.ServiceLayer.Queries;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace App.ServiceLayer.Services
@@ -19,17 +24,27 @@ namespace App.ServiceLayer.Services
         Task<Player> GetByIdEagerAsync(Guid id);
         Task<Player> GetByUserIdEagerAsync(Guid id);
         Task RemoveAsync(Guid id);
-        Task UpdateAsync(Player entity);
+        Task UpdateAsync(UpdatePlayerVM command);
+        Task<PaginatedList<Player>> GetPlayers(PlayerQuery query);
     }
 
-    public class PlayerService : IService<Player>, IPlayerService
+    public class PlayerService : IPlayerService
     {
         private readonly IPlayerRepository _playerRepository;
+        private readonly ICountryRepository _countryRepository;
+        private readonly ITeamRepository _teamRepository;
         private readonly IApplicationDbContext _context;
 
-        public PlayerService(IPlayerRepository playerRepository, IApplicationDbContext context)
+        public PlayerService(
+            IPlayerRepository playerRepository,
+            ICountryRepository countryRepository, 
+            ITeamRepository teamRepository, 
+            IApplicationDbContext context
+            )
         {
             _playerRepository = playerRepository;
+            _countryRepository = countryRepository;
+            _teamRepository = teamRepository;
             _context = context;
         }
 
@@ -79,10 +94,47 @@ namespace App.ServiceLayer.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(Player entity)
+        public async Task UpdateAsync(UpdatePlayerVM command)
         {
-            _playerRepository.Update(entity);
+            var player = await _playerRepository.GetAll()
+                .Include(x => x.User)
+                .Include(x => x.Country)
+                .Include(x => x.Team)
+                .SingleOrDefaultAsync(x => x.Id == command.Id);
+            player.BirthDate = command.BirthDate ?? player.BirthDate;
+            player.User.Email = !string.IsNullOrEmpty(command.Email) ? command.Email : player.User.Email;
+            player.User.Username = !string.IsNullOrEmpty(command.Email) ? command.Email.ToLower() : player.User.Username;
+            player.User.Name = !string.IsNullOrEmpty(command.Name) ? command.Name : player.User.Name;
+            player.User.MiddleName = !string.IsNullOrEmpty(command.MiddleName) ? command.Name : player.User.MiddleName;
+            player.User.Surname = !string.IsNullOrEmpty(command.Surname) ? command.Name : player.User.Surname;
+            player.Country = command.CountryId.HasValue ? _countryRepository.GetById(command.CountryId.Value).FirstOrDefault() : player.Country;
+            player.StartedPlaying = command.StartedPlaying ?? player.StartedPlaying;
+            player.FinishedPlaying = command.FinishedPlaying ?? player.FinishedPlaying;
+            player.Team = command.TeamId.HasValue ? _teamRepository.GetById(command.TeamId.Value).FirstOrDefault() : player.Team;
+            _playerRepository.Update(player);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<PaginatedList<Player>> GetPlayers(PlayerQuery query)
+        {
+            var players = _playerRepository.GetAll()
+                .Include(x => x.User)
+                .Include(x => x.Country)
+                .Where(x => x.IsActive);
+
+            players = players.WhereStringPropertyContains(x => x.User.Email, query.Email);
+
+            players = players.WhereStringPropertyContains(x => x.User.Name, query.Firstname);
+
+            players = players.WhereStringPropertyContains(x => x.User.Surname, query.Surname);
+
+            players = players.WhereIntPropertyEquals(x => x.Country.Id, query.CountryId);
+
+            players = query.Gender.HasValue ? players.Where(x => x.Gender == query.Gender.Value) : players;
+
+            players = players.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
+
+            return await players.PaginatedListAsync(query.PageNumber, query.PageSize);
         }
     }
 }

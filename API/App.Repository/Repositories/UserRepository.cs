@@ -35,6 +35,7 @@ namespace App.Repository.Repositories
 
         public async Task<User> GetByEmailOrUsername(string searchString) => await _dbSet
             .AsNoTracking()
+            .Include(x => x.Roles).ThenInclude(x => x.Claims)
             .SingleOrDefaultAsync(x => x.Email == searchString || x.Username == searchString);
 
         public void Add(User newUser)
@@ -62,15 +63,7 @@ namespace App.Repository.Repositories
 
         public void Update(User user)
         {
-            var userExistsInDatabase = _dbSet.Any(x => x.Id == user.Id);
-            if (userExistsInDatabase)
-            {
-                _dbSet.Update(user);
-            }
-            else
-            {
-                throw new InvalidOperationException("There is no user with designated Id");
-            }
+            _dbSet.Update(user);
         }
     }
 }

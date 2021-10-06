@@ -1,4 +1,5 @@
 ﻿using App.Model.Dtos.Common;
+using System;
 
 namespace App.Model.Dtos
 {

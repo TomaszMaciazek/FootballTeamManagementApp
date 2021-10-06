@@ -53,6 +53,7 @@ namespace App.Repository
             service.AddScoped<IRoleRepository, RoleRepository>();
 
             service.AddScoped<ILanguageRepository, LanguageRepository>();
+            service.AddScoped<ICountryRepository, CountryRepository>();
 
             return service;
         }
