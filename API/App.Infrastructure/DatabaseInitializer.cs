@@ -1,5 +1,5 @@
-﻿using App.Authentication;
-using App.Authentication.Helpers;
+﻿using App.UserMiddleware;
+using App.UserMiddleware.Helpers;
 using App.DataAccess.Interfaces;
 using App.Model.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -37,11 +37,16 @@ namespace App.Infrastructure
 
         public async Task SeedAsync()
         {
-            DirectoryInfo directoryInfo = new DirectoryInfo(Environment.CurrentDirectory + "/InitialData");
+            var directoryInfo = new DirectoryInfo(Environment.CurrentDirectory + "/InitialData");
 
             if (!await _context.Languages.AnyAsync())
             {
                 await SeedLanguagesAsync(directoryInfo.GetFiles("*languages*").SingleOrDefault());
+            }
+
+            if(!await _context.Countries.AnyAsync())
+            {
+                await SeedCountries(directoryInfo.GetFiles("*countries*").SingleOrDefault());
             }
 
             var roles = new Dictionary<string, List<Permission>>() {
@@ -221,6 +226,24 @@ namespace App.Infrastructure
             administrator.Roles.Add(adminRole);
 
             _context.Users.Add(administrator);
+            await _context.SaveChangesAsync();
+        }
+
+        private async Task SeedCountries(FileInfo file)
+        {
+            _logger.LogInformation("Started seeding countries data");
+
+            var template = new[] { new { Name_pl = "", Name_en = "", Code = ""} };
+
+            string json = File.ReadAllText(file.FullName);
+            var countriesData = JsonConvert.DeserializeAnonymousType(json, template);
+
+            var englishLanguage = await _context.Languages.FirstOrDefaultAsync(x => x.Code == "EN");
+            var polishLanguage = await _context.Languages.FirstOrDefaultAsync(x => x.Code == "PL");
+            _context.Countries.AddRange(countriesData.Select(x => new Country { Code = x.Code }).OrderBy(x => x.Code));
+            _context.Translations.AddRange(countriesData.Select(x => new Translation { Key = x.Code, Value = x.Name_en, Language = englishLanguage }));
+            _context.Translations.AddRange(countriesData.Select(x => new Translation { Key = x.Code, Value = x.Name_pl, Language = polishLanguage }));
+
             await _context.SaveChangesAsync();
         }
     }

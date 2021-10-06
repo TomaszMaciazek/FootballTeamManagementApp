@@ -28,9 +28,8 @@ namespace App.Infrastructure.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("CountryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(256)
@@ -62,6 +61,8 @@ namespace App.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
 
                     b.HasIndex("UserId")
                         .IsUnique();
@@ -108,6 +109,21 @@ namespace App.Infrastructure.Migrations
                     b.HasIndex("MatchId");
 
                     b.ToTable("CoachesCards");
+                });
+
+            modelBuilder.Entity("App.Model.Entities.Country", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("App.Model.Entities.GroupChat", b =>
@@ -488,9 +504,8 @@ namespace App.Infrastructure.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("CountryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(256)
@@ -531,6 +546,8 @@ namespace App.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
 
                     b.HasIndex("TeamId");
 
@@ -1566,9 +1583,6 @@ namespace App.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime?>("LastBadPasswordAttempt")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime?>("LastLogon")
                         .HasColumnType("datetime2");
 
@@ -1579,7 +1593,6 @@ namespace App.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
@@ -1587,7 +1600,6 @@ namespace App.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Surname")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")
@@ -1776,11 +1788,18 @@ namespace App.Infrastructure.Migrations
 
             modelBuilder.Entity("App.Model.Entities.Coach", b =>
                 {
+                    b.HasOne("App.Model.Entities.Country", "Country")
+                        .WithMany("Coaches")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("App.Model.Entities.User", "User")
                         .WithOne("CoachDetails")
                         .HasForeignKey("App.Model.Entities.Coach", "UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Country");
 
                     b.Navigation("User");
                 });
@@ -1881,6 +1900,11 @@ namespace App.Infrastructure.Migrations
 
             modelBuilder.Entity("App.Model.Entities.Player", b =>
                 {
+                    b.HasOne("App.Model.Entities.Country", "Country")
+                        .WithMany("Players")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("App.Model.Entities.Team", "Team")
                         .WithMany("Players")
                         .HasForeignKey("TeamId")
@@ -1895,6 +1919,8 @@ namespace App.Infrastructure.Migrations
                         .HasForeignKey("App.Model.Entities.Player", "UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Country");
 
                     b.Navigation("Team");
 
@@ -2277,6 +2303,13 @@ namespace App.Infrastructure.Migrations
                     b.Navigation("Cards");
 
                     b.Navigation("Teams");
+                });
+
+            modelBuilder.Entity("App.Model.Entities.Country", b =>
+                {
+                    b.Navigation("Coaches");
+
+                    b.Navigation("Players");
                 });
 
             modelBuilder.Entity("App.Model.Entities.GroupChat", b =>

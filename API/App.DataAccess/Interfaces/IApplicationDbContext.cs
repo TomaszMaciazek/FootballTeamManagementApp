@@ -74,6 +74,7 @@ namespace App.DataAccess.Interfaces
         #region Site Entities
         DbSet<Language> Languages { get; set; }
         DbSet<Translation> Translations { get; set; }
+        DbSet<Country> Countries { get; set; }
         #endregion
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);

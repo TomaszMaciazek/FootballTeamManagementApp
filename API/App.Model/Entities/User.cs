@@ -19,18 +19,14 @@ namespace App.Model.Entities
         [Required]
         public string Username { get; set; }
 
-        [Required]
         public string Name { get; set; }
         public string MiddleName { get; set; }
-
-        [Required]
         public string Surname { get; set; }
 
         [Required]
         public int BadLogonCount { get; set; } = 0;
         public UserImage Image { get; set; }
         public DateTime? AccountLockoutTime { get; set; }
-        public DateTime? LastBadPasswordAttempt { get; set; }
         public DateTime? LastLogon { get; set; }
 
         [Required]

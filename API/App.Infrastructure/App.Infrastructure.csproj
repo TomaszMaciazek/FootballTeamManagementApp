@@ -16,9 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\App.Authentication\App.Authentication.csproj" />
     <ProjectReference Include="..\App.DataAccess\App.DataAccess.csproj" />
     <ProjectReference Include="..\App.Model\App.Model.csproj" />
+    <ProjectReference Include="..\App.UserMiddleware\App.UserMiddleware.csproj" />
   </ItemGroup>
 
 </Project>

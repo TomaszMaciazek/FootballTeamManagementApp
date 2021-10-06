@@ -28,6 +28,9 @@ namespace App.Infrastructure.Configurations
                 .WithOne(x => x.Player)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.HasOne(c => c.Country)
+                .WithMany(x => x.Players)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

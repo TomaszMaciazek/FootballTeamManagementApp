@@ -15,8 +15,7 @@ namespace App.Model.Entities
         [Required]
         public DateTime BirthDate { get; set; }
 
-        [Required]
-        public string Country { get; set; }
+        public Country Country { get; set; }
 
         [Required]
         public Gender Gender { get; set; }
