@@ -83,7 +83,7 @@ namespace App.API.Controllers
         [Route("/Account/SignIn")]
         public async Task<IActionResult> SignIn(SignInVM model)
         {
-            var user = await _userService.GetByEmailOrUsername(model.EmailOrUsername);
+            var user = await _userService.GetByLogin(model.Login);
             if(user != null)
             {
                 if (PasswordHashHelper.Verify(model.Password, user.PasswordHash))

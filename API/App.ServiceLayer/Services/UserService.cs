@@ -20,7 +20,7 @@ namespace App.ServiceLayer.Services
         Task Add(User entity);
         Task<bool> Deactivate(Guid id);
         Task<IEnumerable<User>> GetAll();
-        Task<User> GetByEmailOrUsername(string searchString);
+        Task<User> GetByLogin(string login);
         Task<User> GetById(Guid id);
         Task Remove(Guid id);
         Task Update(UpdateUserCommandVM command);
@@ -69,7 +69,7 @@ namespace App.ServiceLayer.Services
             return true;
         }
 
-        public async Task<User> GetByEmailOrUsername(string searchString) => await _userRepository.GetByEmailOrUsername(searchString);
+        public async Task<User> GetByLogin(string login) => await _userRepository.GetByEmailOrUsername(login);
 
         public async Task<IEnumerable<User>> GetAll() => await _userRepository.GetAll().ToListAsync();
 

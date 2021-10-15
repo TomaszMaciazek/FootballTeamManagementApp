@@ -47,13 +47,14 @@ namespace App.UserMiddleware.Services
             {
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.Iat, new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds().ToString())
+                new Claim(JwtRegisteredClaimNames.Iat, new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds().ToString()),
+                new Claim("userId", user.Id.ToString())
             };
             foreach(var role in user.Roles)
             {
                 claims.AddRange(role.Claims.Select(x => x.ToClaim()));
             }
-            return claims;
+            return claims.Distinct();
         }
     }
 }
