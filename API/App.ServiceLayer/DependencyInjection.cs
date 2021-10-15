@@ -50,6 +50,7 @@ namespace App.ServiceLayer
             services.AddScoped<IGroupChatImageService, GroupChatImageService>();
 
             services.AddScoped<ILanguageService, LanguageService>();
+            services.AddScoped<ITranslationService, TranslationService>();
             return services;
         }
     }
