@@ -43,6 +43,7 @@ namespace App.Infrastructure
         public DbSet<UserImage> UserImages { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<RoleClaim> RoleClaims { get; set; }
+        public DbSet<UserTokenRefresh> UserTokenRefreshes { get; set; }
         #endregion
 
         #region Training Entities

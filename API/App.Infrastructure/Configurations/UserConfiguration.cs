@@ -66,6 +66,11 @@ namespace App.Infrastructure.Configurations
 
             builder.HasMany(u => u.BoolTestQuestionAnswers)
                 .WithOne(x => x.User);
+
+            builder.HasOne(u => u.TokenRefresh)
+                .WithOne(x => x.User)
+                .HasForeignKey<UserTokenRefresh>(x => x.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
             #endregion
 
             builder.HasIndex(u => u.Email).IsUnique();

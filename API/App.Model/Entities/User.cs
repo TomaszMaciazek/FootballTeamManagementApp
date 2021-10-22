@@ -53,5 +53,6 @@ namespace App.Model.Entities
         public ICollection<Role> Roles { get; set; }
         public Player PlayerDetails { get; set; }
         public Coach CoachDetails { get; set; }
+        public UserTokenRefresh TokenRefresh { get; set; }
     }
 }

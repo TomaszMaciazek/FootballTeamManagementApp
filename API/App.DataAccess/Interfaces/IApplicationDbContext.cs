@@ -39,10 +39,11 @@ namespace App.DataAccess.Interfaces
          DbSet<UserImage> UserImages { get; set; }
          DbSet<Role> Roles { get; set; }
          DbSet<RoleClaim> RoleClaims { get; set; }
+         DbSet<UserTokenRefresh> UserTokenRefreshes { get; set; }
         #endregion
 
         #region Training Entities
-         DbSet<Training> Trainings { get; set; }
+        DbSet<Training> Trainings { get; set; }
          DbSet<TrainingScore> TrainingScores { get; set; }
          DbSet<Team> Teams { get; set; }
         #endregion
