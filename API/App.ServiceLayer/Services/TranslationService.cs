@@ -24,7 +24,7 @@ namespace App.ServiceLayer.Services
             _translationRepository = translationRepository;
         }
 
-        public async Task<IEnumerable<Translation>> GetAllAsync() => await _translationRepository.GetAll().ToListAsync();
+        public async Task<IEnumerable<Translation>> GetAllAsync() => await _translationRepository.GetAll().Include(x => x.Language).ToListAsync();
 
         public async Task<IEnumerable<Translation>> GetAllFromLanguageAsync(Guid languageId) => await _translationRepository.GetAll()
             .Include(x => x.Language)

@@ -1,4 +1,4 @@
-import { NgModule, Renderer2 } from '@angular/core';
+import { NgModule, Renderer2, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -14,6 +14,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
 import { BlankLayoutComponent } from './components/layout/blank-layout/blank-layout.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TranslatePipe } from './pipes/translate.pipe';
+import { RefreshComponent } from './components/refresh/refresh.component';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { TokenStorageProvider } from './providers/token-storage-provider.model';
+import { UserContextProvider } from './providers/user-context-provider.model';
+import { BasicLayoutComponent } from './components/layout/basic-layout/basic-layout.component';
+import { NavigationMenuComponent } from './components/navigation-menu/navigation-menu.component';
+import { NavigationService } from './services/navigation.service';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -24,7 +32,11 @@ export function tokenGetter() {
     AppComponent,
     LoginComponent,
     FormErrorComponent,
-    BlankLayoutComponent
+    BlankLayoutComponent,
+    TranslatePipe,
+    RefreshComponent,
+    BasicLayoutComponent,
+    NavigationMenuComponent
   ],
   imports: [
     BrowserModule,
@@ -35,6 +47,7 @@ export function tokenGetter() {
     NgbModule,
     FontAwesomeModule,
     HttpClientModule,
+    NgxSpinnerModule,
     ToastrModule.forRoot({
       timeOut: 3000,
       progressBar: true,
@@ -48,7 +61,13 @@ export function tokenGetter() {
       }
     })
   ],
-  providers: [AuthenticationService],
+  providers: [
+    AuthenticationService,
+    NavigationService, 
+    TokenStorageProvider,
+    UserContextProvider
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

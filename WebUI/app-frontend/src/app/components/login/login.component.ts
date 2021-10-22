@@ -1,14 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SignInModel } from 'src/app/models/sign-in.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
+import { TranslatePipe } from 'src/app/pipes/translate.pipe';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
 
 
   signInFormSubmitted : boolean = false
@@ -18,16 +21,24 @@ export class LoginComponent implements OnInit {
   faLock = faLock;
 
   constructor(
-    private authenticationService : AuthenticationService
+    public translatePipe: TranslatePipe,
+    private authenticationService : AuthenticationService,
+    private router: Router,
+    private spinner: NgxSpinnerService
   ) { 
   }
 
-  ngOnInit(): void {
+  ngOnInit(){
+    this.spinner.show();
     this.prepareSignInForm();
   }
 
+  ngAfterViewInit(){
+    this.spinner.hide();
+  }
 
   signIn(){
+    this.spinner.show();
     this.signInFormSubmitted = true;
     if(this.signInForm.valid){
       const formData = this.signInForm.getRawValue();

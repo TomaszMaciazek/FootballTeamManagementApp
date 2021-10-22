@@ -1,13 +1,20 @@
+@import "~src/assets/styles/variables";
+
+.container{
+    height: 100%;
+}
+
 .signInForm{
+    margin-top: auto;
+    margin-bottom: auto;
     border: 2px solid #124558;
-
-    h3{
-        color: #232323;
-    }
-
-    form{
-        padding: 10px;
-    }
+    padding-bottom: 20px;
+	padding-left: 70px;
+	padding-right: 70px;
+	padding-top: 20px;
+    background-color: $blue !important;
+    opacity: 0.8;
+    color: $white !important;
 
     label{
         font-size: 1.5em;
@@ -18,5 +25,18 @@
         background-color: #480a81;
         color: #fff;
         font-family: Arial, Helvetica, sans-serif;
+    }
+}
+
+.login-region {
+	padding: 0;
+	height: 100%;
+	display: block;
+}
+
+@media (max-width: 767px) {
+    .signInForm{
+        padding-left: 0px;
+        padding-right: 0px;
     }
 }

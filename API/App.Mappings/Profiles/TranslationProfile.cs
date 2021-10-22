@@ -8,7 +8,8 @@ namespace App.Mappings.Profiles
     {
         public TranslationProfile()
         {
-            CreateMap<Translation, TranslationDto>();
+            CreateMap<Translation, TranslationDto>()
+                .ForMember(dest => dest.LanguageId, opt => opt.MapFrom(src => src.Language.Id));
         }
     }
 }
