@@ -32,7 +32,7 @@ namespace App.API.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<TranslationDto>))]
-        [Route("/Language/{id}")]
+        [Route("Language/{id}")]
         public async Task<ActionResult<IEnumerable<TranslationDto>>> GetTranslationsFromLanguage(Guid id)
         {
             var languages = _mapper.Map<IEnumerable<TranslationDto>>(await _translationService.GetAllFromLanguageAsync(id));

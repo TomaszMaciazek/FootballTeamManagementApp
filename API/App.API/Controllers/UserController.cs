@@ -60,7 +60,7 @@ namespace App.API.Controllers
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.UsersPolicy)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginatedList<PlayerDto>))]
-        [Route("/Players")]
+        [Route("Players")]
         public async Task<ActionResult<PaginatedList<PlayerDto>>> GetPlayers([FromQuery] PlayerQuery query)
         {
             return _mapper.Map<PaginatedList<PlayerDto>>(await _playerService.GetPlayers(query));
@@ -69,7 +69,7 @@ namespace App.API.Controllers
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.UsersPolicy)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginatedList<CoachDto>))]
-        [Route("/Coaches")]
+        [Route("Coaches")]
         public async Task<ActionResult<PaginatedList<CoachDto>>> GetCoaches([FromQuery] CoachQuery query)
         {
             return _mapper.Map<PaginatedList<CoachDto>>(await _coachService.GetCoaches(query));
@@ -80,7 +80,7 @@ namespace App.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AuthenticationResult))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(double))]
-        [Route("/Account/SignIn")]
+        [Route("Account/SignIn")]
         public async Task<IActionResult> SignIn(SignInVM model)
         {
             var user = await _userService.GetByLogin(model.Login);
@@ -123,7 +123,7 @@ namespace App.API.Controllers
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.UsersPolicy)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [Route("/Players")]
+        [Route("Players")]
         public async Task<IActionResult> CreatePlayer([FromBody] CreatePlayerVM model)
         {
             var player = _mapper.Map<Player>(model);
@@ -134,7 +134,7 @@ namespace App.API.Controllers
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.UsersPolicy)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [Route("/Coaches")]
+        [Route("Coaches")]
         public async Task<IActionResult> CreateCoach([FromBody] CreateCoachVM model)
         {
             var coach = _mapper.Map<Coach>(model);
@@ -145,7 +145,7 @@ namespace App.API.Controllers
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.UsersPolicy)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [Route("/Administrators")]
+        [Route("Administrators")]
         public async Task<IActionResult> CreateAdministrator([FromBody] CreateUserVM model)
         {
             var user = _mapper.Map<User>(model);
@@ -157,7 +157,7 @@ namespace App.API.Controllers
         [HttpPut]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.UsersPolicy)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [Route("/Players")]
+        [Route("Players")]
         public async Task<IActionResult> UpdateCoach([FromBody] UpdatePlayerVM model)
         {
             await _playerService.UpdateAsync(model);
@@ -167,7 +167,7 @@ namespace App.API.Controllers
         [HttpPut]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.UsersPolicy)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [Route("/Coaches")]
+        [Route("Coaches")]
         public async Task<IActionResult> UpdateCoach([FromBody] UpdateCoachVM model)
         {
             await _coachService.UpdateAsync(model);
@@ -177,7 +177,7 @@ namespace App.API.Controllers
         [HttpPatch]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.UsersPolicy)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserImageDto))]
-        [Route("/Update/Image")]
+        [Route("Update/Image")]
         public async Task<ActionResult<UserImageDto>> SetUserImage([FromBody] UpdateUserImageVM model)
         {
             var image = await _userImageService.GetByUserId(model.UserId);
