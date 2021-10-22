@@ -5,3 +5,9 @@
 .white-bg {
     background-color: $white;
 }
+
+.login-image-background {
+	background: url("../../#{$images-path}/footballBG.jpg") no-repeat;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
