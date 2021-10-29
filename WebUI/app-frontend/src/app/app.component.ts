@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { LanguageCode } from './enums/language-code';
+import { TranslationProvider } from './providers/translation-provider.model';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'app-frontend';
+  title = 'Klub piłkarski';
+
+
+  constructor(private translationProvider: TranslationProvider){
+    this.setLanguage();
+  }
+
+
+  private setLanguage() {
+    let langId = LanguageCode.DefaultLang.toString();
+    this.translationProvider.setDefaultLanguage(langId as LanguageCode);
+    this.translationProvider.setLanguage(langId as LanguageCode);
+}
 }
