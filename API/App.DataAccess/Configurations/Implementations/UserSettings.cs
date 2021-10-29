@@ -14,5 +14,6 @@ namespace App.DataAccess.Configurations.Implementations
 
         public int MaxBadLogonCout { get => _configuration.GetValue<int>("BadLogonMaxCount"); }
         public double AccountLockoutTimeInMinutes { get => _configuration.GetValue<double>("AccountLockoutTimeInMinutes"); }
+        public int PasswordChangeInterval { get => _configuration.GetValue<int>("PasswordChangeInterval"); }
     }
 }

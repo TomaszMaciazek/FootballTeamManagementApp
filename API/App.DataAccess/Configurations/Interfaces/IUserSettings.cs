@@ -4,5 +4,6 @@
     {
         double AccountLockoutTimeInMinutes { get; }
         int MaxBadLogonCout { get; }
+        int PasswordChangeInterval { get; }
     }
 }
