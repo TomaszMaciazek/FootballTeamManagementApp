@@ -98,6 +98,19 @@ namespace App.UserMiddleware
         public static Permission ChatsDelete { get => new("Usuwanie testu", ChatsDeletePolicy, ChatsGroup, ""); }
         #endregion
 
+        #region News
+        public const string NewsGroup = "Aktualnosci";
+        public const string NewsPolicy = "news";
+        public static Permission News { get => new("Aktualnosci", NewsPolicy, NewsGroup, ""); }
+        public const string NewsAddPolicy = "news.add";
+        public static Permission NewsAdd { get => new("Dodawanie aktualności", NewsAddPolicy, NewsGroup, ""); }
+        public const string NewsEditPolicy = "news.edit";
+        public static Permission NewsEdit { get => new("Edycja aktualności", NewsEditPolicy, NewsGroup, ""); }
+        public const string NewsDeletePolicy = "news.delete";
+        public static Permission NewsDelete { get => new("Usuwanie aktualności", NewsAddPolicy, NewsGroup, ""); }
+
+        #endregion
+
         static Permissions()
         {
             AllPermissions = new List<Permission>
@@ -144,7 +157,13 @@ namespace App.UserMiddleware
                 ChatsActivate,
                 ChatsDeactivate,
                 ChatsAdd,
-                ChatsDelete
+                ChatsDelete,
+
+                //News
+                News,
+                NewsAdd,
+                NewsEdit,
+                NewsDelete
 
             }.AsReadOnly();
         }

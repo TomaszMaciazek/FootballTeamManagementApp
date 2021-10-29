@@ -82,7 +82,11 @@ namespace App.Infrastructure
                         Permissions.ChatsActivate,
                         Permissions.ChatsDeactivate,
                         Permissions.ChatsAdd,
-                        Permissions.ChatsDelete
+                        Permissions.ChatsDelete,
+                        Permissions.News,
+                        Permissions.NewsAdd,
+                        Permissions.NewsEdit,
+                        Permissions.NewsDelete
                     } },
                     { "coach", new List<Permission>() {
                         Permissions.Trainings,
@@ -114,7 +118,10 @@ namespace App.Infrastructure
                         Permissions.ChatsActivate,
                         Permissions.ChatsDeactivate,
                         Permissions.ChatsAdd,
-                        Permissions.ChatsDelete
+                        Permissions.ChatsDelete,
+                        Permissions.News,
+                        Permissions.NewsAdd,
+                        Permissions.NewsEdit
                     } },
                     { $"player", new List<Permission>() {
                         Permissions.Trainings,
@@ -122,6 +129,7 @@ namespace App.Infrastructure
                         Permissions.Surveys,
                         Permissions.Tests,
                         Permissions.Chats,
+                        Permissions.News
                     } }
                 };
 
