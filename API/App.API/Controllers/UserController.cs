@@ -63,7 +63,7 @@ namespace App.API.Controllers
         [Route("Players")]
         public async Task<ActionResult<PaginatedList<PlayerDto>>> GetPlayers([FromQuery] PlayerQuery query)
         {
-            return _mapper.Map<PaginatedList<PlayerDto>>(await _playerService.GetPlayers(query));
+            return Ok(_mapper.Map<PaginatedList<PlayerDto>>(await _playerService.GetPlayers(query)));
         }
 
         [HttpGet]
@@ -72,7 +72,7 @@ namespace App.API.Controllers
         [Route("Coaches")]
         public async Task<ActionResult<PaginatedList<CoachDto>>> GetCoaches([FromQuery] CoachQuery query)
         {
-            return _mapper.Map<PaginatedList<CoachDto>>(await _coachService.GetCoaches(query));
+            return Ok(_mapper.Map<PaginatedList<CoachDto>>(await _coachService.GetCoaches(query)));
         }
 
         [HttpPost]
