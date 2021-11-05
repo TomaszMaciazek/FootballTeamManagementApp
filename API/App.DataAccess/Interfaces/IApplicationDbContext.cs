@@ -78,6 +78,8 @@ namespace App.DataAccess.Interfaces
         DbSet<Country> Countries { get; set; }
         #endregion
 
+        DbSet<News> News { get; set; }
+
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
         int SaveChanges();
         DbSet<TEntity> Set<TEntity>() where TEntity : class;

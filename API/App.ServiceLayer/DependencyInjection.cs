@@ -51,6 +51,8 @@ namespace App.ServiceLayer
 
             services.AddScoped<ILanguageService, LanguageService>();
             services.AddScoped<ITranslationService, TranslationService>();
+
+            services.AddScoped<INewsService, NewsService>();
             return services;
         }
     }

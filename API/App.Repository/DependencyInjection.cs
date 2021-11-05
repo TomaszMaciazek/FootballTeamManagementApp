@@ -56,6 +56,8 @@ namespace App.Repository
             service.AddScoped<ITranslationRepository, TranslationRepository>();
             service.AddScoped<ICountryRepository, CountryRepository>();
 
+            service.AddScoped<INewsRepository, NewsRepository>();
+
             return service;
         }
     }

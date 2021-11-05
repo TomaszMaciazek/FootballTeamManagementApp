@@ -76,6 +76,8 @@ namespace App.Infrastructure
         public DbSet<UserTestResult> UsersTestResults { get; set; }
         #endregion
 
+        public DbSet<News> News { get; set; }
+
         #region Site Entities
         public DbSet<Country> Countries { get; set; }
         public DbSet<Language> Languages { get; set; }

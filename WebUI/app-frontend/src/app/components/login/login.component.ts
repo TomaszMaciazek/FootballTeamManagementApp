@@ -2,10 +2,11 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SignInModel } from 'src/app/models/sign-in.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
-import { TranslatePipe } from 'src/app/pipes/translate.pipe';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { TranslationProvider } from 'src/app/providers/translation-provider.model';
+import { ToastrService } from 'ngx-toastr';
+import { UserContextProvider } from 'src/app/providers/user-context-provider.model';
 @Component({
   selector: 'login',
   templateUrl: './login.component.html',
@@ -16,15 +17,14 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   signInFormSubmitted : boolean = false
   signInForm: FormGroup;
-  
-  faUser = faUser;
-  faLock = faLock;
 
   constructor(
-    public translatePipe: TranslatePipe,
     private authenticationService : AuthenticationService,
     private router: Router,
-    private spinner: NgxSpinnerService
+    private toastr : ToastrService,
+    private spinner: NgxSpinnerService,
+    private translationProvider: TranslationProvider,
+    private userContextProvider : UserContextProvider
   ) { 
   }
 
@@ -37,17 +37,33 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.spinner.hide();
   }
 
-  signIn(){
-    this.spinner.show();
+  async signIn(){
     this.signInFormSubmitted = true;
     if(this.signInForm.valid){
+      this.spinner.show();
       const formData = this.signInForm.getRawValue();
       const model = new SignInModel({
         ...formData
       });
-      this.authenticationService.signIn(model);
-      this.prepareSignInForm();
+      this.authenticationService.signIn(model).then(res => {
+          this.afterSignIn();
+      }).catch(error => {
+        this.toastr.error(this.translationProvider.getTranslation(error));
+        this.spinner.hide();
+        this.signInForm.controls['password'].setValue("");
+      });
     }
+  }
+
+  private afterSignIn() {
+    this.spinner.hide();
+    this.toastr.success(this.translationProvider.getTranslation('success'));
+    this.userContextProvider.tmp();
+    //this.goToFirstPage();
+  }
+
+  private goToFirstPage(){
+
   }
 
   private prepareSignInForm() {
