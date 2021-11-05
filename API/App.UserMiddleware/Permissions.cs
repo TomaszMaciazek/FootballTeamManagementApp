@@ -32,6 +32,8 @@ namespace App.UserMiddleware
         public static Permission TrainingsAdd { get => new("Dodanie treningu", TrainingsAddPolicy, TrainingsGroup, ""); }
         public const string TrainingsDeletePolicy = "trainings.delete";
         public static Permission TrainingsDelete { get => new("Usuwanie treningu", TrainingsDeletePolicy, TrainingsGroup, ""); }
+        public const string TrainingsResultsPolicy = "trainings.results";
+        public static Permission TrainingsResults { get => new("Rezultaty treningów", TrainingsResultsPolicy, MatchesGroup, ""); }
         #endregion
 
         #region Matches
@@ -48,6 +50,8 @@ namespace App.UserMiddleware
         public static Permission MatchesAdd { get => new("Dodanie meczu", MatchesAddPolicy, MatchesGroup, ""); }
         public const string MatchesDeletePolicy = "matches.delete";
         public static Permission MatchesDelete { get => new("Usuwanie meczu", MatchesDeletePolicy, MatchesGroup, ""); }
+        public const string MatchesResultsPolicy = "matches.results";
+        public static Permission MatchesResults { get => new("Wyniki meczow", MatchesResultsPolicy, MatchesGroup, ""); }
         #endregion
 
         #region Surveys
@@ -126,6 +130,7 @@ namespace App.UserMiddleware
                 TrainingsDeactivate,
                 TrainingsAdd,
                 TrainingsDelete,
+                TrainingsResults,
 
                 //Matches
                 Matches,
@@ -134,6 +139,7 @@ namespace App.UserMiddleware
                 MatchesDeactivate,
                 MatchesAdd,
                 MatchesDelete,
+                MatchesResults,
 
                 //Surveys
                 Surveys,
