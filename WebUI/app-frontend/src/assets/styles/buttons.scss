@@ -1,0 +1,25 @@
+.btn-red{
+    color: $white;
+    background-color: $red;
+    border-color: $border-red;
+    box-shadow: 3px 3px 3px rgba(51, 51, 51, 0.2);
+
+    &:hover,
+    &:focus{
+        color: $white;
+        background-color: $red-light;
+    }
+}
+
+.btn-white{
+    color: $black;
+    background-color: $white;
+    border-color: $border-dark;
+    box-shadow: 3px 3px 3px rgba(51, 51, 51, 0.2);
+
+    &:hover,
+    &:focus{
+        color: $black;
+        background-color: $gray;
+    }
+}

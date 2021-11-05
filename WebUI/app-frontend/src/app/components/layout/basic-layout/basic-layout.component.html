@@ -1,1 +1,38 @@
-<p>basic-layout works!</p>
+<div id="wrapper" class="d-block">
+  <nav class="sidebar" [ngClass]="{'active': isSidebarActive}">
+    <div class="dismiss" (click)="hideSidebar()">
+        <i class="fa fa-arrow-left"></i>
+    </div>
+    <ng-scrollbar>
+      <ngb-accordion #acc="ngbAccordion">
+        <ngb-panel *ngFor="let item of menuItems" class="menuItemPanel">
+          <ng-template ngbPanelTitle>
+            <a>
+              <i [ngClass]="item.FontAwesomeIcon"></i> 
+              <span>{{item.Title | translate}}</span><span class="fa arrow" *ngIf="item.SubMenuItems"></span>
+            </a>
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <ul *ngIf="item.SubMenuItems">
+              <li *ngFor="let subitem of item.SubMenuItems" (click)="goTo(subitem.Link)">
+                  <a>{{subitem.Title | translate}}</a>
+              </li>
+            </ul>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
+    </ng-scrollbar>
+  </nav>
+  <div class="overlay" [ngClass]="{'active': isSidebarActive}" (click)="hideSidebar()"></div>
+  <button class="btn btn-primary" id="open-menu" (click)="showSidebar()">
+    <i class="fas fa-align-justify"></i> <span>Menu</span>
+  </button>
+  <div class="content white-bg">
+    <topbar></topbar>
+    <div class="page-content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  <footer></footer>
+  
+</div>

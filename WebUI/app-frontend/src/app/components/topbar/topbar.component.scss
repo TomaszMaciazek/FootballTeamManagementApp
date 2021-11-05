@@ -1,0 +1,16 @@
+@import "~src/assets/styles/variables";
+
+#topbar-wrapper{
+    height: 90px;
+    background-color: $red;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    padding: 0px 20px;
+}
+
+.logout{
+    display: flex;
+    align-items: center;
+    height: 100%;
+}

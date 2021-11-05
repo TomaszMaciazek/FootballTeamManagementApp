@@ -25,6 +25,26 @@ export class TokenStorageProvider {
         return info;
     }
 
+    public getPermissions(): Array<string> {
+        var token = <any>this.getTokenDecoded();
+        var keys = Object.keys(token);
+        var filed = keys.find(x => x == "permission");
+        return token[filed];
+    }
+
+    public hasPermission(role: string): boolean {
+        var permissions = this.getPermissions();
+
+        var myPermissions: any[] = [];
+
+        if (!Array.isArray(permissions))
+            myPermissions = [permissions];
+        else
+            myPermissions = permissions;
+
+        return myPermissions != null ? myPermissions.indexOf(role) !== -1 : false;
+    }
+
     public getValueByName(name: string): any {
         var token = <any>this.getTokenDecoded();
         var keys = Object.keys(token);
@@ -49,5 +69,9 @@ export class TokenStorageProvider {
     public isExpired(): boolean {
         var token = this.getToken();
         return this.jwtHelper.isTokenExpired(token);
+    }
+
+    public getPasswordChangeRequired(): boolean {
+        return this.getValueByName('passwordChangeRequired') === true;
     }
 }

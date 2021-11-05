@@ -19,11 +19,14 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { TokenStorageProvider } from './providers/token-storage-provider.model';
 import { UserContextProvider } from './providers/user-context-provider.model';
 import { BasicLayoutComponent } from './components/layout/basic-layout/basic-layout.component';
-import { NavigationMenuComponent } from './components/navigation-menu/navigation-menu.component';
 import { NavigationService } from './services/navigation.service';
 import { TranslateLoader, TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { TranslationProvider } from './providers/translation-provider.model';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { SharedModule } from './shared/shared.module';
+import { FooterComponent } from './components/footer/footer.component';
+import { NgScrollbarModule } from 'ngx-scrollbar';
+import { TopbarComponent } from './components/topbar/topbar.component';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -41,9 +44,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     BlankLayoutComponent,
     RefreshComponent,
     BasicLayoutComponent,
-    NavigationMenuComponent
+    FooterComponent,
+    TopbarComponent
   ],
   imports: [
+    SharedModule,
     BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
@@ -53,6 +58,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     FontAwesomeModule,
     HttpClientModule,
     NgxSpinnerModule,
+    NgScrollbarModule,
     TranslateModule.forRoot({
       loader: {
           provide: TranslateLoader,
@@ -78,7 +84,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     NavigationService, 
     TranslationProvider,
     TokenStorageProvider,
-    UserContextProvider
+    UserContextProvider,
+    HttpClient
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]

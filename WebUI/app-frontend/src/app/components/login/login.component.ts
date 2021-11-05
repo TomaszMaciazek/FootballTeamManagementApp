@@ -58,12 +58,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
   private afterSignIn() {
     this.spinner.hide();
     this.toastr.success(this.translationProvider.getTranslation('success'));
-    this.userContextProvider.tmp();
-    //this.goToFirstPage();
-  }
-
-  private goToFirstPage(){
-
+    var url = this.userContextProvider.getDefaultPageUrl();
+    this.router.navigate([url]);
   }
 
   private prepareSignInForm() {

@@ -2,14 +2,15 @@
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
-
+@import 'assets/styles/content';
 @import 'assets/styles/variables';
 @import 'assets/styles/fadeIn';
 @import 'assets/styles/backgrounds';
 @import 'assets/styles/responsive';
 @import 'assets/styles/forms';
+@import 'assets/styles/buttons';
 
 html, body {
 	height: 100%;
-	color: $gray;
+	color: $text-color;
 }
