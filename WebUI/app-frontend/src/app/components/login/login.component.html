@@ -1,4 +1,20 @@
 <div class="login-region login-image-background">
+    <p-dropdown id="select-language" [options]="languages" 
+    optionLabel="name" filterBy="name" placeholder="Wybierz język"
+    [(ngModel)]="selectedLanguage" (onChange)="changeLanguage($event)">
+        <ng-template pTemplate="selectedItem">
+            <div *ngIf="selectedLanguage">
+                <img class="d-inline img-flag" src="{{selectedLanguage.imagePath}}"/>
+                <div class="d-inline">{{selectedLanguage.name}}</div>
+            </div>
+        </ng-template>
+        <ng-template let-language pTemplate="item">
+            <div>
+                <img class="d-inline img-flag" src="{{language.imagePath}}"/>
+                <div class="d-inline">{{language.name}}</div>
+            </div>
+        </ng-template>
+    </p-dropdown>
     <div class="container">
         <div class="d-flex h-100">
             <div class="col-0 col-lg-3 col-md-2 col-sm-0"></div>

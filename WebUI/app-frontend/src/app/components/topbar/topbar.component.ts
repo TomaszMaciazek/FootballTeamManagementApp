@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { LanguageCode } from 'src/app/enums/language-code';
+import { Language } from 'src/app/models/language.model';
+import { TranslationProvider } from 'src/app/providers/translation-provider.model';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'topbar',
@@ -7,9 +12,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TopbarComponent implements OnInit {
 
-  constructor() { }
+  languages: Language[];
+  selectedLanguage: Language;
+  constructor(
+    private translationProvider: TranslationProvider,
+    private router: Router,
+    private authenticationService: AuthenticationService
+  ) { 
+    this.languages = [
+      {name: 'Polski', code: LanguageCode.Pl, imagePath: "assets/flags-svg/pl.svg"},
+      {name: 'English', code: LanguageCode.En, imagePath: "assets/flags-svg/gb.svg"}
+    ];
+    this.selectedLanguage = this.languages[0];
+  }
 
   ngOnInit(): void {
+  }
+
+  changeLanguage(event : any){
+    if(event.value != null){
+      this.translationProvider.setLanguage(event.value.code);
+    }
+  }
+
+  logout(){
+    this.authenticationService.logOut();
+    this.router.navigateByUrl('/login');
   }
 
 }

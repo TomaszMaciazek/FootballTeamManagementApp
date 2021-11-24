@@ -7,6 +7,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { TranslationProvider } from 'src/app/providers/translation-provider.model';
 import { ToastrService } from 'ngx-toastr';
 import { UserContextProvider } from 'src/app/providers/user-context-provider.model';
+import { Language } from 'src/app/models/language.model';
+import { LanguageCode } from 'src/app/enums/language-code';
 @Component({
   selector: 'login',
   templateUrl: './login.component.html',
@@ -17,6 +19,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   signInFormSubmitted : boolean = false
   signInForm: FormGroup;
+  languages: Language[] =[];
+  selectedLanguage: Language;
 
   constructor(
     private authenticationService : AuthenticationService,
@@ -26,6 +30,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private translationProvider: TranslationProvider,
     private userContextProvider : UserContextProvider
   ) { 
+    this.languages = [
+      {name: 'Polski', code: LanguageCode.Pl, imagePath: "assets/flags-svg/pl.svg"},
+      {name: 'English', code: LanguageCode.En, imagePath: "assets/flags-svg/gb.svg"}
+    ];
+    this.selectedLanguage = this.languages[0];
   }
 
   ngOnInit(){
@@ -74,6 +83,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
       )
     });
     this.signInFormSubmitted = false;
+  }
+
+  changeLanguage(event : any){
+    if(event.value != null){
+      this.translationProvider.setLanguage(event.value.code);
+    }
   }
 
 }
