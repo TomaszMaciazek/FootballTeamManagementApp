@@ -117,6 +117,13 @@ namespace App.API
                 options.AddPolicy(Permissions.ChatsAddPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.ChatsAdd));
                 options.AddPolicy(Permissions.ChatsEditPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.ChatsEdit));
                 options.AddPolicy(Permissions.ChatsDeletePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.ChatsDelete));
+
+                options.AddPolicy(Permissions.NewsPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.News));
+                options.AddPolicy(Permissions.NewsActivatePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.NewsActivate));
+                options.AddPolicy(Permissions.NewsDeactivatePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.NewsDeactivate));
+                options.AddPolicy(Permissions.NewsAddPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.NewsAdd));
+                options.AddPolicy(Permissions.NewsEditPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.NewsEdit));
+                options.AddPolicy(Permissions.NewsDeletePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.NewsDelete));
             });
 
             services.AddSwaggerGen(c =>

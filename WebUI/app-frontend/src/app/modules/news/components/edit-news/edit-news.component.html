@@ -1,0 +1,36 @@
+<div class="content-wrapper">
+    <div class="text-center pb-3">
+        <h1>{{'message_edit' | translate}}</h1>
+    </div>
+    <div fxLayout="row" style="width: 100%;" fxLayoutAlign="center start" >
+        <form>
+            <p-card>
+                    <div class="form-group">
+                        <h5>{{'title' | translate}}</h5>
+                        <input type="text" class="form-control" [formControl]="form.controls['Title']"/>
+                    </div>
+                    <div class="form-group">
+                        <h5>{{'content' | translate}}</h5>
+                        <p-editor [style]="{'height':'200px'}" [formControl]="form.controls['Content']"></p-editor>
+                    </div>
+                    <div class="form-group">
+                        <h5>{{'important' | translate}}</h5>
+                        <p-inputSwitch [formControl]="form.controls['IsImportant']"></p-inputSwitch>
+                    </div>
+
+                    <ng-template pTemplate="footer">
+                        <button type="submit" [ngClass.lt-md]="'btn-block'"
+                        [ngClass.gt-sm]="'btn-lg'"
+                        class="btn btn-success" (click)="submit()">
+                            {{'save' | translate}}
+                        </button>
+                        <button type="reset" [ngClass.lt-md]="'btn-block'"
+                        [ngClass.gt-sm]="'btn-lg ml-3'"  
+                        class="btn btn-danger" (click)="reset()">
+                            {{'clear' | translate}}
+                        </button>
+                    </ng-template>
+            </p-card>
+        </form>
+    </div>
+</div>

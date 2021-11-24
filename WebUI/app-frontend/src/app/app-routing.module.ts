@@ -18,6 +18,10 @@ const routes: Routes = [
     path: 'news', component: BasicLayoutComponent,
     loadChildren: () => import('./modules/news/news.module').then(m => m.NewsModule)
   },
+  {
+    path: 'admin', component: BasicLayoutComponent,
+    loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
+  },
   { path: '**', redirectTo: 'login' }
 ];
 

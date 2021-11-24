@@ -96,7 +96,7 @@ namespace App.ServiceLayer.Services
 
         public async Task<PaginatedList<News>> GetNews(NewsQuery query)
         {
-            var news = _newsRepository.GetAll();
+            var news = _newsRepository.GetAll().AsNoTracking();
 
             news = news.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
 

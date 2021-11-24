@@ -1,5 +1,63 @@
 <div class="content-wrapper">
-    <div class="text-center">
+    <div class="text-center pb-3">
         <h1>{{'news' | translate}}</h1>
+    </div>
+    <div fxLayout="row">
+        <div 
+            fxFlexOffset.lt-lg="10" fxFlex.lt-lg="80"
+            fxFlex.xs="94"fxFlexOffset.xs="3"
+            fxHide fxShow.lt-lg>
+            <p-toolbar>
+                <button class="btn btn-primary btn-block btn-lg btn-action"
+                (click)="addNewNews($event)">
+                    <i class="far fa-plus-square"></i>    
+                    {{'message_add' | translate}}
+                </button>
+            </p-toolbar>
+        </div>
+        <div fxFlex.gt-md="80" fxFlexOffset.gt-md="10"
+            fxHide fxShow.gt-md>
+            <p-toolbar>
+                <div class="p-toolbar-group-left">
+                    <button role="button" [ngClass.lt-md]="'btn-block'"
+                    (click)="addNewNews($event)"
+                    class="btn btn-primary btn-lg btn-action">
+                        <i class="far fa-plus-square"></i>    
+                        {{'message_add' | translate}}
+                </button>
+                </div>
+                
+                <div class="p-toolbar-group-right">
+                </div>
+            </p-toolbar>
+        </div>
+        <div fxFlex.gt-md="10" fxFlex.lt-lg="10" fxFlex.xs="3"></div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center start" class="mt-2">
+        <p-paginator #paginator [rows]="rowNumbers" [totalRecords]="totalCount"
+        [rowsPerPageOptions]="rowNumbersOptions" pageLinkSize="3"
+        (onPageChange)="onPageChange($event)"></p-paginator>
+    </div>
+    <div fxLayout="row">
+        <div fxFlex.gt-xs="80" fxFlexOffset.gt-xs="10" 
+        fxFlex.xs="94" fxFlexOffset.xs="3"
+        fxLayout="column">
+            <p-panel *ngFor="let item of news; let i = index"
+            styleClass="mt-4 news-panel panel-item" [toggleable]="true">
+                <ng-template pTemplate="header">
+                    <div class="header-content">
+                        <img *ngIf="item.isImportant" class="exclamation-img" src="../../assets/icons-svg/warning-sign.svg"/>
+                        {{item.title}}
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="icons">
+                    <button pButton class="p-panel-header-icon" (click)="editNews(item.id, $event)">
+                        <span class="pi pi-pencil"></span>
+                    </button>
+                </ng-template>
+                <div [innerHtml]="item.content"></div>
+            </p-panel>
+        </div>
+        <div fxFlex.gt-xs="10" fxFlex.xs="3"></div>
     </div>
 </div>

@@ -24,7 +24,7 @@ export class UserContextProvider {
 
     public getDefaultPageUrl() : string{
         //if (this.getPasswordChangeRequired()) { return "/changePasswordRequired"; }
-        if (this.hasPermission("news")) { return "/news"; }
+        if (this.hasPermission("news")) { return "/news/preview"; }
         else { return "/noAccess"; }
     }
 

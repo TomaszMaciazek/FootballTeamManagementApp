@@ -1,0 +1,23 @@
+@import "~src/assets/styles/variables";
+
+.news-panel{
+    width: 100%;
+}
+
+:host ::ng-deep .p-panel .p-panel-header{
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+
+.header-content{
+    position: relative;
+}
+
+.exclamation-img{
+    max-width: 2rem;
+    max-height: 2rem;
+    position: absolute;
+    top: -25px;
+    left: -30px;
+    z-index: 997;
+}

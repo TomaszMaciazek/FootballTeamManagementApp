@@ -112,6 +112,10 @@ namespace App.UserMiddleware
         public static Permission NewsEdit { get => new("Edycja aktualności", NewsEditPolicy, NewsGroup, ""); }
         public const string NewsDeletePolicy = "news.delete";
         public static Permission NewsDelete { get => new("Usuwanie aktualności", NewsAddPolicy, NewsGroup, ""); }
+        public const string NewsActivatePolicy = "news.activate";
+        public static Permission NewsActivate { get => new("Aktywacja aktualności", NewsActivatePolicy, NewsGroup, ""); }
+        public const string NewsDeactivatePolicy = "news.deactivate";
+        public static Permission NewsDeactivate { get => new("Dezaktywacja aktualności", NewsDeactivatePolicy, NewsGroup, ""); }
 
         #endregion
 
@@ -168,6 +172,8 @@ namespace App.UserMiddleware
                 //News
                 News,
                 NewsAdd,
+                NewsActivate,
+                NewsDeactivate,
                 NewsEdit,
                 NewsDelete
 

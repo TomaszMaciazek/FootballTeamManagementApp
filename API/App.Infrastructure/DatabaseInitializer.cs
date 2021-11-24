@@ -87,6 +87,8 @@ namespace App.Infrastructure
                         Permissions.ChatsDelete,
                         Permissions.News,
                         Permissions.NewsAdd,
+                        Permissions.NewsActivate,
+                        Permissions.NewsDeactivate,
                         Permissions.NewsEdit,
                         Permissions.NewsDelete
                     } },

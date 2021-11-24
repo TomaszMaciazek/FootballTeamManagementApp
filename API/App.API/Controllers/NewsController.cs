@@ -32,7 +32,8 @@ namespace App.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginatedList<NewsDto>))]
         public async Task<ActionResult<PaginatedList<NewsDto>>> GetNews([FromQuery] NewsQuery query)
         {
-            return Ok(_mapper.Map<PaginatedList<NewsDto>>(await _newsService.GetNews(query)));
+            var result = _mapper.Map<PaginatedList<News> ,PaginatedList <NewsDto>>(await _newsService.GetNews(query));
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
@@ -40,14 +41,14 @@ namespace App.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(NewsDto))]
         public async Task<ActionResult<NewsDto>> GetNewsById(Guid id)
         {
-            var news = _mapper.Map<TranslationDto>(await _newsService.GetByIdAsync(id));
+            var news = _mapper.Map<NewsDto>(await _newsService.GetByIdAsync(id));
             return Ok(news);
         }
 
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.NewsAddPolicy)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> CreateNews([FromBody] NewsDto model)
+        public async Task<IActionResult> CreateNews([FromBody] CreateNewsVM model)
         {
             var news = _mapper.Map<News>(model);
             await _newsService.AddAsync(news);

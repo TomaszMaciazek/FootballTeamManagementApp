@@ -27,6 +27,8 @@ import { SharedModule } from './shared/shared.module';
 import { FooterComponent } from './components/footer/footer.component';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { TopbarComponent } from './components/topbar/topbar.component';
+import { NewsService } from './services/news.service';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -59,6 +61,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     NgxSpinnerModule,
     NgScrollbarModule,
+    FlexLayoutModule,
     TranslateModule.forRoot({
       loader: {
           provide: TranslateLoader,
@@ -67,7 +70,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     }),
     ToastrModule.forRoot({
-      timeOut: 3000,
+      timeOut: 1500,
       progressBar: true,
       preventDuplicates: true
     }),
@@ -85,7 +88,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     TranslationProvider,
     TokenStorageProvider,
     UserContextProvider,
-    HttpClient
+    HttpClient,
+    NewsService
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
