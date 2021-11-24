@@ -1,5 +1,7 @@
+import { LanguageCode } from "../enums/language-code";
+
 export class Language {
-    public id: string;
-    public name: string;
-    public code: string;
-  }
+  public name: string;
+  public code: LanguageCode;
+  public imagePath: string;
+}
