@@ -1,4 +1,5 @@
 ﻿using App.DataAccess.Interfaces;
+using App.Model.Dtos;
 using App.Model.Entities;
 using App.Model.ViewModels.Commands;
 using App.Repository.Repositories;
@@ -19,11 +20,12 @@ namespace App.ServiceLayer.Services
         Task<bool> Activate(Guid id);
         Task Add(User entity);
         Task<bool> Deactivate(Guid id);
-        Task<IEnumerable<User>> GetAll();
+        Task<IEnumerable<UserDto>> GetAll();
         Task<User> GetByLogin(string login);
         Task<User> GetById(Guid id);
         Task Remove(Guid id);
         Task Update(UpdateUserCommandVM command);
+        Task<PaginatedList<UserDto>> GetUsers(UserQuery query);
     }
 
     public class UserService : IUserService
@@ -71,7 +73,17 @@ namespace App.ServiceLayer.Services
 
         public async Task<User> GetByLogin(string login) => await _userRepository.GetByEmailOrUsername(login);
 
-        public async Task<IEnumerable<User>> GetAll() => await _userRepository.GetAll().ToListAsync();
+        public async Task<IEnumerable<UserDto>> GetAll() => await _userRepository.GetAll()
+            .Select(x => new UserDto
+            {
+                Id = x.Id,
+                IsActive = x.IsActive,
+                Email = x.Email,
+                Name = $"{x.Name} {x.MiddleName} {x.Surname}",
+                UserName = x.Username,
+                Role = new RoleDto { Id = x.Role.Id, Name = x.Role.Name }
+            })
+            .ToListAsync();
 
         public async Task<User> GetById(Guid id) => await _userRepository.GetById(id).SingleOrDefaultAsync();
 
@@ -106,19 +118,32 @@ namespace App.ServiceLayer.Services
             }
         }
 
-        public async Task<PaginatedList<User>> GetUsers(UserQuery query)
+        public async Task<PaginatedList<UserDto>> GetUsers(UserQuery query)
         {
-            var users = _userRepository.GetAll().Where(x => x.IsActive);
+            var users = _userRepository.GetAll();
 
-            users = users.WhereStringPropertyContains(x => x.Email, query.Email);
+            users = query.IsActive.HasValue ? users.Where(x => x.IsActive == query.IsActive.Value) : users;
 
-            users = users.WhereStringPropertyContains(x => x.Name, query.Firstname);
+            if (!string.IsNullOrEmpty(query.OrderByColumnName))
+            {
+                users = users.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
+            }
+            else
+            {
+                users = users.OrderByProperty("Surname", query.OrderByDirection);
+            }
 
-            users = users.WhereStringPropertyContains(x => x.Surname, query.Surname);
-
-            users = users.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
-
-            return await users.PaginatedListAsync(query.PageNumber, query.PageSize);
+            return await users
+                .Select(x => new UserDto { 
+                    Id =  x.Id,
+                    IsActive = x.IsActive,
+                    Email = x.Email,
+                    Name = $"{x.Name} {x.MiddleName} {x.Surname}",
+                    UserName = x.Username,
+                    Role = new RoleDto { Id = x.Role.Id, Name = x.Role.Name }
+                    }
+                )
+                .PaginatedListAsync(query.PageNumber, query.PageSize);
         }
     }
 }

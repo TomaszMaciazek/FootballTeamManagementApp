@@ -1,0 +1,128 @@
+<div class="content-wrapper">
+    <div class="text-center pb-3">
+        <h1>{{'user_add' | translate}}</h1>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center start" >
+        <form fxFlex="80" [formGroup]="form" (submit)="submit()">
+            <p-card>
+                <div fxLayout="column">
+                    <div fxLayout.gt-sm="row" fxLayout.lt-md="column">
+                        <div class="form-group p-2" fxFlex.gt-sm="50">
+                            <h5>{{'email' | translate}}</h5>
+                            <input type="text" class="form-control" formControlName="Email"/>
+                        </div>
+                        <div class="form-group p-2" fxFlex.gt-sm="50">
+                            <h5>{{'password' | translate}}</h5>
+                            <input type="password" class="form-control" formControlName="Password"/>
+                        </div>
+                    </div>
+                    <div fxLayout.gt-sm="row" fxLayout.lt-md="column">
+                        <div class="form-group p-2" fxFlex.gt-sm="50">
+                            <h5>{{'name' | translate}}</h5>
+                            <input type="text" class="form-control" formControlName="Name"/>
+                        </div>
+                        <div class="form-group p-2" fxFlex.gt-sm="50">
+                            <h5>{{'middlename' | translate}}</h5>
+                            <input type="text" class="form-control" formControlName="Middlename"/>
+                        </div>
+                    </div>
+                    <div fxLayout.gt-sm="row" fxLayout.lt-md="column">
+                        <div class="form-group p-2" fxFlex.gt-sm="50">
+                            <h5>{{'surname' | translate}}</h5>
+                            <input type="text" class="form-control" formControlName="Surname"/>
+                        </div>
+                        <div class="form-group p-2" fxFlex.gt-sm="50">
+                            <h5>{{'role' | translate}}</h5>
+                            <p-dropdown id="select-role" [options]="roles" (onChange)="setRole($event)"
+                                optionLabel="name" filterBy="name" placeholder="{{'select_role' | translate}}"
+                                formControlName="Role" [style]="{'min-width': '50%'}">
+                                <ng-template let-selected pTemplate="selectedItem">
+                                    {{selected.name | translate}}
+                                </ng-template>
+                                <ng-template let-item pTemplate="item">
+                                    <div>
+                                        {{item.name | translate}}
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    <div fxLayout.gt-sm="row" fxLayout.lt-md="column">
+                        <div class="form-group p-2" *ngIf="(showPlayerControls | async) || (showCoachControls | async)" fxFlex.gt-sm="25">
+                            <h5>{{'gender' | translate}}</h5>
+                            <p-dropdown id="select-gender" [options]="genders" [showClear]="true"
+                                placeholder="{{'select_gender' | translate}}" [formControl]="form.controls['Gender']"
+                                [style]="{'min-width': '80%'}">
+                                <ng-template let-selected pTemplate="selectedItem">
+                                    {{selected.label | translate}}
+                                </ng-template>
+                                <ng-template let-item pTemplate="item">
+                                    <div>
+                                        {{item.label | translate}}
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+                        <div class="form-group p-2" *ngIf="(showPlayerControls | async) || (showCoachControls | async)" fxFlex.gt-sm="25">
+                            <h5>{{'country' | translate}}</h5>
+                            <p-dropdown id="select-country" [options]="countries" [showClear]="true"
+                                optionLabel="code" filterBy="code" placeholder="{{'select_country' | translate}}"
+                                [style]="{'min-width': '80%'}" [formControl]="form.controls['CountryId']">
+                            </p-dropdown>
+                        </div>
+                        <div class="form-group p-2" *ngIf="showPlayerControls | async"
+                        fxFlex.gt-sm="50">
+                            <h5>{{'preferred_position' | translate}}</h5>
+                            <p-dropdown id="select-position" [options]="playerPositions" [showClear]="true"
+                                placeholder="{{'select_preffered_position' | translate}}" [formControl]="form.controls['PreferredPosition']"
+                                [style]="{'min-width': '50%'}">
+                                <ng-template let-selected pTemplate="selectedItem">
+                                        {{selected.label | translate}}
+                                </ng-template>
+                                <ng-template let-item pTemplate="item">
+                                    <div>
+                                        {{item.label | translate}}
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    <div fxLayout.gt-sm="row" fxLayout.lt-md="column">
+                        <div class="form-group p-2" *ngIf="showPlayerControls | async" fxFlex.gt-sm="50">
+                            <h5>{{'started_playing' | translate}}</h5>
+                            <p-calendar [showIcon]="true" dateFormat="dd-mm-yy"
+                            [yearNavigator]="true" yearRange="1900:2100"
+                            formControlName="StartedPlaying"></p-calendar>
+                        </div>
+                        <div class="form-group p-2" *ngIf="showCoachControls | async" fxFlex.gt-sm="50">
+                            <h5>{{'started_working' | translate}}</h5>
+                            <p-calendar  [showIcon]="true" dateFormat="dd-mm-yy"
+                            [yearNavigator]="true" yearRange="1900:2100"
+                            formControlName="StartedWorking"></p-calendar>
+                        </div>
+                        <div class="form-group p-2" *ngIf="(showCoachControls | async) || (showPlayerControls | async)" fxFlex.gt-sm="50">
+                            <h5>{{'date_of_birth' | translate}}</h5>
+                            <p-calendar  [showIcon]="true" dateFormat="dd-mm-yy"
+                            [yearNavigator]="true" yearRange="1900:2100"
+                            formControlName="DateOfBirth"></p-calendar>
+                        </div>
+                    </div>
+                </div>
+
+                <ng-template pTemplate="footer">
+                    <button type="submit" [ngClass.lt-md]="'btn-block'"
+                    [ngClass.gt-sm]="'btn-lg'"
+                    class="btn btn-success">
+                        {{'save' | translate}}
+                    </button>
+                    <button type="reset" [ngClass.lt-md]="'btn-block'"
+                    [ngClass.gt-sm]="'btn-lg ml-3'"  
+                    class="btn btn-danger">
+                        {{'clear' | translate}}
+                    </button>
+                </ng-template>
+            </p-card>
+        </form>
+    </div>
+</div>
+

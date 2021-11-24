@@ -46,5 +46,5 @@ export class AuthenticationService {
     } else {
       return Promise.reject('something_went_wrong');
     }
-}
+  }
 }
