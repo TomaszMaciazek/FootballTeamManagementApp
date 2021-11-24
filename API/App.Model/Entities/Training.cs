@@ -9,7 +9,6 @@ namespace App.Model.Entities
     {
         [Required]
         public DateTime Date { get; set; }
-        public ICollection<Player> Players { get; set; }
         public ICollection<Coach> Coaches { get; set; }
         public ICollection<TrainingScore> Scores { get; set; }
         public string Description { get; set; }
