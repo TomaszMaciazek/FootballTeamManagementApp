@@ -19,7 +19,7 @@ namespace App.Mappings.Profiles
             CreateMap<CreateCoachVM, Coach>()
                 .ForMember(dest => dest.Country, opt => opt.MapFrom<CoachCountryResolver>())
                 .ForMember(dest => dest.Teams, opt => opt.MapFrom<CoachTeamResolver>())
-                .ForMember(dest => dest.User, opt => opt.MapFrom<CoachUserResolver>())
+                .ForMember(dest => dest.User, opt => opt.MapFrom<CreateCoachUserResolver>())
                 .ForMember(dest => dest.FinishedWorking, opt => opt.Ignore())
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
 

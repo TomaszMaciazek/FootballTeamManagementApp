@@ -1,4 +1,6 @@
-﻿using App.Mappings.Generics;
+﻿using App.Mappings.Converters;
+using App.Mappings.Generics;
+using App.ServiceLayer.Models;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -13,6 +15,7 @@ namespace App.Mappings.Profiles
         public GenericsProfile()
         {
             CreateMap(typeof(Source<>), typeof(Destination<>));
+            CreateMap(typeof(PaginatedList<>), typeof(PaginatedList<>)).ConvertUsing(typeof(PaginatedListConverter<,>));
         }
     }
 }
