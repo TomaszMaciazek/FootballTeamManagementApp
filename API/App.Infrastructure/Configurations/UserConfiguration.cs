@@ -14,11 +14,6 @@ namespace App.Infrastructure.Configurations
                 .HasForeignKey<Player>(p => p.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(u => u.Image)
-                .WithOne(i => i.User)
-                .HasForeignKey<UserImage>(i => i.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
-
             builder.HasOne(u => u.CoachDetails)
                 .WithOne(c => c.User)
                 .HasForeignKey<Coach>(c => c.UserId)

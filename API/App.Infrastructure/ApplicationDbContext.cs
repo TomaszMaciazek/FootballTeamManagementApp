@@ -41,7 +41,6 @@ namespace App.Infrastructure
         public DbSet<User> Users { get; set; }
         public DbSet<Coach> Coaches { get; set; }
         public DbSet<Player> Players { get; set; }
-        public DbSet<UserImage> UserImages { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<RoleClaim> RoleClaims { get; set; }
         public DbSet<UserTokenRefresh> UserTokenRefreshes { get; set; }

@@ -11,7 +11,6 @@ namespace App.Model.Dtos
         public string Name { get; set; }
         public string MiddleName { get; set; }
         public string Surname { get; set; }
-        public UserImageDto Image { get; set; }
         public bool IsActive { get; set; }
     }
 }

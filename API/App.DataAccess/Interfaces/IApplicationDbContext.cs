@@ -36,7 +36,6 @@ namespace App.DataAccess.Interfaces
          DbSet<User> Users { get; set; }
          DbSet<Coach> Coaches { get; set; }
          DbSet<Player> Players { get; set; }
-         DbSet<UserImage> UserImages { get; set; }
          DbSet<Role> Roles { get; set; }
          DbSet<RoleClaim> RoleClaims { get; set; }
          DbSet<UserTokenRefresh> UserTokenRefreshes { get; set; }

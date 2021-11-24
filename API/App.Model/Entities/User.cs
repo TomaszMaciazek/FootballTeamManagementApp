@@ -25,7 +25,6 @@ namespace App.Model.Entities
 
         [Required]
         public int BadLogonCount { get; set; } = 0;
-        public UserImage Image { get; set; }
         public DateTime? AccountLockoutTime { get; set; }
         public DateTime? LastLogon { get; set; }
 

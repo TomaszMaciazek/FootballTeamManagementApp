@@ -1,4 +1,6 @@
-﻿using App.Repository.Repositories;
+﻿using App.Repository.Common.Implementation;
+using App.Repository.Common.Interfaces;
+using App.Repository.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace App.Repository
@@ -37,7 +39,6 @@ namespace App.Repository
             service.AddScoped<ITeamRepository, TeamRepository>();
             service.AddScoped<ITrainingRepository, TrainingRepository>();
             service.AddScoped<ITrainingScoreRepository, TrainingScoreRepository>();
-            service.AddScoped<IUserImageRepository, UserImageRepository>();
             
             service.AddScoped<IUserSurveyResultRepository, UserSurveyResultRepository>();
             service.AddScoped<IUserTestResultRepository, UserTestResultRepository>();

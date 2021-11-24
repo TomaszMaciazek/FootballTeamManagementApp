@@ -37,11 +37,6 @@ namespace App.Mappings.Resolvers
                 BadLogonCount = 0
             };
 
-            if(source.ImageData != null && source.ImageData.Length > 0)
-            {
-                var image = new UserImage { Data = source.ImageData, User = user };
-                user.Image = image;
-            }
 
             return user;
         }

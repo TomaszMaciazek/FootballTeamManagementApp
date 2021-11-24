@@ -9,7 +9,6 @@ namespace App.Mappings.Profiles
     {
         public ImageProfile()
         {
-            CreateMap<UserImage, UserImageDto>();
 
             CreateMap<GroupChatImage, GroupChatImageDto>();
         }

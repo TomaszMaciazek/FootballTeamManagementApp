@@ -30,7 +30,6 @@ namespace App.API.Controllers
         private readonly IUserService _userService;
         private readonly IPlayerService _playerService;
         private readonly ICoachService _coachService;
-        private readonly IUserImageService _userImageService;
         private readonly IRoleService _roleService;
         private readonly IJwtService _jwtService;
         private readonly IMapper _mapper;
@@ -40,7 +39,6 @@ namespace App.API.Controllers
             IUserService userService, 
             IPlayerService playerService, 
             ICoachService coachService, 
-            IUserImageService userImageService,
             IRoleService roleService,
             IJwtService jwtService, 
             IMapper mapper, 
@@ -50,7 +48,6 @@ namespace App.API.Controllers
             _userService = userService;
             _playerService = playerService;
             _coachService = coachService;
-            _userImageService = userImageService;
             _roleService = roleService;
             _jwtService = jwtService;
             _mapper = mapper;
@@ -172,26 +169,6 @@ namespace App.API.Controllers
         {
             await _coachService.UpdateAsync(model);
             return NoContent();
-        }
-
-        [HttpPatch]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.UsersPolicy)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserImageDto))]
-        [Route("Update/Image")]
-        public async Task<ActionResult<UserImageDto>> SetUserImage([FromBody] UpdateUserImageVM model)
-        {
-            var image = await _userImageService.GetByUserId(model.UserId);
-            if(image == null)
-            {
-                var result = await _userImageService.AddAsync(new UserImage { UserId = model.UserId, Data = model.ImageData });
-                return Ok(_mapper.Map<UserImageDto>(result));
-            }
-            else
-            {
-                var result = await _userImageService.UpdateAsync(image.Id, model.ImageData);
-                return Ok(_mapper.Map<UserImageDto>(result));
-            }
-
         }
     }
 }
