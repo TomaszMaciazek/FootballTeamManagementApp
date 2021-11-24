@@ -10,6 +10,7 @@ using App.Model.Entities.TestEntities.AnswersResults;
 using App.Model.Entities.TestEntities.AnswersTemplates;
 using App.Model.Entities.TestEntities.QuestionTemplates;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -107,12 +108,15 @@ namespace App.Infrastructure
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        entry.Entity.CreatedBy = _currentUserService.UserId;
-                        entry.Entity.CreatedDate = _dateTimeService.Now;
+                        var timeNow = _dateTimeService.Now;
+                        entry.Entity.CreatedBy = Guid.Parse(_currentUserService.UserId);
+                        entry.Entity.CreatedDate = timeNow;
+                        entry.Entity.UpdatedBy = Guid.Parse(_currentUserService.UserId);
+                        entry.Entity.UpdatedDate = timeNow;
                         break;
 
                     case EntityState.Modified:
-                        entry.Entity.UpdatedBy = _currentUserService.UserId;
+                        entry.Entity.UpdatedBy = Guid.Parse(_currentUserService.UserId);
                         entry.Entity.UpdatedDate = _dateTimeService.Now;
                         break;
                 }
@@ -129,12 +133,15 @@ namespace App.Infrastructure
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        entry.Entity.CreatedBy = _currentUserService.UserId;
-                        entry.Entity.CreatedDate = _dateTimeService.Now;
+                        var timeNow = _dateTimeService.Now;
+                        entry.Entity.CreatedBy = Guid.Parse(_currentUserService.UserId);
+                        entry.Entity.CreatedDate = timeNow;
+                        entry.Entity.UpdatedBy = Guid.Parse(_currentUserService.UserId);
+                        entry.Entity.UpdatedDate = timeNow;
                         break;
 
                     case EntityState.Modified:
-                        entry.Entity.UpdatedBy = _currentUserService.UserId;
+                        entry.Entity.UpdatedBy = Guid.Parse(_currentUserService.UserId);
                         entry.Entity.UpdatedDate = _dateTimeService.Now;
                         break;
                 }
