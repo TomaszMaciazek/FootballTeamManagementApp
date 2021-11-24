@@ -30,7 +30,6 @@ namespace App.API.Controllers
         private readonly IUserService _userService;
         private readonly IPlayerService _playerService;
         private readonly ICoachService _coachService;
-        private readonly IRoleService _roleService;
         private readonly IJwtService _jwtService;
         private readonly IMapper _mapper;
         private readonly IUserSettings _userSettings;
@@ -39,7 +38,6 @@ namespace App.API.Controllers
             IUserService userService, 
             IPlayerService playerService, 
             ICoachService coachService, 
-            IRoleService roleService,
             IJwtService jwtService, 
             IMapper mapper, 
             IUserSettings userSettings
@@ -48,7 +46,6 @@ namespace App.API.Controllers
             _userService = userService;
             _playerService = playerService;
             _coachService = coachService;
-            _roleService = roleService;
             _jwtService = jwtService;
             _mapper = mapper;
             _userSettings = userSettings;
@@ -143,10 +140,9 @@ namespace App.API.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.UsersPolicy)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [Route("Administrators")]
-        public async Task<IActionResult> CreateAdministrator([FromBody] CreateUserVM model)
+        public async Task<IActionResult> CreateAdministrator([FromBody] CreateAdminVM model)
         {
             var user = _mapper.Map<User>(model);
-            user.Roles.Add(await _roleService.GetRole(UserRole.Administrator));
             await _userService.Add(user);
             return NoContent();
         }

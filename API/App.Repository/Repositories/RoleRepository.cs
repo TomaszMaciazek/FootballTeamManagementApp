@@ -11,6 +11,8 @@ namespace App.Repository.Repositories
         void Add(Role role);
         IQueryable<Role> GetAll();
         IQueryable<Role> GetAllWithClaims();
+        IQueryable<Role> GetByName(string name);
+        IQueryable<Role> GetById(Guid id);
         IQueryable<Role> GetByIdWithClaims(Guid id);
         void Remove(Guid id);
         void Update(Role role);
@@ -34,6 +36,16 @@ namespace App.Repository.Repositories
         public IQueryable<Role> GetAllWithClaims()
         {
             return DbSet.AsNoTracking().Include(x => x.Claims);
+        }
+
+        public IQueryable<Role> GetById(Guid id)
+        {
+            return DbSet.AsNoTracking().Where(x => x.Id == id);
+        }
+
+        public IQueryable<Role> GetByName(string name)
+        {
+            return DbSet.Where(x => x.Name == name);
         }
 
         public IQueryable<Role> GetByIdWithClaims(Guid id)

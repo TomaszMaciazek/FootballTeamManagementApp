@@ -9,8 +9,8 @@ namespace App.Infrastructure.Configurations
         public void Configure(EntityTypeBuilder<Role> builder)
         {
             builder.HasMany(x => x.Users)
-                .WithMany(x => x.Roles)
-                .UsingEntity(join => join.ToTable("UserRoles"));
+                .WithOne(x => x.Role)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasMany(x => x.Claims)
                 .WithOne(x => x.Role);

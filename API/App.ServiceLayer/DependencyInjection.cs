@@ -45,12 +45,11 @@ namespace App.ServiceLayer
             services.AddScoped<IOptionsTestQuestionTemplateService, OptionsTestQuestionTemplateService>();
             services.AddScoped<IUserBoolTestQuestionAnswerService, UserBoolTestQuestionAnswerService>();
             services.AddScoped<IUserOptionsTestQuestionAnswerService, UserOptionsTestQuestionAnswerService>();
-
-            services.AddScoped<IUserImageService, UserImageService>();
             services.AddScoped<IGroupChatImageService, GroupChatImageService>();
 
             services.AddScoped<ILanguageService, LanguageService>();
             services.AddScoped<ITranslationService, TranslationService>();
+            services.AddScoped<ICountryService, CountryService>();
 
             services.AddScoped<INewsService, NewsService>();
             return services;

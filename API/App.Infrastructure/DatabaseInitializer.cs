@@ -228,18 +228,16 @@ namespace App.Infrastructure
 
         private async Task SeedAdministrator()
         {
+            var adminRole = await _context.Roles.FirstOrDefaultAsync(x => x.Name == "admin");
             var administrator = new User
             {
                 Username = "admin",
+                Name = "Administrator",
                 PasswordHash = PasswordHashHelper.HashPassword("admin"),
                 IsActive = true,
                 LastPasswordSet = DateTime.Now,
-                Roles = new List<Role>()
+                Role = adminRole
             };
-
-            var adminRole = await _context.Roles.FirstOrDefaultAsync(x => x.Name == "admin");
-
-            administrator.Roles.Add(adminRole);
 
             _context.Users.Add(administrator);
             await _context.SaveChangesAsync();

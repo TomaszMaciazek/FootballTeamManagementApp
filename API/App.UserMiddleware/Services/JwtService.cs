@@ -53,10 +53,7 @@ namespace App.UserMiddleware.Services
                 new Claim("userId", user.Id.ToString()),
                 new Claim("passwordChangeRequired", user.LastPasswordSet < DateTime.Now.AddDays(-1 *  passwordChangeInterval) ? "true" : "false")
             };
-            foreach(var role in user.Roles)
-            {
-                claims.AddRange(role.Claims.Select(x => x.ToClaim()));
-            }
+            claims.AddRange(user.Role.Claims.Select(x => x.ToClaim()));
             return claims.Distinct();
         }
     }

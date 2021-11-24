@@ -1,4 +1,5 @@
 ﻿using App.DataAccess.Interfaces;
+using App.Model.Dtos;
 using App.Model.Entities;
 using App.Model.Enums;
 using App.Repository.Repositories;
@@ -13,9 +14,9 @@ namespace App.ServiceLayer.Services
     public interface IRoleService
     {
         Task AddAsync(Role role);
-        Task<IEnumerable<Role>> GetAllAsync();
+        Task<IEnumerable<RoleDto>> GetAllAsync();
         Task<IEnumerable<Role>> GetAllWithClaimsAsync();
-        Task<Role> GetByIdAsync(Guid id);
+        Task<RoleDto> GetByIdAsync(Guid id);
         Task<Role> GetRole(UserRole role);
         Task RemoveAsync(Guid id);
         Task UpdateAsync(Role role);
@@ -38,17 +39,17 @@ namespace App.ServiceLayer.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Role>> GetAllAsync() => await _roleRepository.GetAll().ToListAsync();
+        public async Task<IEnumerable<RoleDto>> GetAllAsync() => await _roleRepository.GetAll().Select(x => new RoleDto { Id = x.Id, Name = x.Name }).ToListAsync();
 
         public async Task<IEnumerable<Role>> GetAllWithClaimsAsync() => await _roleRepository.GetAllWithClaims().ToListAsync();
 
-        public async Task<Role> GetByIdAsync(Guid id) => await _roleRepository.GetByIdWithClaims(id).FirstOrDefaultAsync();
+        public async Task<RoleDto> GetByIdAsync(Guid id) => await _roleRepository.GetById(id).Select(x => new RoleDto { Id = x.Id, Name = x.Name }).FirstOrDefaultAsync();
 
         public async Task<Role> GetRole(UserRole role) => role switch
         {
-            UserRole.Administrator => await _roleRepository.GetAll().FirstOrDefaultAsync(x => x.Name == "admin"),
-            UserRole.Coach => await _roleRepository.GetAll().FirstOrDefaultAsync(x => x.Name == "coach"),
-            UserRole.Player => await _roleRepository.GetAll().FirstOrDefaultAsync(x => x.Name == "player"),
+            UserRole.Administrator => await _roleRepository.GetByName("admin").FirstOrDefaultAsync(),
+            UserRole.Coach => await _roleRepository.GetByName("coach").FirstOrDefaultAsync(),
+            UserRole.Player => await _roleRepository.GetByName("player").FirstOrDefaultAsync(),
             _ => null
         };
 
