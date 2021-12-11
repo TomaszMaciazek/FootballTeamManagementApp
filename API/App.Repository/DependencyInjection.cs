@@ -1,6 +1,4 @@
-﻿using App.Repository.Common.Implementation;
-using App.Repository.Common.Interfaces;
-using App.Repository.Repositories;
+﻿using App.Repository.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace App.Repository
@@ -20,7 +18,8 @@ namespace App.Repository
             service.AddScoped<IIndividualChatRepository, IndividualChatRepository>();
             service.AddScoped<IIndividualMessageRepository, IndividualMessageRepository>();
             service.AddScoped<IMatchRepository, MatchRepository>();
-            service.AddScoped<IMatchPlayerRepository, MatchPlayerRepository>();
+            service.AddScoped<IMatchPlayerPerformanceRepository, MatchPlayerPerformanceRepository>();
+            service.AddScoped<IMatchPlayerScoreRepository, MatchPlayerScoreRepository>();
             service.AddScoped<IMatchPointRepository, MatchPointRepository>();
             service.AddScoped<IPlayerRepository, PlayerRepository>();
             

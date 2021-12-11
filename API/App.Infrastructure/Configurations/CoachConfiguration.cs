@@ -13,11 +13,6 @@ namespace App.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Coach> builder)
         {
-
-            builder.HasMany(p => p.Matches)
-                .WithMany(m => m.Coaches)
-                .UsingEntity(join => join.ToTable("CoachesMatches"));
-
             builder.HasMany(x => x.Teams)
                 .WithOne(x => x.MainCoach);
 

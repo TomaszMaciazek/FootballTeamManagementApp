@@ -18,12 +18,10 @@ namespace App.ServiceLayer.Services
         Task AddAsync(Match entity);
         Task<bool> DeactivateAsync(Guid id);
         Task<List<Match>> GetAllAsync();
-        Task<IEnumerable<Match>> GetAllFromCoach(Guid coachId);
         Task<IEnumerable<Match>> GetAllFromPlayer(Guid playerId);
         Task<Match> GetByIdAsync(Guid id);
         Task<Match> GetByIdEager(Guid id);
         Task<PaginatedList<Match>> GetPaginatedMatches(MatchQuery query);
-        Task<PaginatedList<Match>> GetPaginatedMatchesFromCoach(Guid coachId, MatchQuery query);
         Task<PaginatedList<Match>> GetPaginatedMatchesFromPlayer(Guid playerId, MatchQuery query);
         Task RemoveAsync(Guid id);
         Task UpdateAsync(Match entity);
@@ -95,37 +93,9 @@ namespace App.ServiceLayer.Services
             .Where(x => x.Players.Any(x => x.Player.Id == playerId) && x.IsActive)
             .ToListAsync();
 
-        public async Task<IEnumerable<Match>> GetAllFromCoach(Guid coachId) => await _matchRepository
-            .GetAllEager()
-            .Where(x => x.Coaches.Any(x => x.Id == coachId && x.IsActive))
-            .ToListAsync();
-
         public async Task<PaginatedList<Match>> GetPaginatedMatches(MatchQuery query)
         {
             var matches = _matchRepository.GetAll().Where(x => x.IsActive);
-
-            matches = matches.WhereStringPropertyContains(x => x.OpponentsClubName, query.OpponentsClubName);
-
-            matches = matches.WhereStringPropertyContains(x => x.Location, query.Location);
-
-            matches = matches.WhereDatetimePropertyLessOrEqual(x => x.Date, query.MaxDate);
-
-            matches = matches.WhereDatetimePropertyGreaterOrEqual(x => x.Date, query.MinDate);
-
-            matches = query.PlayersGender.HasValue
-                ? matches.Where(x => x.PlayersGender == query.PlayersGender.Value)
-                : matches;
-
-            matches = matches.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
-
-            return await matches.PaginatedListAsync(query.PageNumber, query.PageSize);
-        }
-
-        public async Task<PaginatedList<Match>> GetPaginatedMatchesFromCoach(Guid coachId, MatchQuery query)
-        {
-            var matches = _matchRepository.GetAll()
-                .Include(x => x.Coaches)
-                .Where(x => x.Coaches.Any(x => x.Id == coachId) && x.IsActive);
 
             matches = matches.WhereStringPropertyContains(x => x.OpponentsClubName, query.OpponentsClubName);
 

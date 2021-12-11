@@ -26,7 +26,8 @@ namespace App.Infrastructure
         public DbSet<CoachCard> CoachesCards { get; set; }
         public DbSet<Match> Matches { get; set; }
         public DbSet<MatchPoint> MatchPoints { get; set; }
-        public DbSet<MatchPlayer> MatchPlayers { get; set; }
+        public DbSet<MatchPlayerPerformance> MatchPlayersPerformances { get; set; }
+        public DbSet<MatchPlayerScore> MatchPlayersScores { get; set; }
         #endregion
 
         #region Chat Entities

@@ -15,7 +15,8 @@ namespace App.ServiceLayer
             services.AddScoped<IPlayerCardService, PlayerCardService>();
             services.AddScoped<ICoachCardService, CoachCardService>();
             services.AddScoped<IMatchService, MatchService>();
-            services.AddScoped<IMatchPlayerService, MatchPlayerService>();
+            services.AddScoped<IMatchPlayerPerformanceService, MatchPlayerPerformanceService>();
+            services.AddScoped<IMatchPlayerScoreService, MatchPlayerScoreService>();
             services.AddScoped<ITeamService, TeamService>();
             services.AddScoped<ITrainingService, TrainingService>();
             services.AddScoped<ITrainingScoreService, TrainingScoreService>();

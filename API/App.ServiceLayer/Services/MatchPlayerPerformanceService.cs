@@ -9,23 +9,23 @@ using System.Threading.Tasks;
 
 namespace App.ServiceLayer.Services
 {
-    public interface IMatchPlayerService
+    public interface IMatchPlayerPerformanceService
     {
         Task<bool> ActivateAsync(Guid id);
-        Task AddAsync(MatchPlayer entity);
+        Task AddAsync(MatchPlayerPerformance entity);
         Task<bool> DeactivateAsync(Guid id);
-        Task<List<MatchPlayer>> GetAllAsync();
-        Task<MatchPlayer> GetByIdAsync(Guid id);
+        Task<List<MatchPlayerPerformance>> GetAllAsync();
+        Task<MatchPlayerPerformance> GetByIdAsync(Guid id);
         Task RemoveAsync(Guid id);
-        Task UpdateAsync(MatchPlayer entity);
+        Task UpdateAsync(MatchPlayerPerformance entity);
     }
 
-    public class MatchPlayerService : IService<MatchPlayer>, IMatchPlayerService
+    public class MatchPlayerPerformanceService : IService<MatchPlayerPerformance>, IMatchPlayerPerformanceService
     {
-        private readonly IMatchPlayerRepository _matchPlayerRepository;
+        private readonly IMatchPlayerPerformanceRepository _matchPlayerRepository;
         private readonly IApplicationDbContext _context;
 
-        public MatchPlayerService(IMatchPlayerRepository matchPlayerRepository, IApplicationDbContext context)
+        public MatchPlayerPerformanceService(IMatchPlayerPerformanceRepository matchPlayerRepository, IApplicationDbContext context)
         {
             _matchPlayerRepository = matchPlayerRepository;
             _context = context;
@@ -44,7 +44,7 @@ namespace App.ServiceLayer.Services
             return true;
         }
 
-        public async Task AddAsync(MatchPlayer entity)
+        public async Task AddAsync(MatchPlayerPerformance entity)
         {
             _matchPlayerRepository.Add(entity);
             await _context.SaveChangesAsync();
@@ -63,9 +63,9 @@ namespace App.ServiceLayer.Services
             return true;
         }
 
-        public async Task<List<MatchPlayer>> GetAllAsync() => await _matchPlayerRepository.GetAll().ToListAsync();
+        public async Task<List<MatchPlayerPerformance>> GetAllAsync() => await _matchPlayerRepository.GetAll().ToListAsync();
 
-        public async Task<MatchPlayer> GetByIdAsync(Guid id) => await _matchPlayerRepository.GetById(id).FirstOrDefaultAsync();
+        public async Task<MatchPlayerPerformance> GetByIdAsync(Guid id) => await _matchPlayerRepository.GetById(id).FirstOrDefaultAsync();
 
         public async Task RemoveAsync(Guid id)
         {
@@ -73,7 +73,7 @@ namespace App.ServiceLayer.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(MatchPlayer entity)
+        public async Task UpdateAsync(MatchPlayerPerformance entity)
         {
             _matchPlayerRepository.Update(entity);
             await _context.SaveChangesAsync();

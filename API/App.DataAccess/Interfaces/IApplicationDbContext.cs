@@ -21,7 +21,8 @@ namespace App.DataAccess.Interfaces
          DbSet<CoachCard> CoachesCards { get; set; }
          DbSet<Match> Matches { get; set; }
          DbSet<MatchPoint> MatchPoints { get; set; }
-         DbSet<MatchPlayer> MatchPlayers { get; set; }
+        DbSet<MatchPlayerPerformance> MatchPlayersPerformances { get; set; }
+        DbSet<MatchPlayerScore> MatchPlayersScores { get; set; }
         #endregion
 
         #region Chat Entities
