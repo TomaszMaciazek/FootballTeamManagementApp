@@ -49,6 +49,7 @@ namespace App.Model.Entities
         public ICollection<UserRatingSurveyQuestionAnswer> RatingSurveyQuestionAnswers { get; set; }
         public ICollection<UserBoolTestQuestionAnswer> BoolTestQuestionAnswers { get; set; }
         public ICollection<UserOptionsTestQuestionAnswer> OptionsTestQuestionAnswers { get; set; }
+        public ICollection<TrainingScore> CreatedTrainingScores { get; set; }
         public Role Role { get; set; }
         public Player PlayerDetails { get; set; }
         public Coach CoachDetails { get; set; }

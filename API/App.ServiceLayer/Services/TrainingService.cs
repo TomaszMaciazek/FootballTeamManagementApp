@@ -1,5 +1,8 @@
 ﻿using App.DataAccess.Interfaces;
+using App.Model.Dtos;
+using App.Model.Dtos.ListItemDtos;
 using App.Model.Entities;
+using App.Model.ViewModels.Commands;
 using App.Repository.Repositories;
 using App.ServiceLayer.Common;
 using App.ServiceLayer.Extenstions;
@@ -20,12 +23,12 @@ namespace App.ServiceLayer.Services
         Task<bool> DeactivateAsync(Guid id);
         Task<List<Training>> GetAllAsync();
         Task<Training> GetByIdAsync(Guid id);
-        Task<PaginatedList<Training>> GetTrainings(TrainingQuery query);
+        Task<PaginatedList<TrainingListItem>> GetTrainings(TrainingQuery query);
         Task RemoveAsync(Guid id);
-        Task UpdateAsync(Training entity);
+        Task UpdateAsync(UpdateTrainingVM command);
     }
 
-    public class TrainingService : IService<Training>, ITrainingService
+    public class TrainingService : ITrainingService
     {
         private readonly ITrainingRepository _trainingRepository;
         private readonly IApplicationDbContext _context;
@@ -79,17 +82,21 @@ namespace App.ServiceLayer.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(Training entity)
+        public async Task UpdateAsync(UpdateTrainingVM command)
         {
+            var entity = await _trainingRepository.GetById(command.Id).SingleOrDefaultAsync();
+            entity.Title = !string.IsNullOrEmpty(command.Title) ? command.Title : entity.Title;
+            entity.Description = !string.IsNullOrEmpty(command.Description) ? command.Title : entity.Description;
+            entity.Date = command.Date ?? entity.Date;
             _trainingRepository.Update(entity);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<PaginatedList<Training>> GetTrainings(TrainingQuery query)
+        public async Task<PaginatedList<TrainingListItem>> GetTrainings(TrainingQuery query)
         {
-            var trainings = _trainingRepository.GetAllEager().Where(x => x.IsActive);
+            var trainings = _trainingRepository.GetAllEager();
 
-            trainings = trainings.WhereStringPropertyContains(x => x.Localization, query.Location);
+            trainings = query.IsActive.HasValue ? trainings.Where(x => x.IsActive == query.IsActive) : trainings;
 
             trainings = trainings.WhereStringPropertyContains(x => x.Title, query.Title);
 
@@ -99,7 +106,13 @@ namespace App.ServiceLayer.Services
 
             trainings = trainings.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
 
-            return await trainings.PaginatedListAsync(query.PageNumber, query.PageSize);
+            return await trainings.Select(x => new TrainingListItem
+            {
+                Id = x.Id,
+                Title = x.Title,
+                Date = x.Date,
+                UpdatedDate = x.UpdatedDate
+            }).PaginatedListAsync(query.PageNumber, query.PageSize);
         }
     }
 }

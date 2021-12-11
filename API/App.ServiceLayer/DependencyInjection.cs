@@ -18,6 +18,7 @@ namespace App.ServiceLayer
             services.AddScoped<IMatchPlayerService, MatchPlayerService>();
             services.AddScoped<ITeamService, TeamService>();
             services.AddScoped<ITrainingService, TrainingService>();
+            services.AddScoped<ITrainingScoreService, TrainingScoreService>();
 
             services.AddScoped<IGroupChatService, GroupChatService>();
             services.AddScoped<IIndividualChatService, IndividualChatService>();

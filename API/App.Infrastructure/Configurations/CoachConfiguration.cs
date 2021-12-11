@@ -18,10 +18,6 @@ namespace App.Infrastructure.Configurations
                 .WithMany(m => m.Coaches)
                 .UsingEntity(join => join.ToTable("CoachesMatches"));
 
-            builder.HasMany(x => x.Trainings)
-                .WithMany(x => x.Coaches)
-                .UsingEntity(join => join.ToTable("CoachesTrainings"));
-
             builder.HasMany(x => x.Teams)
                 .WithOne(x => x.MainCoach);
 

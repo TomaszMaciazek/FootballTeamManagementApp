@@ -20,7 +20,6 @@ namespace App.Repository.Repositories
 
         public IQueryable<Training> GetAllEager() => _dbSet
             .AsNoTracking()
-            .Include(x => x.Coaches)
             .Include(x => x.Scores).ThenInclude(x => x.Player);
     }
 }
