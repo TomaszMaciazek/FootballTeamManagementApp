@@ -39,8 +39,12 @@
                 <ng-template pTemplate="header">
                     <tr>
                         <th class="text-center" pSortableColumn="Surname">
-                            {{'user' | translate}}
-                            <p-sortIcon [field]="name"></p-sortIcon>
+                            {{'surname' | translate}}
+                            <p-sortIcon [field]="surname"></p-sortIcon>
+                        </th>
+                        <th class="text-center" pSortableColumn="Name">
+                            {{'name' | translate}}
+                            <p-sortIcon [field]="names"></p-sortIcon>
                         </th>
                         <th class="text-center" pSortableColumn="Email">
                             {{'email' | translate}}
@@ -56,7 +60,8 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-user>
                     <tr>
-                        <td class="text-center">{{user.name}}</td>
+                        <td class="text-center">{{user.surname}}</td>
+                        <td class="text-center">{{user.names}}</td>
                         <td class="text-center">{{user.email}}</td>
                         <td class="text-center">{{user.role.name | translate}}</td>
                         <td class="text-center">

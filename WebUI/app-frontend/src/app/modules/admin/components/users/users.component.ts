@@ -55,7 +55,7 @@ export class UsersComponent implements OnInit {
       pageSize: this.rowNumbers,
       orderByColumnName: this.sortColumn,
       orderByDirection: this.sortOrder,
-      isActive: true,
+      isActive: null,
       queryString: null
     });
     this.userService.getUsers(query)
