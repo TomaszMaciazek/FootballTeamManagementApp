@@ -33,8 +33,24 @@ namespace App.UserMiddleware
         public const string TrainingsDeletePolicy = "trainings.delete";
         public static Permission TrainingsDelete { get => new("Usuwanie treningu", TrainingsDeletePolicy, TrainingsGroup, ""); }
         public const string TrainingsResultsPolicy = "trainings.results";
-        public static Permission TrainingsResults { get => new("Rezultaty treningów", TrainingsResultsPolicy, MatchesGroup, ""); }
         #endregion
+
+        #region TrainingScores
+        public const string TrainingScoresGroup = "Rezultaty treningow";
+        public const string TrainingScoresPolicy = "trainings_scores";
+        public static Permission TrainingScores { get => new("Re", TrainingsPolicy, TrainingsGroup, "Rezultaty treningów"); }
+        public const string TrainingScoresEditPolicy = "trainings_scores.edit";
+        public static Permission TrainingScoresEdit { get => new("Edycja rezultatów treningów", TrainingsEditPolicy, TrainingsGroup, ""); }
+        public const string TrainingScoresActivatePolicy = "trainings_scores.activate";
+        public static Permission TrainingScoresActivate { get => new("Aktywacja rezultatów treningów", TrainingsActivatePolicy, TrainingsGroup, ""); }
+        public const string TrainingScoresDeactivatePolicy = "trainings_scores.deactivate";
+        public static Permission TrainingScoresDeactivate { get => new("Dezaktywacja rezultatów treningów", TrainingsDeactivatePolicy, TrainingsGroup, ""); }
+        public const string TrainingScoresAddPolicy = "trainings_scores.add";
+        public static Permission TrainingScoresAdd { get => new("Dodanie rezultatów treningów", TrainingsAddPolicy, TrainingsGroup, ""); }
+        public const string TrainingScoresDeletePolicy = "trainings_scores.delete";
+        public static Permission TrainingScoresDelete { get => new("Usuwanie rezultatów treningów", TrainingsDeletePolicy, TrainingsGroup, ""); }
+        #endregion
+
 
         #region Matches
         public const string MatchesGroup = "Mecze";
@@ -134,7 +150,14 @@ namespace App.UserMiddleware
                 TrainingsDeactivate,
                 TrainingsAdd,
                 TrainingsDelete,
-                TrainingsResults,
+
+                //TrainingScores
+                TrainingScores,
+                TrainingScoresActivate,
+                TrainingScoresAdd,
+                TrainingScoresDeactivate,
+                TrainingScoresEdit,
+                TrainingScoresDelete,
 
                 //Matches
                 Matches,
