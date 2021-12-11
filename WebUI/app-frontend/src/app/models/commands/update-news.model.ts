@@ -1,4 +1,4 @@
-export class UpdateNews {
+export class UpdateNewsCommand {
     public id: string;
     public title: string;
     public content: string;

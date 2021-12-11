@@ -1,4 +1,4 @@
-export class AddNews {
+export class AddNewsCommand {
     public title: string;
     public content: string;
     public isImportant: boolean;
