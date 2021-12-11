@@ -46,7 +46,10 @@
               "node_modules/quill/dist/quill.snow.css",
               "src/styles.scss"
             ],
-            "scripts": ["node_modules/quill/dist/quill.js"],
+            "scripts": [
+              "node_modules/quill/dist/quill.js",
+              "node_modules/chart.js/dist/Chart.js"
+            ],
             "vendorChunk": true,
             "extractLicenses": false,
             "buildOptimizer": false,
