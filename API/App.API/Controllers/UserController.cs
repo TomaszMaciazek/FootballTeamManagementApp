@@ -1,6 +1,7 @@
 ﻿using App.API.Models;
 using App.DataAccess.Configurations.Interfaces;
 using App.Model.Dtos;
+using App.Model.Dtos.ListItemDtos;
 using App.Model.Entities;
 using App.Model.Enums;
 using App.Model.ViewModels;
@@ -49,6 +50,23 @@ namespace App.API.Controllers
             _jwtService = jwtService;
             _mapper = mapper;
             _userSettings = userSettings;
+        }
+
+        [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.UsersPolicy)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginatedList<UserListItemDto>))]
+        public async Task<ActionResult<PaginatedList<UserListItemDto>>> GetUsers([FromQuery] UserQuery query)
+        {
+            return Ok(await _userService.GetUsers(query));
+        }
+
+        [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.UsersPolicy)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserDto>))]
+        [Route("All")]
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsers()
+        {
+            return Ok(await _userService.GetAll());
         }
 
         [HttpGet]

@@ -1,5 +1,6 @@
 ﻿using App.DataAccess.Interfaces;
 using App.Model.Dtos;
+using App.Model.Dtos.ListItemDtos;
 using App.Model.Entities;
 using App.Model.ViewModels.Commands;
 using App.Repository.Repositories;
@@ -25,7 +26,7 @@ namespace App.ServiceLayer.Services
         Task<User> GetById(Guid id);
         Task Remove(Guid id);
         Task Update(UpdateUserCommandVM command);
-        Task<PaginatedList<UserDto>> GetUsers(UserQuery query);
+        Task<PaginatedList<UserListItemDto>> GetUsers(UserQuery query);
     }
 
     public class UserService : IUserService
@@ -118,10 +119,9 @@ namespace App.ServiceLayer.Services
             }
         }
 
-        public async Task<PaginatedList<UserDto>> GetUsers(UserQuery query)
+        public async Task<PaginatedList<UserListItemDto>> GetUsers(UserQuery query)
         {
             var users = _userRepository.GetAll();
-
             users = query.IsActive.HasValue ? users.Where(x => x.IsActive == query.IsActive.Value) : users;
 
             if (!string.IsNullOrEmpty(query.OrderByColumnName))
@@ -134,11 +134,13 @@ namespace App.ServiceLayer.Services
             }
 
             return await users
-                .Select(x => new UserDto { 
+                .Select(x => new UserListItemDto
+                { 
                     Id =  x.Id,
                     IsActive = x.IsActive,
                     Email = x.Email,
-                    Name = $"{x.Name} {x.MiddleName} {x.Surname}",
+                    Surname = x.Surname,
+                    Names = $"{x.Name} {x.MiddleName}",
                     UserName = x.Username,
                     Role = new RoleDto { Id = x.Role.Id, Name = x.Role.Name }
                     }

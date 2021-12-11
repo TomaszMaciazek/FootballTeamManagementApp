@@ -30,12 +30,12 @@ namespace App.Repository.Repositories
 
         public IQueryable<User> GetAll()
         {
-            return _dbSet.AsQueryable();
+            return _dbSet.Include(x => x.Role).AsNoTracking();
         }
 
         public async Task<User> GetByEmailOrUsername(string searchString) => await _dbSet
             .AsNoTracking()
-            .Include(x => x.Roles).ThenInclude(x => x.Claims)
+            .Include(x => x.Role).ThenInclude(x => x.Claims)
             .SingleOrDefaultAsync(x => x.Email == searchString || x.Username == searchString);
 
         public void Add(User newUser)
