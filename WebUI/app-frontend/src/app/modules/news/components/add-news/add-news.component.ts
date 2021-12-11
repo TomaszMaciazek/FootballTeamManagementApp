@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { AddNews } from 'src/app/models/commands/add-news.model';
+import { AddNewsCommand } from 'src/app/models/commands/add-news.model';
 import { News } from 'src/app/models/news.model';
 import { TranslationProvider } from 'src/app/providers/translation-provider.model';
 import { NewsService } from 'src/app/services/news.service';
@@ -38,10 +38,9 @@ export class AddNewsComponent implements OnInit {
   }
 
   submit(){
-    debugger;
     if(this.form.valid){
       this.spinner.show();
-      var news = new AddNews({
+      var news = new AddNewsCommand({
         title: this.form.controls['Title'].value,
         content: this.form.controls['Content'].value,
         isImportant: this.form.controls['IsImportant'].value
