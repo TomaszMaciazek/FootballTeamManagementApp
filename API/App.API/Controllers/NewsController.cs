@@ -29,6 +29,7 @@ namespace App.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.NewsPolicy)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginatedList<NewsDto>))]
         public async Task<ActionResult<PaginatedList<NewsDto>>> GetNews([FromQuery] NewsQuery query)
         {
