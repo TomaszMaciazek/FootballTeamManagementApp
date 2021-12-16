@@ -22,6 +22,10 @@ const routes: Routes = [
     path: 'admin', component: BasicLayoutComponent,
     loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
   },
+  {
+    path: 'results', component: BasicLayoutComponent,
+    loadChildren: () => import('./modules/results/results.module').then(m => m.ResultsModule)
+  },
   { path: '**', redirectTo: 'login' }
 ];
 

@@ -1,0 +1,36 @@
+<div class="content-wrapper">
+    <div class="text-center pb-3">
+        <h1>{{'training_new' | translate}}</h1>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center start" >
+        <form [formGroup]="form">
+            <p-card>
+                    <div class="form-group">
+                        <h5>{{'title' | translate}}</h5>
+                        <input type="text" class="form-control" [formControl]="form.controls['Title']"/>
+                    </div>
+                    <div class="form-group">
+                        <h5>{{'description' | translate}}</h5>
+                        <p-editor [style]="{'height':'200px'}" [formControl]="form.controls['Description']"></p-editor>
+                    </div>
+                    <div class="form-group">
+                        <h5>{{'date' | translate}}</h5>
+                        <p-calendar [locale]="pl" [showIcon]="true" dateFormat="dd-mm-yy" [showTime]="true" formControlName="Date"></p-calendar>
+                    </div>
+
+                    <ng-template pTemplate="footer">
+                        <button type="submit" [ngClass.lt-md]="'btn-block'"
+                        [ngClass.gt-sm]="'btn-lg'"
+                        class="btn btn-success" (click)="submit()">
+                            {{'save' | translate}}
+                        </button>
+                        <button type="reset" [ngClass.lt-md]="'btn-block'"
+                        [ngClass.gt-sm]="'btn-lg ml-3'"  
+                        class="btn btn-danger" (click)="reset()">
+                            {{'clear' | translate}}
+                        </button>
+                    </ng-template>
+            </p-card>
+        </form>
+    </div>
+</div>

@@ -15,6 +15,8 @@ import {InputSwitchModule} from 'primeng/inputswitch';
 import {CalendarModule} from 'primeng/calendar';
 import {TableModule} from 'primeng/table';
 import {MultiSelectModule} from 'primeng/multiselect';
+import {SpeedDialModule} from 'primeng/speeddial';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [],
@@ -34,7 +36,9 @@ import {MultiSelectModule} from 'primeng/multiselect';
     InputSwitchModule,
     CalendarModule,
     TableModule,
-    MultiSelectModule
+    MultiSelectModule,
+    SpeedDialModule,
+    ConfirmDialogModule
   ],
   exports: [
     ReactiveFormsModule,
@@ -51,7 +55,9 @@ import {MultiSelectModule} from 'primeng/multiselect';
     InputSwitchModule,
     CalendarModule,
     TableModule,
-    MultiSelectModule
+    MultiSelectModule,
+    SpeedDialModule,
+    ConfirmDialogModule
   ]
 })
 export class SharedModule { }

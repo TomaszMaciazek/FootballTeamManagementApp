@@ -8,5 +8,6 @@ namespace App.Model.Dtos.ListItemDtos
         public string Title { get; set; }
         public DateTime Date { get; set; }
         public DateTime UpdatedDate { get; set; }
+        public bool IsActive { get; set; }
     }
 }

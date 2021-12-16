@@ -46,6 +46,7 @@ export class TranslationProvider {
                 "account_last_logon": "Ostatnie logowanie",
                 "active": "Aktywny",
                 "activate": "Aktywuj",
+                "actions": "Akcje",
                 "add": "Dodaj",
                 "admin": "Administrator",
                 "administrators": "Administratorzy",
@@ -74,9 +75,12 @@ export class TranslationProvider {
                 "coach_add": "Dodaj nowego trenera",
                 "coach_new": "Nowy trener",
                 "columns_selected": "wybranych kolumn",
+                "confirm_activate_training": "Czy na pewno chcesz aktywować ten trening ?",
+                "confirm_deactivate_training": "Czy na pewno chcesz deaktywować ten trening ?",
+                "confirm_delete_training": "Czy na pewno chcesz usunąć ten trening ?",
                 "content": "Treść",
                 "country": "Kraj",
-                "deactivate": "Dezaktuwuj",
+                "deactivate": "Dezaktywuj",
                 "date": "Data",
                 "date_of_birth": "Data urodzenia",
                 "dec": "Gr",
@@ -103,6 +107,7 @@ export class TranslationProvider {
                 "july": "Lipiec",
                 "jun": "Cz",
                 "june": "Czerwiec",
+                "last_modification": "Ostatnia modyfikacja",
                 "login": "Login",
                 "logout": "Wyloguj się",
                 "male": "Mężczyzna",
@@ -125,6 +130,7 @@ export class TranslationProvider {
                 "my_account": "Moje konto",
                 "name": "Imię",
                 "news": "Aktualności",
+                "no": "Nie",
                 "nov": "Lis",
                 "november": "Listopad",
                 "oct": "Paź",
@@ -195,7 +201,8 @@ export class TranslationProvider {
                 "user_add": "Dodawanie nowego użytkownika",
                 "user_edit": "Edycja użytkownika",
                 "user_details": "Szczegóły konta użytkownika",
-                "wrong_password": "Hasło nieprawidłowe"
+                "wrong_password": "Hasło nieprawidłowe",
+                "yes": "Tak"
             }
 
         },
@@ -209,6 +216,7 @@ export class TranslationProvider {
                 "account_last_logon": "Last logon",
                 "active": "Active",
                 "activate": "Activate",
+                "actions": "Actions",
                 "add": "Add",
                 "admin": "Administrator",
                 "administrators": "Administrators",
@@ -237,6 +245,9 @@ export class TranslationProvider {
                 "coach_add": "Add new coach",
                 "coach_new": "New coach",
                 "columns_selected": "columns selected",
+                "confirm_activate_training": "Are you sure you want activate this training ?",
+                "confirm_deactivate_training": "Are you sure you want deactivate this training ?",
+                "confirm_delete_training": "Are you sure you want delete this training ?",
                 "content": "Content",
                 "country": "Country",
                 "date": "Date",
@@ -266,6 +277,7 @@ export class TranslationProvider {
                 "july": "July",
                 "jun": "Jun",
                 "june": "June",
+                "last_modification": "Last modification",
                 "login": "Login",
                 "logout": "Log out",
                 "male": "Male",
@@ -288,6 +300,7 @@ export class TranslationProvider {
                 "my_account": "My account",
                 "name": "Name",
                 "news": "News",
+                "no": "No",
                 "nov": "nov",
                 "november": "November",
                 "oct": "Oct",
@@ -358,7 +371,8 @@ export class TranslationProvider {
                 "user_add": "Add new user",
                 "user_edit": "Edit user",
                 "user_details": "User Details",
-                "wrong_password": "Incorrect password"
+                "wrong_password": "Incorrect password",
+                "yes": "Yes"
             }
         }
     ]

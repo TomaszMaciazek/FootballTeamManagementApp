@@ -1,13 +1,13 @@
 ﻿using App.DataAccess.Interfaces;
-using App.Model.Dtos;
 using App.Model.Dtos.ListItemDtos;
 using App.Model.Entities;
 using App.Model.ViewModels.Commands;
 using App.Repository.Repositories;
-using App.ServiceLayer.Common;
 using App.ServiceLayer.Extenstions;
 using App.ServiceLayer.Models;
 using App.ServiceLayer.Queries;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -32,11 +32,13 @@ namespace App.ServiceLayer.Services
     {
         private readonly ITrainingRepository _trainingRepository;
         private readonly IApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public TrainingService(ITrainingRepository trainingRepository, IApplicationDbContext context)
+        public TrainingService(ITrainingRepository trainingRepository, IApplicationDbContext context, IMapper mapper)
         {
             _trainingRepository = trainingRepository;
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<bool> ActivateAsync(Guid id)
@@ -106,13 +108,7 @@ namespace App.ServiceLayer.Services
 
             trainings = trainings.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
 
-            return await trainings.Select(x => new TrainingListItem
-            {
-                Id = x.Id,
-                Title = x.Title,
-                Date = x.Date,
-                UpdatedDate = x.UpdatedDate
-            }).PaginatedListAsync(query.PageNumber, query.PageSize);
+            return await trainings.ProjectTo<TrainingListItem>(_mapper.ConfigurationProvider).PaginatedListAsync(query.PageNumber, query.PageSize);
         }
     }
 }

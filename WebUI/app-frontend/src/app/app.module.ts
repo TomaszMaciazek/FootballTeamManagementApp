@@ -29,6 +29,8 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
 import { TopbarComponent } from './components/topbar/topbar.component';
 import { NewsService } from './services/news.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { LocaleCalendarProvider } from './providers/locale-calendar-provider.model';
+import { ConfirmationService } from 'primeng/api';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -88,8 +90,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     TranslationProvider,
     TokenStorageProvider,
     UserContextProvider,
+    LocaleCalendarProvider,
     HttpClient,
-    NewsService
+    NewsService,
+    ConfirmationService
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
