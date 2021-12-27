@@ -29,7 +29,8 @@ namespace App.ServiceLayer.Services
         Task<Coach> GetByUserId(Guid userId);
         Task RemoveAsync(Guid id);
         Task UpdateAsync(UpdateCoachVM entity);
-        Task<PaginatedList<Coach>> GetCoaches(CoachQuery query);
+        Task<PaginatedList<CoachListItemDto>> GetCoaches(CoachQuery query);
+        Task<IEnumerable<SimpleCoachDto>> GetWorkingCoaches();
     }
 
     public class CoachService : ICoachService
@@ -39,18 +40,15 @@ namespace App.ServiceLayer.Services
         private readonly ICountryRepository _countryRepository;
         private readonly ITeamRepository _teamRepository;
         private readonly IApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public CoachService(
-            ICoachRepository coachRepository, 
-            ICountryRepository countryRepository, 
-            ITeamRepository teamRepository, 
-            IApplicationDbContext context
-            )
+        public CoachService(ICoachRepository coachRepository, ICountryRepository countryRepository, ITeamRepository teamRepository, IApplicationDbContext context, IMapper mapper)
         {
             _coachRepository = coachRepository;
             _countryRepository = countryRepository;
             _teamRepository = teamRepository;
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<bool> ActivateAsync(Guid id)
@@ -123,25 +121,70 @@ namespace App.ServiceLayer.Services
 
         public async Task<Coach> GetByUserId(Guid userId) => await _coachRepository.GetByUserIdEager(userId).FirstOrDefaultAsync();
 
-        public async Task<PaginatedList<Coach>> GetCoaches(CoachQuery query) {
+        public async Task<PaginatedList<CoachListItemDto>> GetCoaches(CoachQuery query) {
             var coaches = _coachRepository.GetAll()
                 .Include(x => x.User)
                 .Include(x => x.Country)
-                .Where(x => x.IsActive);
+                .Include(x => x.Teams)
+                .AsNoTracking();
 
-            coaches = coaches.WhereStringPropertyContains(x => x.User.Email, query.Email);
+            if (!string.IsNullOrEmpty(query.QueryString))
+            {
+                coaches = coaches.Where(x =>
+                x.User.Name.ToLower().Contains(query.QueryString.ToLower()) ||
+                x.User.MiddleName.ToLower().Contains(query.QueryString.ToLower()) ||
+                x.User.Surname.ToLower().Contains(query.QueryString.ToLower()) ||
+                $"{x.User.Surname} {x.User.Name} {x.User.MiddleName}".ToLower().Contains(query.QueryString.ToLower()) ||
+                $"{x.User.Surname} {x.User.MiddleName} {x.User.Name}".ToLower().Contains(query.QueryString.ToLower()) ||
+                $"{x.User.Name} {x.User.MiddleName} {x.User.Surname}".ToLower().Contains(query.QueryString.ToLower()) ||
+                $"{x.User.Name} {x.User.Surname}".ToLower().Contains(query.QueryString.ToLower()) ||
+                $"{x.User.Name} {x.User.Surname} {x.User.MiddleName}".ToLower().Contains(query.QueryString.ToLower())
+                );
+            }
 
-            coaches = coaches.WhereStringPropertyContains(x => x.User.Name, query.Firstname);
+            if(query.TeamsIds != null && query.TeamsIds.Any())
+            {
+                coaches = coaches.Where(x => x.Teams.Any(y => query.TeamsIds.Any(x => x == y.Id)));
+            }
 
-            coaches = coaches.WhereStringPropertyContains(x => x.User.Surname, query.Surname);
+            if (query.CountriesIds != null && query.CountriesIds.Any())
+            {
+                coaches = coaches.Where(x => query.CountriesIds.Any(y => y == x.Country.Id));
+            }
 
-            coaches = coaches.WhereIntPropertyEquals(x => x.Country.Id, query.CountryId);
+            if (query.IsStillWorking.HasValue)
+            {
+                coaches = query.IsStillWorking.Value == true
+                    ? coaches.Where(x => !x.FinishedWorking.HasValue)
+                    : coaches.Where(x => x.FinishedWorking.HasValue);
+            }
 
             coaches = query.Gender.HasValue ? coaches.Where(x => x.Gender == query.Gender.Value) : coaches;
 
-            coaches = coaches.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
+            if (query.OrderByColumnName.ToLower() == "coachname")
+            {
 
-            return await coaches.PaginatedListAsync(query.PageNumber, query.PageSize);
+                coaches = query.OrderByDirection == "asc"
+                    ? coaches.OrderBy(x => x.User.Surname).ThenBy(x => x.User.Name).ThenBy(x => x.User.MiddleName)
+                    : coaches.OrderByDescending(x => x.User.Surname).ThenByDescending(x => x.User.Name).ThenByDescending(x => x.User.MiddleName);
+            }
+            else
+            {
+                coaches = coaches.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
+            }
+
+            return await coaches
+                .ProjectTo<CoachListItemDto>(_mapper.ConfigurationProvider)
+                .PaginatedListAsync(query.PageNumber, query.PageSize);
+        }
+
+        public async Task<IEnumerable<SimpleCoachDto>> GetWorkingCoaches()
+        {
+            var coaches = _coachRepository.GetAll().Include(x => x.User).AsNoTracking().Where(x => !x.FinishedWorking.HasValue);
+
+            return await coaches.ProjectTo<SimpleCoachDto>(_mapper.ConfigurationProvider).ToListAsync();
+
+
         }
     }
 }

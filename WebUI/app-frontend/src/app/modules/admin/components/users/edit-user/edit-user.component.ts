@@ -58,7 +58,6 @@ export class EditUserComponent implements OnInit {
   ngOnInit(): void {
     this.spinner.show();
     this.activatedRoute.params.subscribe((routeParams: Params) => {
-      debugger;
       this.isEdit = !(routeParams['id'] == '0')
       this.id = routeParams['id'];
       this.createForm();

@@ -28,7 +28,7 @@ namespace App.ServiceLayer.Services
         Task<Player> GetByUserIdEagerAsync(Guid id);
         Task RemoveAsync(Guid id);
         Task UpdateAsync(UpdatePlayerVM command);
-        Task<PaginatedList<Player>> GetPlayers(PlayerQuery query);
+        Task<PaginatedList<PlayerListItemDto>> GetPlayers(PlayerQuery query);
         Task<IEnumerable<SimpleSelectPlayerDto>> GetPlayingPlayers();
         Task AddPlayerToTeam(AddPlayersToTeamVM command);
         Task RemovePlayerFromTeam(Guid playerId, Guid teamId);
@@ -125,27 +125,60 @@ namespace App.ServiceLayer.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<PaginatedList<Player>> GetPlayers(PlayerQuery query)
+        public async Task<PaginatedList<PlayerListItemDto>> GetPlayers(PlayerQuery query)
         {
             var players = _playerRepository.GetAll()
                 .Include(x => x.User)
                 .Include(x => x.Country)
-                .Where(x => x.IsActive);
+                .Include(x => x.Team)
+                .AsNoTracking();
 
-            players = players.WhereStringPropertyContains(x => x.User.Email, query.Email);
+            players = query.IsActive.HasValue ? players.Where(x => x.IsActive == query.IsActive) : players;
 
-            players = players.WhereStringPropertyContains(x => x.User.Name, query.Firstname);
+            if (!string.IsNullOrEmpty(query.QueryString))
+            {
+                players = players.Where(x =>
+                x.User.Name.ToLower().Contains(query.QueryString.ToLower()) ||
+                x.User.MiddleName.ToLower().Contains(query.QueryString.ToLower()) ||
+                x.User.Surname.ToLower().Contains(query.QueryString.ToLower()) ||
+                $"{x.User.Surname} {x.User.Name} {x.User.MiddleName}".ToLower().Contains(query.QueryString.ToLower()) ||
+                $"{x.User.Surname} {x.User.MiddleName} {x.User.Name}".ToLower().Contains(query.QueryString.ToLower()) ||
+                $"{x.User.Name} {x.User.MiddleName} {x.User.Surname}".ToLower().Contains(query.QueryString.ToLower()) ||
+                $"{x.User.Name} {x.User.Surname}".ToLower().Contains(query.QueryString.ToLower()) ||
+                $"{x.User.Name} {x.User.Surname} {x.User.MiddleName}".ToLower().Contains(query.QueryString.ToLower())
+                );
+            }
 
-            players = players.WhereStringPropertyContains(x => x.User.Surname, query.Surname);
+            players = query.TeamId.HasValue ? players.Where(x => x.Team.Id == query.TeamId.Value) : players;
 
-            players = players.WhereIntPropertyEquals(x => x.Country.Id, query.CountryId);
+            players = query.CountryId.HasValue ? players.Where(x => x.Country.Id == query.CountryId.Value) : players;
 
             players = query.Gender.HasValue ? players.Where(x => x.Gender == query.Gender.Value) : players;
 
-            players = players.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
+            if (query.IsStillPlaying.HasValue)
+            {
+                players = query.IsStillPlaying.Value == true
+                    ? players.Where(x => !x.FinishedPlaying.HasValue)
+                    : players.Where(x => x.FinishedPlaying.HasValue);
+            }
 
-            return await players.PaginatedListAsync(query.PageNumber, query.PageSize);
+            if (query.OrderByColumnName.ToLower() == "playername")
+            {
+                
+                players = query.OrderByDirection == "asc"
+                    ? players.OrderBy(x => x.User.Surname).ThenBy(x => x.User.Name).ThenBy(x => x.User.MiddleName)
+                    : players.OrderByDescending(x => x.User.Surname).ThenByDescending(x => x.User.Name).ThenByDescending(x => x.User.MiddleName);
+            }
+            else
+            {
+                players = players.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
+            }
+
+            return await players
+                .ProjectTo<PlayerListItemDto>(_mapper.ConfigurationProvider)
+                .PaginatedListAsync(query.PageNumber, query.PageSize);
         }
+
         public async Task<IEnumerable<SimpleSelectPlayerDto>> GetPlayingPlayers()
             => await _playerRepository.GetAll()
                 .AsNoTracking()

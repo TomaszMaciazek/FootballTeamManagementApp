@@ -72,12 +72,12 @@ export class AddUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.spinner.show();
-      this.createForm();
-      forkJoin([
-        this.roleService.getRoles().then(res => this.roles = res),
-        this.countryService.getCountries().then(res => this.countries = res.sort((a, b) => (a.code > b.code) ? 1 : -1))
-      ])
-      .subscribe(res => this.spinner.hide());
+    this.createForm();
+    forkJoin([
+      this.roleService.getRoles().then(res => this.roles = res),
+      this.countryService.getCountries().then(res => this.countries = res.sort((a, b) => (a.code > b.code) ? 1 : -1))
+    ])
+    .subscribe(res => this.spinner.hide());
   }
 
   createForm() {

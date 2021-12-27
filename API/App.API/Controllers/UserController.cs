@@ -67,24 +67,6 @@ namespace App.API.Controllers
             return Ok(await _userService.GetAll());
         }
 
-        [HttpGet]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.UsersPolicy)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginatedList<PlayerDto>))]
-        [Route("Players")]
-        public async Task<ActionResult<PaginatedList<PlayerDto>>> GetPlayers([FromQuery] PlayerQuery query)
-        {
-            return Ok(_mapper.Map<PaginatedList<PlayerDto>>(await _playerService.GetPlayers(query)));
-        }
-
-        [HttpGet]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.UsersPolicy)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginatedList<CoachDto>))]
-        [Route("Coaches")]
-        public async Task<ActionResult<PaginatedList<CoachDto>>> GetCoaches([FromQuery] CoachQuery query)
-        {
-            return Ok(_mapper.Map<PaginatedList<CoachDto>>(await _coachService.GetCoaches(query)));
-        }
-
         [HttpPost]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AuthenticationResult))]
@@ -167,7 +149,7 @@ namespace App.API.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.UsersPolicy)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [Route("Players")]
-        public async Task<IActionResult> UpdateCoach([FromBody] UpdatePlayerVM model)
+        public async Task<IActionResult> UpdatePlayer([FromBody] UpdatePlayerVM model)
         {
             await _playerService.UpdateAsync(model);
             return NoContent();
