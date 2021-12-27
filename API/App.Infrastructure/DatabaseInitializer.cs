@@ -53,6 +53,10 @@ namespace App.Infrastructure
                     { "admin", new List<Permission>() {
                         Permissions.Users,
                         Permissions.AdminSettings,
+                        Permissions.Players,
+                        Permissions.PlayersTeamsEdit,
+                        Permissions.Coaches,
+                        Permissions.CoachesTeamsEdit,
                         Permissions.Trainings,
                         Permissions.TrainingsEdit,
                         Permissions.TrainingsActivate,
@@ -95,9 +99,18 @@ namespace App.Infrastructure
                         Permissions.NewsActivate,
                         Permissions.NewsDeactivate,
                         Permissions.NewsEdit,
-                        Permissions.NewsDelete
+                        Permissions.NewsDelete,
+                        Permissions.Teams,
+                        Permissions.TeamsEdit,
+                        Permissions.TeamsActivate,
+                        Permissions.TeamsDeactivate,
+                        Permissions.TeamsAdd,
+                        Permissions.TeamsDelete
                     } },
                     { "coach", new List<Permission>() {
+                        Permissions.Players,
+                        Permissions.PlayersTeamsEdit,
+                        Permissions.Coaches,
                         Permissions.Trainings,
                         Permissions.TrainingsEdit,
                         Permissions.TrainingsActivate,
@@ -137,9 +150,17 @@ namespace App.Infrastructure
                         Permissions.ChatsDelete,
                         Permissions.News,
                         Permissions.NewsAdd,
-                        Permissions.NewsEdit
+                        Permissions.NewsEdit,
+                        Permissions.Teams,
+                        Permissions.TeamsEdit,
+                        Permissions.TeamsActivate,
+                        Permissions.TeamsDeactivate,
+                        Permissions.TeamsAdd,
+                        Permissions.TeamsDelete
                     } },
                     { $"player", new List<Permission>() {
+                        Permissions.Players,
+                        Permissions.Coaches,
                         Permissions.Trainings,
                         Permissions.TrainingScores,
                         Permissions.Matches,
@@ -147,7 +168,8 @@ namespace App.Infrastructure
                         Permissions.Surveys,
                         Permissions.Tests,
                         Permissions.Chats,
-                        Permissions.News
+                        Permissions.News,
+                        Permissions.Teams
                     } }
                 };
 

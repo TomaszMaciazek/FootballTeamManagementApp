@@ -83,6 +83,12 @@ namespace App.API
                 options.AddPolicy(Permissions.UsersPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.Users));
                 options.AddPolicy(Permissions.AdminSettingsPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.AdminSettings));
 
+                options.AddPolicy(Permissions.PlayersPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.Players));
+                options.AddPolicy(Permissions.PlayersTeamsEditPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.PlayersTeamsEdit));
+
+                options.AddPolicy(Permissions.CoachesPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.Coaches));
+                options.AddPolicy(Permissions.CoachesTeamsEditPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.CoachesTeamsEdit));
+
                 options.AddPolicy(Permissions.TrainingsPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.Trainings));
                 options.AddPolicy(Permissions.TrainingsActivatePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TrainingsActivate));
                 options.AddPolicy(Permissions.TrainingsDeactivatePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TrainingsDeactivate));
@@ -124,6 +130,20 @@ namespace App.API
                 options.AddPolicy(Permissions.NewsAddPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.NewsAdd));
                 options.AddPolicy(Permissions.NewsEditPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.NewsEdit));
                 options.AddPolicy(Permissions.NewsDeletePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.NewsDelete));
+
+                options.AddPolicy(Permissions.TrainingScoresPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TrainingScores));
+                options.AddPolicy(Permissions.TrainingScoresActivatePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TrainingScoresActivate));
+                options.AddPolicy(Permissions.TrainingScoresDeactivatePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TrainingScoresDeactivate));
+                options.AddPolicy(Permissions.TrainingScoresAddPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TrainingScoresAdd));
+                options.AddPolicy(Permissions.TrainingScoresEditPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TrainingScoresEdit));
+                options.AddPolicy(Permissions.TrainingScoresDeletePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TrainingScoresDelete));
+
+                options.AddPolicy(Permissions.TeamsPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.Teams));
+                options.AddPolicy(Permissions.TeamsActivatePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TeamsActivate));
+                options.AddPolicy(Permissions.TeamsDeactivatePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TeamsDeactivate));
+                options.AddPolicy(Permissions.TeamsAddPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TeamsAdd));
+                options.AddPolicy(Permissions.TeamsEditPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TeamsEdit));
+                options.AddPolicy(Permissions.TeamsDeletePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TeamsDelete));
             });
 
             services.AddSwaggerGen(c =>

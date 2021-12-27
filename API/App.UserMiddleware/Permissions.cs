@@ -18,6 +18,22 @@ namespace App.UserMiddleware
         public static Permission AdminSettings { get => new("AdminSettings", AdminSettingsPolicy, AdministrationGroup, ""); }
         #endregion
 
+        #region Players
+        public const string PlayersGroup = "Zawodnicy";
+        public const string PlayersPolicy = "players";
+        public static Permission Players { get => new("Zawodnicy", PlayersPolicy, PlayersGroup, ""); }
+        public const string PlayersTeamsEditPolicy = "players.teams.edit";
+        public static Permission PlayersTeamsEdit { get => new("Edycja drużyn zawodników", PlayersTeamsEditPolicy, PlayersGroup, ""); }
+        #endregion
+
+        #region Coaches
+        public const string CoachesGroup = "Trenerzy";
+        public const string CoachesPolicy = "coaches";
+        public static Permission Coaches { get => new("Trenerzy", CoachesPolicy, CoachesGroup, ""); }
+        public const string CoachesTeamsEditPolicy = "coaches.teams.edit";
+        public static Permission CoachesTeamsEdit { get => new("Edycja drużyn trenerów", CoachesTeamsEditPolicy, CoachesGroup, ""); }
+        #endregion
+
         #region Trainings
         public const string TrainingsGroup = "Treningi";
         public const string TrainingsPolicy = "trainings";
@@ -32,7 +48,6 @@ namespace App.UserMiddleware
         public static Permission TrainingsAdd { get => new("Dodanie treningu", TrainingsAddPolicy, TrainingsGroup, ""); }
         public const string TrainingsDeletePolicy = "trainings.delete";
         public static Permission TrainingsDelete { get => new("Usuwanie treningu", TrainingsDeletePolicy, TrainingsGroup, ""); }
-        public const string TrainingsResultsPolicy = "trainings.results";
         #endregion
 
         #region TrainingScores
@@ -135,6 +150,23 @@ namespace App.UserMiddleware
 
         #endregion
 
+        #region Teams
+        public const string TeamsGroup = "Drużyny";
+        public const string TeamsPolicy = "teams";
+        public static Permission Teams { get => new("Drużyny", TeamsPolicy, TeamsGroup, ""); }
+        public const string TeamsEditPolicy = "teams.edit";
+        public static Permission TeamsEdit { get => new("Edycja drużyny", TeamsEditPolicy, TeamsGroup, ""); }
+        public const string TeamsActivatePolicy = "teams.activate";
+        public static Permission TeamsActivate { get => new("Aktywacja drużyny", TeamsActivatePolicy, TeamsGroup, ""); }
+        public const string TeamsDeactivatePolicy = "teams.deactivate";
+        public static Permission TeamsDeactivate { get => new("Dezaktywacja drużyny", TeamsDeactivatePolicy, TeamsGroup, ""); }
+        public const string TeamsAddPolicy = "teams.add";
+        public static Permission TeamsAdd { get => new("Dodanie drużyny", TeamsAddPolicy, TeamsGroup, ""); }
+        public const string TeamsDeletePolicy = "teams.delete";
+        public static Permission TeamsDelete { get => new("Usuwanie drużyny", TeamsDeletePolicy, TeamsGroup, ""); }
+        public const string TeamsResultsPolicy = "teams.results";
+        #endregion
+
         static Permissions()
         {
             AllPermissions = new List<Permission>
@@ -142,6 +174,14 @@ namespace App.UserMiddleware
                 // Administration
                 Users,
                 AdminSettings,
+
+                // Players
+                Players,
+                PlayersTeamsEdit,
+
+                //Coaches
+                Coaches,
+                CoachesTeamsEdit,
 
                 //Trainings
                 Trainings,
@@ -198,7 +238,15 @@ namespace App.UserMiddleware
                 NewsActivate,
                 NewsDeactivate,
                 NewsEdit,
-                NewsDelete
+                NewsDelete,
+
+                //Teams
+                Teams,
+                TeamsEdit,
+                TeamsActivate,
+                TeamsDeactivate,
+                TeamsAdd,
+                TeamsDelete,
 
             }.AsReadOnly();
         }
