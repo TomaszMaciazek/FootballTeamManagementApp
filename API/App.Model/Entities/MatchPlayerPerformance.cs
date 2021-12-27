@@ -9,6 +9,7 @@ namespace App.Model.Entities
     {
         public Match Match { get; set; }
         public Player Player { get; set; }
+        public PlayerHistory PlayerHistory { get; set; }
 
         [Required]
         public PlayerPosition PlayerPosition { get; set; }

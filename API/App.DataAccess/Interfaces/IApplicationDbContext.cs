@@ -34,22 +34,34 @@ namespace App.DataAccess.Interfaces
         #endregion
 
         #region Identity Entites
-         DbSet<User> Users { get; set; }
-         DbSet<Coach> Coaches { get; set; }
-         DbSet<Player> Players { get; set; }
-         DbSet<Role> Roles { get; set; }
-         DbSet<RoleClaim> RoleClaims { get; set; }
-         DbSet<UserTokenRefresh> UserTokenRefreshes { get; set; }
+        DbSet<User> Users { get; set; }
+        DbSet<Coach> Coaches { get; set; }
+        DbSet<Player> Players { get; set; }
+        DbSet<Role> Roles { get; set; }
+        DbSet<RoleClaim> RoleClaims { get; set; }
+        DbSet<UserTokenRefresh> UserTokenRefreshes { get; set; }
+        DbSet<PlayerHistory> PlayerHistories { get; set; }
         #endregion
 
         #region Training Entities
         DbSet<Training> Trainings { get; set; }
-         DbSet<TrainingScore> TrainingScores { get; set; }
-         DbSet<Team> Teams { get; set; }
+        DbSet<TrainingScore> TrainingScores { get; set; }
+        #endregion
+
+        #region History Events Entities
+        DbSet<PlayerJoinedTeamEvent> PlayerJoinedTeamEvents { get; set; }
+        DbSet<CoachAssignedToTeamEvent> CoachAssignedToTeamEvents { get; set; }
+        DbSet<TeamPlayersPlayedMatchEvent> TeamPlayersPlayedMatchEvents { get; set; }
+        DbSet<PlayerLeftTeamEvent> PlayerLeftTeamEvents { get; set; }
+        #endregion
+
+        #region Team Entities
+        DbSet<Team> Teams { get; set; }
+        DbSet<TeamHistory> TeamHistories { get; set; }
         #endregion
 
         #region Survey Entites
-         DbSet<SurveyTemplate> SurveyTemplates { get; set; }
+        DbSet<SurveyTemplate> SurveyTemplates { get; set; }
          DbSet<TextSurveyQuestionTemplate> TextSurveyQuestionsTemplates { get; set; }
          DbSet<BoolSurveyQuestionTemplate> BoolSurveyQuestionsTemplates { get; set; }
          DbSet<OptionsSurveyQuestionTemplate> OptionsSurveyQuestionsTemplates { get; set; }

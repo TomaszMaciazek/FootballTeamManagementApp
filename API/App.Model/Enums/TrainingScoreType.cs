@@ -20,7 +20,6 @@
         /// <summary>
         /// Skuteczność prowadzenia piłki lewą nogą
         /// </summary>
-
         LeftFootDribblingAccuracy = 3,
 
         /// <summary>
@@ -94,7 +93,7 @@
         EmotionsControl = 17,
 
         /// <summary>
-        /// Kontrola emocji
+        /// Pewność siebie
         /// </summary>
         Selfconfidence = 18,
 

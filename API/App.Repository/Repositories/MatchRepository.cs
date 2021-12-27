@@ -54,10 +54,6 @@ namespace App.Repository.Repositories
                 .FirstOrDefault(match => match.Id == id);
             if (match != null)
             {
-                if(match.IsModificationForbidden)
-                {
-                    throw new InvalidOperationException("Delete operation is forbiden for this match");
-                }
                 if (match.Points.Any())
                 {
                     _dbContext.MatchPoints.RemoveRange(match.Points);

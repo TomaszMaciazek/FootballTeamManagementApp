@@ -13,7 +13,8 @@ namespace App.Model.Entities
 
         [Required(AllowEmptyStrings = false)]
         public string OpponentsClubName { get; set; }
-        public int? OpponentsScore { get; set; }
+        public int OpponentsScore { get; set; }
+        public int ClubScore { get; set; }
 
         [Required]
         public string Location { get; set; }
@@ -22,11 +23,12 @@ namespace App.Model.Entities
         public PlayersGender PlayersGender { get; set; }
 
         [Required]
-        public bool IsModificationForbidden { get; set; }
+        public MatchType MatchType { get; set; }
 
         public ICollection<MatchPlayerPerformance> Players { get; set; }
         public ICollection<MatchPoint> Points { get; set; }
         public ICollection<PlayerCard> PlayersCards { get; set; }
         public ICollection<CoachCard> CoachesCards { get; set; }
+        public ICollection<TeamPlayersPlayedMatchEvent> TeamPlayersPlayedMatchEvents { get; set; }
     }
 }

@@ -23,6 +23,10 @@ namespace App.Infrastructure.Configurations
             builder.HasMany(x => x.Players)
                 .WithOne(x => x.Match)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(x => x.TeamPlayersPlayedMatchEvents)
+                .WithOne(x => x.Match)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -23,6 +23,10 @@ namespace App.Infrastructure.Configurations
             builder.HasOne(c => c.Country)
                 .WithMany(x => x.Coaches)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(x => x.AssignedToTeamEvents)
+                .WithOne(x => x.Coach)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

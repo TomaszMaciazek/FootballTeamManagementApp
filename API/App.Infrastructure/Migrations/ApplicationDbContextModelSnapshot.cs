@@ -68,6 +68,30 @@ namespace App.Infrastructure.Migrations
                     b.ToTable("Coaches");
                 });
 
+            modelBuilder.Entity("App.Model.Entities.CoachAssignedToTeamEvent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CoachId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("TeamHistoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CoachId");
+
+                    b.HasIndex("TeamHistoryId");
+
+                    b.ToTable("CoachAssignedToTeamEvents");
+                });
+
             modelBuilder.Entity("App.Model.Entities.CoachCard", b =>
                 {
                     b.Property<Guid>("Id")
@@ -337,6 +361,9 @@ namespace App.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("ClubScore")
+                        .HasColumnType("int");
+
                     b.Property<Guid?>("CoachId")
                         .HasColumnType("uniqueidentifier");
 
@@ -352,18 +379,18 @@ namespace App.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsModificationForbidden")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MatchType")
+                        .HasColumnType("int");
 
                     b.Property<string>("OpponentsClubName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OpponentsScore")
+                    b.Property<int>("OpponentsScore")
                         .HasColumnType("int");
 
                     b.Property<int>("PlayersGender")
@@ -400,6 +427,9 @@ namespace App.Infrastructure.Migrations
                     b.Property<Guid?>("MatchId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("PlayerHistoryId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid?>("PlayerId")
                         .HasColumnType("uniqueidentifier");
 
@@ -415,6 +445,8 @@ namespace App.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("MatchId");
+
+                    b.HasIndex("PlayerHistoryId");
 
                     b.HasIndex("PlayerId");
 
@@ -631,6 +663,86 @@ namespace App.Infrastructure.Migrations
                     b.HasIndex("PlayerId");
 
                     b.ToTable("PlayersCards");
+                });
+
+            modelBuilder.Entity("App.Model.Entities.PlayerHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("PlayerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlayerId")
+                        .IsUnique();
+
+                    b.ToTable("PlayerHistories");
+                });
+
+            modelBuilder.Entity("App.Model.Entities.PlayerJoinedTeamEvent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("PlayerHistoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("TeamHistoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlayerHistoryId");
+
+                    b.HasIndex("TeamHistoryId");
+
+                    b.ToTable("PlayerJoinedTeamEvents");
+                });
+
+            modelBuilder.Entity("App.Model.Entities.PlayerLeftTeamEvent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("PlayerHistoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("TeamHistoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlayerHistoryId");
+
+                    b.HasIndex("TeamHistoryId");
+
+                    b.ToTable("PlayerLeftTeamEvents");
                 });
 
             modelBuilder.Entity("App.Model.Entities.Role", b =>
@@ -1133,6 +1245,59 @@ namespace App.Infrastructure.Migrations
                     b.HasIndex("MainCoachId");
 
                     b.ToTable("Teams");
+                });
+
+            modelBuilder.Entity("App.Model.Entities.TeamHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("TeamId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TeamId")
+                        .IsUnique();
+
+                    b.ToTable("TeamHistories");
+                });
+
+            modelBuilder.Entity("App.Model.Entities.TeamPlayersPlayedMatchEvent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("MatchId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("TeamHistoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MatchId");
+
+                    b.HasIndex("TeamHistoryId");
+
+                    b.ToTable("TeamPlayersPlayedMatchEvents");
                 });
 
             modelBuilder.Entity("App.Model.Entities.TestEntities.AnswersResults.UserBoolTestQuestionAnswer", b =>
@@ -1730,6 +1895,23 @@ namespace App.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("App.Model.Entities.CoachAssignedToTeamEvent", b =>
+                {
+                    b.HasOne("App.Model.Entities.Coach", "Coach")
+                        .WithMany("AssignedToTeamEvents")
+                        .HasForeignKey("CoachId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("App.Model.Entities.TeamHistory", "TeamHistory")
+                        .WithMany("CoachAssignedToTeamEvents")
+                        .HasForeignKey("TeamHistoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Coach");
+
+                    b.Navigation("TeamHistory");
+                });
+
             modelBuilder.Entity("App.Model.Entities.CoachCard", b =>
                 {
                     b.HasOne("App.Model.Entities.Coach", "Coach")
@@ -1804,6 +1986,11 @@ namespace App.Infrastructure.Migrations
                         .HasForeignKey("MatchId")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("App.Model.Entities.PlayerHistory", "PlayerHistory")
+                        .WithMany("MatchPlayerPerformances")
+                        .HasForeignKey("PlayerHistoryId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("App.Model.Entities.Player", "Player")
                         .WithMany("Matches")
                         .HasForeignKey("PlayerId")
@@ -1812,6 +1999,8 @@ namespace App.Infrastructure.Migrations
                     b.Navigation("Match");
 
                     b.Navigation("Player");
+
+                    b.Navigation("PlayerHistory");
                 });
 
             modelBuilder.Entity("App.Model.Entities.MatchPlayerScore", b =>
@@ -1881,6 +2070,51 @@ namespace App.Infrastructure.Migrations
                     b.Navigation("Match");
 
                     b.Navigation("Player");
+                });
+
+            modelBuilder.Entity("App.Model.Entities.PlayerHistory", b =>
+                {
+                    b.HasOne("App.Model.Entities.Player", "Player")
+                        .WithOne("History")
+                        .HasForeignKey("App.Model.Entities.PlayerHistory", "PlayerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Player");
+                });
+
+            modelBuilder.Entity("App.Model.Entities.PlayerJoinedTeamEvent", b =>
+                {
+                    b.HasOne("App.Model.Entities.PlayerHistory", "PlayerHistory")
+                        .WithMany("PlayerJoinedTeamEvents")
+                        .HasForeignKey("PlayerHistoryId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("App.Model.Entities.TeamHistory", "TeamHistory")
+                        .WithMany("PlayerJoinedTeamEvents")
+                        .HasForeignKey("TeamHistoryId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("PlayerHistory");
+
+                    b.Navigation("TeamHistory");
+                });
+
+            modelBuilder.Entity("App.Model.Entities.PlayerLeftTeamEvent", b =>
+                {
+                    b.HasOne("App.Model.Entities.PlayerHistory", "PlayerHistory")
+                        .WithMany("PlayerLeftTeamEvents")
+                        .HasForeignKey("PlayerHistoryId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("App.Model.Entities.TeamHistory", "TeamHistory")
+                        .WithMany("PlayerLeftTeamEvents")
+                        .HasForeignKey("TeamHistoryId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("PlayerHistory");
+
+                    b.Navigation("TeamHistory");
                 });
 
             modelBuilder.Entity("App.Model.Entities.RoleClaim", b =>
@@ -2013,6 +2247,34 @@ namespace App.Infrastructure.Migrations
                         .HasForeignKey("MainCoachId");
 
                     b.Navigation("MainCoach");
+                });
+
+            modelBuilder.Entity("App.Model.Entities.TeamHistory", b =>
+                {
+                    b.HasOne("App.Model.Entities.Team", "Team")
+                        .WithOne("History")
+                        .HasForeignKey("App.Model.Entities.TeamHistory", "TeamId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Team");
+                });
+
+            modelBuilder.Entity("App.Model.Entities.TeamPlayersPlayedMatchEvent", b =>
+                {
+                    b.HasOne("App.Model.Entities.Match", "Match")
+                        .WithMany("TeamPlayersPlayedMatchEvents")
+                        .HasForeignKey("MatchId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("App.Model.Entities.TeamHistory", "TeamHistory")
+                        .WithMany("TeamPlayersPlayedMatchEvents")
+                        .HasForeignKey("TeamHistoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Match");
+
+                    b.Navigation("TeamHistory");
                 });
 
             modelBuilder.Entity("App.Model.Entities.TestEntities.AnswersResults.UserBoolTestQuestionAnswer", b =>
@@ -2219,6 +2481,8 @@ namespace App.Infrastructure.Migrations
 
             modelBuilder.Entity("App.Model.Entities.Coach", b =>
                 {
+                    b.Navigation("AssignedToTeamEvents");
+
                     b.Navigation("Cards");
 
                     b.Navigation("Matches");
@@ -2261,6 +2525,8 @@ namespace App.Infrastructure.Migrations
                     b.Navigation("PlayersCards");
 
                     b.Navigation("Points");
+
+                    b.Navigation("TeamPlayersPlayedMatchEvents");
                 });
 
             modelBuilder.Entity("App.Model.Entities.MatchPlayerPerformance", b =>
@@ -2272,11 +2538,22 @@ namespace App.Infrastructure.Migrations
                 {
                     b.Navigation("Cards");
 
+                    b.Navigation("History");
+
                     b.Navigation("Matches");
 
                     b.Navigation("MatchPoints");
 
                     b.Navigation("TrainingScores");
+                });
+
+            modelBuilder.Entity("App.Model.Entities.PlayerHistory", b =>
+                {
+                    b.Navigation("MatchPlayerPerformances");
+
+                    b.Navigation("PlayerJoinedTeamEvents");
+
+                    b.Navigation("PlayerLeftTeamEvents");
                 });
 
             modelBuilder.Entity("App.Model.Entities.Role", b =>
@@ -2323,7 +2600,20 @@ namespace App.Infrastructure.Migrations
 
             modelBuilder.Entity("App.Model.Entities.Team", b =>
                 {
+                    b.Navigation("History");
+
                     b.Navigation("Players");
+                });
+
+            modelBuilder.Entity("App.Model.Entities.TeamHistory", b =>
+                {
+                    b.Navigation("CoachAssignedToTeamEvents");
+
+                    b.Navigation("PlayerJoinedTeamEvents");
+
+                    b.Navigation("PlayerLeftTeamEvents");
+
+                    b.Navigation("TeamPlayersPlayedMatchEvents");
                 });
 
             modelBuilder.Entity("App.Model.Entities.TestEntities.QuestionTemplates.BoolTestQuestionTemplate", b =>

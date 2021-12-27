@@ -11,5 +11,6 @@ namespace App.Model.Entities
         public string Name { get; set; }
         public ICollection<Player> Players { get; set; }
         public Coach MainCoach { get; set; }
+        public TeamHistory History { get; set; }
     }
 }

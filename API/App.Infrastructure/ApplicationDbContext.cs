@@ -45,12 +45,24 @@ namespace App.Infrastructure
         public DbSet<Role> Roles { get; set; }
         public DbSet<RoleClaim> RoleClaims { get; set; }
         public DbSet<UserTokenRefresh> UserTokenRefreshes { get; set; }
+        public DbSet<PlayerHistory> PlayerHistories { get; set; }
+        #endregion
+
+        #region History Events Entities
+        public DbSet<PlayerJoinedTeamEvent> PlayerJoinedTeamEvents { get; set; }
+        public DbSet<CoachAssignedToTeamEvent> CoachAssignedToTeamEvents { get; set; }
+        public DbSet<TeamPlayersPlayedMatchEvent> TeamPlayersPlayedMatchEvents { get; set; }
+        public DbSet<PlayerLeftTeamEvent> PlayerLeftTeamEvents { get; set; }
         #endregion
 
         #region Training Entities
         public DbSet<Training> Trainings { get; set; }
         public DbSet<TrainingScore> TrainingScores { get; set; }
+        #endregion
+
+        #region Team Entities
         public DbSet<Team> Teams { get; set; }
+        public DbSet<TeamHistory> TeamHistories { get; set; }
         #endregion
 
         #region Survey Entites

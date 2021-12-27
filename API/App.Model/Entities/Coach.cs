@@ -25,5 +25,6 @@ namespace App.Model.Entities
         public ICollection<Training> Trainings { get; set; }
         public ICollection<Team> Teams { get; set; }
         public ICollection<CoachCard> Cards { get; set; }
+        public ICollection<CoachAssignedToTeamEvent> AssignedToTeamEvents { get; set; }
     }
 }
