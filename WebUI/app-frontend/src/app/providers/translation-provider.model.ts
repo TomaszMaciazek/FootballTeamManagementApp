@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
+import { PrimeNGConfig } from "primeng/api";
 import { LanguageCode } from "../enums/language-code";
 
 @Injectable()
@@ -8,31 +9,44 @@ export class TranslationProvider {
     private static langId: string = "pl";
     public static get LangId(): string { return this.langId; }
 
-    constructor(private translate: TranslateService){}
+    constructor(private translate: TranslateService, private config: PrimeNGConfig){}
 
     async setDefaultLanguage(langId: LanguageCode) {        
         this.translateLangs.forEach(element => {
             this.translate.setTranslation(element.lang, element.data);
         });
         this.translate.use(langId);
+        var primengTranslationsData = this.primengTranslations.find(x => x.lang === this.translate.currentLang).data;
+        this.config.setTranslation(primengTranslationsData);
     }
 
     async setLanguage(langId: LanguageCode) {
         this.translate.use(langId);
+        var primengTranslationsData = this.primengTranslations.find(x => x.lang === this.translate.currentLang).data;
+        this.config.setTranslation(primengTranslationsData);
     }
 
     getTranslation(key: string): any {
-        let cuurentLangTransalations: any = this.translate.translations[this.translate.currentLang];
-        if (!cuurentLangTransalations) {
+        let currentLangTransalations: any = this.translate.translations[this.translate.currentLang];
+        if (!currentLangTransalations) {
             let msg: string = "Translations not loaded";
             console.warn(msg);
             return;
         }
-        let translation: string = cuurentLangTransalations[key];
+        let translation: string = currentLangTransalations[key];
         if (translation === undefined || translation === null || translation === "") {
             return key;
         }
         return translation;
+    }
+
+    getCurrentLangTransalations() : any{
+        let currentLangTransalations: any = this.translate.translations[this.translate.currentLang];
+        if (!currentLangTransalations) {
+            let msg: string = "Translations not loaded";
+            return;
+        }
+        return currentLangTransalations;
     }
 
     translateLangs: any = [
@@ -525,4 +539,104 @@ export class TranslationProvider {
             }
         }
     ]
+
+    primengTranslations = [
+        {
+        lang: "en",
+        data: {
+            "startsWith": "Starts with",
+            "contains": "Contains",
+            "notContains": "Not contains",
+            "endsWith": "Ends with",
+            "equals": "Equals",
+            "notEquals": "Not equals",
+            "noFilter": "No Filter",
+            "lt": "Less than",
+            "lte": "Less than or equal to",
+            "gt": "Greater than",
+            "gte": "Greater than or equal to",
+            "is": "Is",
+            "isNot": "Is not",
+            "before": "Before",
+            "after": "After",
+            "dateIs": "Date is",
+            "dateIsNot": "Date is not",
+            "dateBefore": "Date is before",
+            "dateAfter": "Date is after",
+            "clear": "Clear",
+            "apply": "Apply",
+            "matchAll": "Match All",
+            "matchAny": "Match Any",
+            "addRule": "Add Rule",
+            "removeRule": "Remove Rule",
+            "accept": "Yes",
+            "reject": "No",
+            "choose": "Choose",
+            "upload": "Upload",
+            "cancel": "Cancel",
+            "dayNames": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "dayNamesShort": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+            "dayNamesMin": ["Su","Mo","Tu","We","Th","Fr","Sa"],
+            "monthNames": ["January","February","March","April","May","June","July","August","September","October","November","December"],
+            "monthNamesShort": ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            "dateFormat": "mm/dd/yy",
+            "today": "Today",
+            "weekHeader": "Wk",
+            "weak": 'Weak',
+            "medium": 'Medium',
+            "strong": 'Strong',
+            "passwordPrompt": 'Enter a password',
+            "emptyMessage": 'No results found',
+            "emptyFilterMessage": 'No results found'
+        }
+    },
+    {
+        lang: "pl",
+        data: {
+            "startsWith": "zaczyna się od",
+            "contains": "zawiera",
+            "notContains": "nie zawiera",
+            "endsWith": "kończy się na",
+            "equals": "równa się",
+            "notEquals": "rie równa się",
+            "noFilter": "brak filtrów",
+            "lt": "mniej niż",
+            "lte": "mniejsze lub równe",
+            "gt": "większe",
+            "gte": "większe lub równe",
+            "is": "jest",
+            "isNot": "nie jest",
+            "before": "przed",
+            "after": "po",
+            "dateIs": "Data",
+            "dateIsNot": "Data nie jest",
+            "dateBefore": "Data przed",
+            "dateAfter": "Data po",
+            "clear": "Wyczyść",
+            "apply": "Zastosuj",
+            "matchAll": "Dopasuj wszystkie",
+            "matchAny": "Dopasuj dowolny",
+            "addRule": "Dodaj regułę",
+            "removeRule": "Usuń regułę",
+            "accept": "Tak",
+            "reject": "Nie",
+            "choose": "Wybierz",
+            "upload": "Wyślij",
+            "cancel": "Anuluj",
+            "dayNames": ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"],
+            "dayNamesShort": ["Niedz", "Pon", "Wt", "Śr", "Czw", "Pt", "Sob"],
+            "dayNamesMin": ["Niedz","Pon","Wt","Śr","Czw","Pt","Sob"],
+            "monthNames": ["Styczeń","Luty","Marzec","Kwiecień","Maj","Czerwiec","Lipiec","Sierpień","Wrzesień","Październik","Listopad","Grudzień"],
+            "monthNamesShort": ["Sty", "Lut", "Mar", "Kwi", "Maj", "Cze","Lip", "Sie", "Wrz", "Paź", "Lis", "Gr"],
+            "dateFormat": "mm-dd-yy",
+            "today": "Dziś",
+            "weekHeader": "Tyg",
+            "weak": 'Tydzień',
+            "medium": 'Średni',
+            "strong": 'Mocno',
+            "passwordPrompt": 'Podaj hasło',
+            "emptyMessage": 'Brak wyników',
+            "emptyFilterMessage": 'Brak wyników'
+        }
+    }];
 }
