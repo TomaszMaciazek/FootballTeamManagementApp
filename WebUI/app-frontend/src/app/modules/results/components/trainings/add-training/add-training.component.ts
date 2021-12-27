@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { AddTrainingCommand } from 'src/app/models/commands/add-training.model';
+import { LocaleCalendarProvider } from 'src/app/providers/locale-calendar-provider.model';
 import { TranslationProvider } from 'src/app/providers/translation-provider.model';
 import { TrainingService } from 'src/app/services/training.service';
 
@@ -24,32 +25,8 @@ export class AddTrainingComponent implements OnInit {
     private trainingService: TrainingService
   ) { }
 
-  public pl = { 
-    closeText: 'Zamknij',
-    prevText: 'Poprzedni',
-    nextText: 'Następny',
-    monthNames: ['Styczeń','Luty','Marzec','Kwiecień','Maj','Czerwiec','Lipiec','Sierpień','Wrzesień','Październik','Listopad','Grudzień'],
-    monthNamesShort: ['Sty','Lut','Mar','Kwi','Maj','Cze', 'Lip','Sie','Wrz','Paź','Lis','Gru'],
-    dayNames: ['Niedziela','Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota'],
-    dayNamesShort: ['Nie','Pon','Wt','Śr','Czw','Pt','So'],
-    dayNamesMin: ['N','P','W','Ś','Cz','P','S'],
-    weekHeader: 'Tydzień',
-    firstDay: 1,
-    isRTL: false,
-    showMonthAfterYear: false,
-    yearSuffix: 'r',
-    timeOnlyTitle: 'Tylko czas',
-    timeText: 'Czas',
-    hourText: 'Godzina',
-    minuteText: 'Minuta',
-    secondText: 'Sekunda',
-    currentText: 'Teraz',
-    ampm: false,
-    month: 'Miesiąc',
-    week: 'Tydzień',
-    day: 'Dzień',
-    allDayText : 'Cały dzień'
-  };
+
+  
   ngOnInit(): void {
     this.createForm();
   }
@@ -64,18 +41,18 @@ export class AddTrainingComponent implements OnInit {
 
   submit(){
     if(this.form.valid){
-      debugger;
+      let date = this.form.controls['Date'].value;
       this.spinner.show();
       var training = new AddTrainingCommand({
         title: this.form.controls['Title'].value,
         description: this.form.controls['Description'].value,
-        date: this.form.controls['Date'].value
+        date:  new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()))
       });
       this.trainingService.createTraining(training)
         .then(res => {
           this.toastr.success(this.translationProvider.getTranslation('success'));
           this.spinner.hide();
-          this.router.navigate(["/news/preview"]);
+          this.router.navigate(["/results/trainings"]);
         })
         .catch(error => {
           this.toastr.error(this.translationProvider.getTranslation(error));

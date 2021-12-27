@@ -10,7 +10,8 @@ namespace App.Mappings.Profiles
     {
         public TrainingProfile()
         {
-            CreateMap<Training, TrainingDto>();
+            CreateMap<Training, TrainingDto>()
+                .ForMember(x => x.TrainingScores, opt => opt.MapFrom(src => src.Scores));
             CreateMap<CreateTrainingVM, Training>();
             CreateMap<Training, TrainingListItem>();
         }

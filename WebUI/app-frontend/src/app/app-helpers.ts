@@ -17,8 +17,16 @@ export function goTop() {
 export function toParams(data: any){
     let httpParams = new HttpParams();
     Object.keys(data).forEach(function (key) {
-     var value = data[key] != null && data[key] != undefined ? data[key] : '';
-     httpParams = httpParams.append(key, value);
+        if(data[key] != null && data[key] != undefined){
+            if(data[key] instanceof Array){
+                data[key].forEach(element => {
+                    httpParams = httpParams.append(key, element);
+                });
+            }
+            else{
+                httpParams = httpParams.append(key, data[key]);
+            }
+        }
     });
     return httpParams;
 }

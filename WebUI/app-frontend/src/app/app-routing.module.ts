@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BasicLayoutComponent } from './components/layout/basic-layout/basic-layout.component';
 import { BlankLayoutComponent } from './components/layout/blank-layout/blank-layout.component';
 import { LoginComponent } from './components/login/login.component';
+import { RefreshComponent } from './components/refresh/refresh.component';
 
 const routes: Routes = [
   {
@@ -11,7 +12,8 @@ const routes: Routes = [
   {
     path: '', component: BlankLayoutComponent,
     children: [
-      { path: 'login', component: LoginComponent }
+      { path: 'login', component: LoginComponent },
+      { path: 'refresh', component: RefreshComponent },
     ]
   },
   {

@@ -27,7 +27,6 @@ import { SharedModule } from './shared/shared.module';
 import { FooterComponent } from './components/footer/footer.component';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { TopbarComponent } from './components/topbar/topbar.component';
-import { NewsService } from './services/news.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LocaleCalendarProvider } from './providers/locale-calendar-provider.model';
 import { ConfirmationService } from 'primeng/api';
@@ -49,7 +48,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     RefreshComponent,
     BasicLayoutComponent,
     FooterComponent,
-    TopbarComponent
+    TopbarComponent,
   ],
   imports: [
     SharedModule,
@@ -92,7 +91,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     UserContextProvider,
     LocaleCalendarProvider,
     HttpClient,
-    NewsService,
     ConfirmationService
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

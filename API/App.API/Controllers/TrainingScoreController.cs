@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace App.API.Controllers
@@ -41,26 +42,34 @@ namespace App.API.Controllers
         [HttpGet("{id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.TrainingScoresPolicy)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TrainingScoreDto))]
-        public async Task<ActionResult<TrainingScoreDto>> GetNewsById(Guid id)
+        public async Task<ActionResult<TrainingScoreDto>> GetScoreById(Guid id)
         {
-            var news = _mapper.Map<TrainingScoreDto>(await _trainingScoreService.GetByIdAsync(id));
-            return Ok(news);
+            var score = _mapper.Map<TrainingScoreDto>(await _trainingScoreService.GetByIdAsync(id));
+            return Ok(score);
+        }
+
+        [HttpGet("Training/{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.TrainingScoresPolicy)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SimpleTrainingScoreDto>))]
+        public async Task<ActionResult<IEnumerable<SimpleTrainingScoreDto>>> GetTrainingScoresFromTraining(Guid id)
+        {
+            return Ok(await _trainingScoreService.GetTrainingScoresFromTraining(id));
         }
 
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.TrainingScoresAddPolicy)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> CreateTraining([FromBody] CreateTrainingScoreVM model)
+        public async Task<IActionResult> CreateTrainingsScore([FromBody] CreateTrainingScoreVM model)
         {
-            var training = _mapper.Map<TrainingScore>(model);
-            await _trainingScoreService.AddAsync(training);
+            var trainingScore = _mapper.Map<TrainingScore>(model);
+            await _trainingScoreService.AddAsync(trainingScore);
             return NoContent();
         }
 
         [HttpPut]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.TrainingScoresEditPolicy)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> UpdateNews([FromBody] UpdateTrainingScoreVM model)
+        public async Task<IActionResult> UpdateTrainingScore([FromBody] UpdateTrainingScoreVM model)
         {
             await _trainingScoreService.UpdateAsync(model);
             return NoContent();
@@ -70,7 +79,7 @@ namespace App.API.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.TrainingScoresActivatePolicy)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [Route("Activate/{id}")]
-        public async Task<IActionResult> ActivateNews(Guid id)
+        public async Task<IActionResult> ActivateTrainingScore(Guid id)
         {
             await _trainingScoreService.ActivateAsync(id);
             return NoContent();
@@ -80,7 +89,7 @@ namespace App.API.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.TrainingScoresDeactivatePolicy)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [Route("Deactivate/{id}")]
-        public async Task<IActionResult> DeactivateNews(Guid id)
+        public async Task<IActionResult> DeactivateTrainingScore(Guid id)
         {
             await _trainingScoreService.DeactivateAsync(id);
             return NoContent();

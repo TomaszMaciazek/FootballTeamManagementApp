@@ -1,0 +1,32 @@
+<p-table [value]="trainingScores" responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+        <tr>
+            <th class="text-center">{{'player' | translate}}</th>
+            <th class="text-center">{{'value' | translate}}</th>
+            <th class="text-center">{{'active' | translate}}</th>
+            <th class="text-center">{{'actions' | translate}}</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-score>
+        <tr>
+            <td class="text-center">{{score.playerName}}</td>
+            <td class="text-center">{{score.value}}</td>
+            <td class="text-center">
+                <i class="pi" [ngClass]="{
+                    'true-icon pi-check-circle': score.isActive,
+                    'false-icon pi-times-circle': !score.isActive
+                }"></i>
+            </td>
+            <td class="text-center">
+                <button pButton pRipple type="button" icon="fas fa-edit"
+                class="p-button-rounded p-button-info" (click)="confirmEditScore(score.id)"></button>
+                <button *ngIf="score.isActive" pButton pRipple type="button" icon="fas fa-ban" 
+                class="p-button-rounded p-button-secondary ml-2" (click)="confirmDeactivateScore(score.id)"></button>
+                <button *ngIf="!score.isActive" pButton pRipple type="button" icon="far fa-check-circle" 
+                class="p-button-rounded p-button-success ml-2" (click)="confirmActivateScore(score.id)"></button>
+                <button pButton pRipple type="button" icon="fas fa-trash" 
+                class="p-button-rounded p-button-danger ml-2" (click)="confirmDeleteScore(score.id)"></button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

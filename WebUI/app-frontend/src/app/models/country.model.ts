@@ -1,4 +1,4 @@
 export class Country {
-    public id: string;
+    public id: number;
     public code: string;
 }

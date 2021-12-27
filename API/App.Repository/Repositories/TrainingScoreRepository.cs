@@ -13,7 +13,7 @@ namespace App.Repository.Repositories
     {
         IQueryable<TrainingScore> GetAllEager();
         IEnumerable<TrainingScore> GetAllFromPlayer(Guid playerId);
-        IEnumerable<TrainingScore> GetAllFromTraining(Guid trainingId);
+        IQueryable<TrainingScore> GetAllFromTraining(Guid trainingId);
     }
     public class TrainingScoreRepository : BaseRepository<TrainingScore>, ITrainingScoreRepository
     {
@@ -33,11 +33,10 @@ namespace App.Repository.Repositories
                 .Where(x => x.Player.Id == playerId)
                 .ToList();
 
-        public IEnumerable<TrainingScore> GetAllFromTraining(Guid trainingId) =>_dbSet
+        public IQueryable<TrainingScore> GetAllFromTraining(Guid trainingId) =>_dbSet
                 .AsNoTracking()
                 .Include(x => x.Player)
                 .Include(x => x.Training)
-                .Where(x => x.Training.Id == trainingId)
-                .ToList();
+                .Where(x => x.Training.Id == trainingId);
     }
 }

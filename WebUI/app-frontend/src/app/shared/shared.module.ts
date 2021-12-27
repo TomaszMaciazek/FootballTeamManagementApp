@@ -17,6 +17,12 @@ import {TableModule} from 'primeng/table';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {SpeedDialModule} from 'primeng/speeddial';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {DialogModule} from 'primeng/dialog';
+import {InputNumberModule} from 'primeng/inputnumber';
+import {AccordionModule} from 'primeng/accordion';
+import {FieldsetModule} from 'primeng/fieldset';
+import {ChipsModule} from 'primeng/chips';
+import {SelectButtonModule} from 'primeng/selectbutton';
 
 @NgModule({
   declarations: [],
@@ -38,7 +44,13 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
     TableModule,
     MultiSelectModule,
     SpeedDialModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    DialogModule,
+    InputNumberModule,
+    AccordionModule,
+    FieldsetModule,
+    ChipsModule,
+    SelectButtonModule
   ],
   exports: [
     ReactiveFormsModule,
@@ -57,7 +69,13 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
     TableModule,
     MultiSelectModule,
     SpeedDialModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    DialogModule,
+    InputNumberModule,
+    AccordionModule,
+    FieldsetModule,
+    ChipsModule,
+    SelectButtonModule
   ]
 })
 export class SharedModule { }

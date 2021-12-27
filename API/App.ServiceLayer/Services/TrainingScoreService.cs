@@ -7,6 +7,8 @@ using App.Repository.Repositories;
 using App.ServiceLayer.Extenstions;
 using App.ServiceLayer.Models;
 using App.Model.ViewModels.Queries;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -25,17 +27,20 @@ namespace App.ServiceLayer.Services
         Task RemoveAsync(Guid id);
         Task UpdateAsync(UpdateTrainingScoreVM command);
         Task<PaginatedList<TrainingScoreListItemDto>> GetScores(TrainingScoreQuery query);
+        Task<IEnumerable<TrainingScoreDto>> GetTrainingScoresFromTraining(Guid trainingId);
     }
 
     public class TrainingScoreService : ITrainingScoreService
     {
         private readonly ITrainingScoreRepository _trainingScoreRepository;
         private readonly IApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public TrainingScoreService(ITrainingScoreRepository trainingScoreRepository, IApplicationDbContext context)
+        public TrainingScoreService(ITrainingScoreRepository trainingScoreRepository, IApplicationDbContext context, IMapper mapper)
         {
             _trainingScoreRepository = trainingScoreRepository;
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<bool> ActivateAsync(Guid id)
@@ -103,12 +108,12 @@ namespace App.ServiceLayer.Services
 
             scores = scores.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
 
-            return await scores.Select(x => new TrainingScoreListItemDto { 
-                Id = x.Id,
-                LastModyfication = x.UpdatedDate,
-                LastModifier = string.IsNullOrEmpty(x.Modifier.Surname) ? x.Modifier.Username : x.Modifier.Surname,
-                PlayerName = $"{x.Player.User.Surname} {x.Player.User.Name} {x.Player.User.MiddleName}"
-            }).PaginatedListAsync(query.PageNumber, query.PageSize);
+            return await scores.ProjectTo<TrainingScoreListItemDto>(_mapper.ConfigurationProvider).PaginatedListAsync(query.PageNumber, query.PageSize);
         }
+
+        public async Task<IEnumerable<TrainingScoreDto>> GetTrainingScoresFromTraining(Guid trainingId)
+            => await _trainingScoreRepository.GetAllFromTraining(trainingId)
+                .ProjectTo<TrainingScoreDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
     }
 }

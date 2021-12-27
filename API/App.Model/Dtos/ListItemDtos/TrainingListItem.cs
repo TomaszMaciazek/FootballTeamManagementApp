@@ -7,7 +7,6 @@ namespace App.Model.Dtos.ListItemDtos
         public Guid Id { get; set; }
         public string Title { get; set; }
         public DateTime Date { get; set; }
-        public DateTime UpdatedDate { get; set; }
         public bool IsActive { get; set; }
     }
 }

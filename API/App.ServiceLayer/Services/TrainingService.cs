@@ -76,7 +76,7 @@ namespace App.ServiceLayer.Services
         public async Task<List<Training>> GetAllAsync() => await _trainingRepository.GetAll().ToListAsync();
 
         public async Task<Training> GetByIdAsync(Guid id) => await _trainingRepository
-            .GetAllEager().FirstOrDefaultAsync(x => x.Id == id);
+            .GetByIdEager(id).FirstOrDefaultAsync();
 
         public async Task RemoveAsync(Guid id)
         {
@@ -96,7 +96,7 @@ namespace App.ServiceLayer.Services
 
         public async Task<PaginatedList<TrainingListItem>> GetTrainings(TrainingQuery query)
         {
-            var trainings = _trainingRepository.GetAllEager();
+            var trainings = _trainingRepository.GetAll();
 
             trainings = query.IsActive.HasValue ? trainings.Where(x => x.IsActive == query.IsActive) : trainings;
 

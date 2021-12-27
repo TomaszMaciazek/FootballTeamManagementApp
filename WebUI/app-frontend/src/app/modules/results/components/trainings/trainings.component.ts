@@ -10,8 +10,7 @@ import { TrainingService } from 'src/app/services/training.service';
 
 @Component({
   selector: 'app-trainings',
-  templateUrl: './trainings.component.html',
-  styleUrls: ['./trainings.component.scss']
+  templateUrl: './trainings.component.html'
 })
 export class TrainingsComponent implements OnInit {
 
@@ -24,7 +23,6 @@ export class TrainingsComponent implements OnInit {
   sortOrder: string = "desc";
   sortColumn: string = "";
   trainings : TrainingItem[];
-  trainingButtons: Map<string,MenuItem[]>;
 
   constructor(
     private router: Router,
@@ -36,14 +34,12 @@ export class TrainingsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.trainingButtons = new Map<string, MenuItem[]>();
     this.getTrainings();
   }
 
 
   getTrainings(){
     this.spinner.show();
-    this.trainingButtons.clear();
     var query = new TrainingQuery({
       pageNumber: this.pageNumber,
       pageSize: this.rowNumbers,
@@ -87,10 +83,6 @@ export class TrainingsComponent implements OnInit {
     this.getTrainings();
   }
 
-  goToTraining(id: string){
-    this.router.navigate([`/results/training/${id}`]);
-  }
-
   confirmDeactivate(id: string) {
     this.confirmationService.confirm({
         message: this.translationProvider.getTranslation('confirm_deactivate_training'),
@@ -100,7 +92,7 @@ export class TrainingsComponent implements OnInit {
             this.spinner.show();
             this.trainigService.deactivateTraining(id).then(x => {
               this.spinner.hide();
-              this.toastr.success(id, 'tmp');
+              this.toastr.success(this.translationProvider.getTranslation('training_deactivated'));
               this.getTrainings();
             });
         }
@@ -116,7 +108,7 @@ export class TrainingsComponent implements OnInit {
             this.spinner.show();
             this.trainigService.activateTraining(id).then(x => {
               this.spinner.hide();
-              this.toastr.success(id, 'tmp');
+              this.toastr.success(this.translationProvider.getTranslation('training_activated'));
               this.getTrainings();
             });
         }
@@ -132,7 +124,7 @@ export class TrainingsComponent implements OnInit {
           this.spinner.show();
           this.trainigService.deleteTraining(id).then(x => {
             this.spinner.hide();
-            this.toastr.success(id, 'tmp');
+            this.toastr.success(this.translationProvider.getTranslation('training_deleted'));
             this.getTrainings();
           });
         }
