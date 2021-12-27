@@ -32,6 +32,10 @@ const routes: Routes = [
     path: 'teams', component: BasicLayoutComponent,
     loadChildren: () => import('./modules/teams/teams.module').then(m => m.TeamsModule)
   },
+  {
+    path: 'members', component: BasicLayoutComponent,
+    loadChildren: () => import('./modules/club-members/club-members.module').then(m => m.ClubMembersModule)
+  },
   { path: '**', redirectTo: 'login' }
 ];
 

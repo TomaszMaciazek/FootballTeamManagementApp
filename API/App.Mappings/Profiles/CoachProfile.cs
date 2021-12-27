@@ -1,5 +1,6 @@
 ﻿using App.Mappings.Resolvers;
 using App.Model.Dtos;
+using App.Model.Dtos.ListItemDtos;
 using App.Model.Entities;
 using App.Model.ViewModels.Commands;
 using App.ServiceLayer.Models;
@@ -16,6 +17,14 @@ namespace App.Mappings.Profiles
                 .ForMember(dest => dest.MiddleName, opt => opt.MapFrom(src => src.User.MiddleName))
                 .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.User.Surname));
 
+            CreateMap<Coach, CoachListItemDto>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.User.Name))
+                .ForMember(dest => dest.MiddleName, opt => opt.MapFrom(src => src.User.MiddleName))
+                .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.User.Surname))
+                .ForMember(dest => dest.Country, opt => opt.MapFrom(src => src.Country.Code))
+                .ForMember(dest => dest.IsStillWorking, opt => opt.MapFrom(src => !src.FinishedWorking.HasValue))
+                .ForMember(dest => dest.TeamsCount, opt => opt.MapFrom(src => src.Teams != null ? src.Teams.Count : 0));
+
             CreateMap<CreateCoachVM, Coach>()
                 .ForMember(dest => dest.Country, opt => opt.MapFrom<CoachCountryResolver>())
                 .ForMember(dest => dest.Teams, opt => opt.MapFrom<CoachTeamResolver>())
@@ -26,7 +35,10 @@ namespace App.Mappings.Profiles
             CreateMap<UpdateCoachVM, Coach>()
                 .ForMember(dest => dest.Teams, opt => opt.MapFrom<CoachTeamResolver>());
 
-            CreateMap<PaginatedList<Coach>, PaginatedList<CoachDto>>();
+            CreateMap<Coach, SimpleCoachDto>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.User.Name))
+                .ForMember(dest => dest.MiddleName, opt => opt.MapFrom(src => src.User.MiddleName))
+                .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.User.Surname));
         }
     }
 }

@@ -13,7 +13,7 @@ export class NavigationService {
     let menuItems = new Array<MenuItem>();
     let news = this.getNews();
     let accountItem = this.getAccount();
-    let calendar = this.getCalendar();
+    let calendar = this.getTeams();
     let members = this.getClubMembers();
     let results = this.getResults();
     let surveys = this.getSurveys();

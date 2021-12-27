@@ -1,0 +1,171 @@
+<div class="content-wrapper">
+    <div class="text-center pb-3">
+        <h1>{{'coaches' | translate}}</h1>
+    </div>
+    <div fxLayout="row">
+        <div fxFlex.gt-xs="80" fxFlexOffset.gt-xs="10" 
+        fxFlex.xs="94" fxFlexOffset.xs="3"
+        fxLayout="column">
+            <form fxFlex="100" [formGroup]="form" fxLayout="row" class="mb-3">
+                <p-card fxFlex="100">
+                    <div fxLayout="column" fxFlex="100">
+                        <div fxLayout.gt-sm="row" fxLayout.lt-md="column">
+                            <div class="form-group p-3" fxFlex.gt-sm="50">
+                                <h5 class="mb-3">{{'coach' | translate}}</h5>
+                                <input type="text" class="form-control" formControlName="SearchQuery"/>
+                            </div>
+                            <div class="form-group p-3" fxFlex.gt-sm="25">
+                                <h5 class="mb-3">{{'gender' | translate}}</h5>
+                                <p-selectButton [options]="genders"
+                                    formControlName="Gender"
+                                    optionLabel="label" optionValue="value">
+                                    <ng-template let-item>
+                                        {{item.label | translate}}
+                                    </ng-template>
+                                </p-selectButton>
+                            </div>
+                            <div class="form-group p-3" fxFlex.gt-sm="25">
+                                <h5 class="mb-3">{{'countries' | translate}}</h5>
+                                <p-multiSelect  [options]="countries"
+                                formControlName="Countries"  placeholder="{{'select_countries' | translate}}"
+                                    autoWidth="false" [style]="{'width':'100%'}"
+                                    optionLabel="code" display="chip">
+                                </p-multiSelect >
+                            </div>
+                        </div>
+                        <div fxLayout.gt-sm="row" fxLayout.lt-md="column">
+                            <div class="form-group p-3" fxFlex.gt-sm="50">
+                                <h5 class="mb-3">{{'team' | translate}}</h5>
+                                <p-multiSelect  [options]="teams" display="chip"
+                                formControlName="Teams"  placeholder="{{'select_teams' | translate}}"
+                                    autoWidth="false" [style]="{'width':'100%'}"
+                                    optionLabel="name">
+                                </p-multiSelect >
+                            </div>
+                            <div class="form-group p-3" fxFlex.gt-sm="25">
+                                <h5 class="mb-3">{{'active' | translate}}</h5>
+                                <p-selectButton [options]="boolFilterOptions"
+                                    formControlName="IsActive"
+                                    optionLabel="label"optionValue="value">
+                                    <ng-template let-item>
+                                        {{item.label | translate}}
+                                    </ng-template>
+                                </p-selectButton>
+                            </div>
+                            <div class="form-group p-3" fxFlex.gt-sm="25">
+                                <h5 class="mb-3">{{'is_still_working' | translate}}</h5>
+                                <p-selectButton [options]="boolFilterOptions"
+                                    formControlName="StillWorking"
+                                    optionLabel="label" optionValue="value">
+                                    <ng-template let-item>
+                                        {{item.label | translate}}
+                                    </ng-template>
+                                </p-selectButton>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ng-template pTemplate="footer">
+                        <div fxLayout="row" fxFlex="100">
+                            <div fxFlex="100" fxHide fxShow.lt-lg>
+                                <button class="btn btn-primary btn-block btn-action" (click)="filter()">
+                                    <i class="fas fa-search"></i>  
+                                    {{'filter' | translate}}
+                                </button>
+                                <button class="btn btn-danger btn-block btn-action" (click)="resetFilter()">
+                                    <i class="fas fa-sync-alt"></i>
+                                    {{'clear' | translate}}
+                                </button>
+                            </div>
+                            <div fxFlex="100" fxHide fxShow.gt-md fxLayoutAlign="end start">
+                                <button role="button" [ngClass.lt-md]="'btn-block'"
+                                class="btn btn-danger btn-action mr-3"
+                                (click)="resetFilter()">
+                                    <i class="fas fa-sync-alt"></i>
+                                    {{'clear' | translate}}
+                                </button>
+                                <button role="button" [ngClass.lt-md]="'btn-block'"
+                                class="btn btn-primary btn-action mr-3"
+                                (click)="filter()">
+                                    <i class="fas fa-search"></i>  
+                                    {{'filter' | translate}}
+                                </button>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-card>
+            </form>
+            <div fxLayout="row" class="card mt-2" fxFlex="100">
+                <p-table [value]="coaches" responsiveLayout="scroll" styleClass="p-datatable-striped"
+                    [paginator]="true" [rows]="rowNumbers" [totalRecords]="totalCount" [rowsPerPageOptions]="rowNumbersOptions"
+                    [resizableColumns]="true" [autoLayout]="true" fxFlex="100" [lazy]="true" (onLazyLoad)="loadCoaches($event)">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th class="text-center" pSortableColumn="CoachName">
+                                {{'coach' | translate}}
+                                <p-sortIcon [field]="surname"></p-sortIcon>
+                            </th>
+                            <th class="text-center">
+                                {{'gender' | translate}}
+                            </th>
+                            <th class="text-center">
+                                {{'country' | translate}}
+                            </th>
+                            <th class="text-center">
+                                {{'coach_teams_count' | translate}}
+                            </th>
+                            <th class="text-center">
+                                {{'is_still_working' | translate}}
+                            </th>
+                            <th class="text-center">
+                                {{'active' | translate}}
+                            </th>
+                            <th class="text-center">
+                                {{'actions' | translate}}
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-coach>
+                        <tr>
+                            <td class="text-center">
+                                <span *ngIf="coach.middleName && coach.middleName.length > 0; else noCoachMiddleName">
+                                    {{coach.surname}} {{coach.name}} {{coach.middleName}}
+                                </span>
+                                <ng-template #noCoachMiddleName>
+                                    <span>{{coach.surname}} {{coach.name}}</span>
+                                </ng-template>
+                            </td>
+                            <td class="text-center">
+                                {{genderLabel.get(coach.gender) | translate}}
+                            </td>
+                            <td class="text-center">
+                                {{coach.country}}
+                            </td>
+                            <td class="text-center">
+                                {{coach.teamsCount}}
+                            </td>
+                            <td class="text-center">
+                                <span *ngIf="coach.isStillWorking; else coachFinishedPlaying">
+                                    {{'yes' | translate}}
+                                </span>
+                                <ng-template #coachFinishedPlaying>
+                                    {{'no' | translate}}
+                                </ng-template>
+                            </td>
+                            <td class="text-center">
+                                <i class="pi" [ngClass]="{'true-icon pi-check-circle': coach.isActive, 'false-icon pi-times-circle': !coach.isActive}"></i>
+                            </td>
+                            <td class="text-center">
+                                <a [routerLink]="['/club-members/coach/'+coach.id]">
+                                    <button pButton pRipple type="button" icon="fas fa-info" 
+                                    class="p-button-rounded p-button-info"></button>
+                                </a>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+        <div fxFlex.gt-xs="10" fxFlex.xs="3"></div>
+    </div>
+</div>
