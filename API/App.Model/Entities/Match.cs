@@ -25,6 +25,8 @@ namespace App.Model.Entities
         [Required]
         public MatchType MatchType { get; set; }
 
+        public string Description { get; set; }
+
         public ICollection<MatchPlayerPerformance> Players { get; set; }
         public ICollection<MatchPoint> Points { get; set; }
         public ICollection<PlayerCard> PlayersCards { get; set; }
