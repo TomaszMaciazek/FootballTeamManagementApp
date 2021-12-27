@@ -6,6 +6,8 @@ using App.Repository.Repositories;
 using App.ServiceLayer.Extenstions;
 using App.ServiceLayer.Models;
 using App.Model.ViewModels.Queries;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -22,18 +24,20 @@ namespace App.ServiceLayer.Services
         Task<News> GetByIdAsync(Guid id);
         Task RemoveAsync(Guid id);
         Task UpdateAsync(UpdateNewsCommand command);
-        Task<PaginatedList<News>> GetNews(NewsQuery query);
+        Task<PaginatedList<NewsDto>> GetNews(NewsQuery query);
     }
 
     public class NewsService : INewsService
     {
         private readonly INewsRepository _newsRepository;
         private readonly IApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public NewsService(INewsRepository newsRepository, IApplicationDbContext context)
+        public NewsService(INewsRepository newsRepository, IApplicationDbContext context, IMapper mapper)
         {
             _newsRepository = newsRepository;
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<bool> ActivateAsync(Guid id)
@@ -95,13 +99,14 @@ namespace App.ServiceLayer.Services
             }
         }
 
-        public async Task<PaginatedList<News>> GetNews(NewsQuery query)
+        public async Task<PaginatedList<NewsDto>> GetNews(NewsQuery query)
         {
             var news = _newsRepository.GetAll().AsNoTracking();
 
             news = news.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
 
-            return await news.PaginatedListAsync(query.PageNumber, query.PageSize);
+            return await news.ProjectTo<NewsDto>(_mapper.ConfigurationProvider)
+                .PaginatedListAsync(query.PageNumber, query.PageSize);
         }
     }
 }
