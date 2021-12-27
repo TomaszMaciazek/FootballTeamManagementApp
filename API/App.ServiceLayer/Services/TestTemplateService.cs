@@ -1,10 +1,10 @@
 ﻿using App.DataAccess.Interfaces;
 using App.Model.Entities.TestEntities;
+using App.Model.ViewModels.Queries;
 using App.Repository.Repositories;
 using App.ServiceLayer.Common;
 using App.ServiceLayer.Extenstions;
 using App.ServiceLayer.Models;
-using App.ServiceLayer.Queries;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

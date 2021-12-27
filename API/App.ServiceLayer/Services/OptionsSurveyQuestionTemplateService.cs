@@ -3,7 +3,7 @@ using App.Model.Entities.SurveyEntities.QuestionTemplates;
 using App.Repository.Repositories;
 using App.ServiceLayer.Common;
 using App.ServiceLayer.Extenstions;
-using App.ServiceLayer.Queries;
+using App.Model.ViewModels.Queries;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

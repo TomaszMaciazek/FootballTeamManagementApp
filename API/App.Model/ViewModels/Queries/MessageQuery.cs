@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace App.ServiceLayer.Queries
+namespace App.Model.ViewModels.Queries
 {
     public class MessageQuery : PaginationQuery
     {

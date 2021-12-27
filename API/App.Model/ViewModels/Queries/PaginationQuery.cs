@@ -1,4 +1,4 @@
-﻿namespace App.ServiceLayer.Queries
+﻿namespace App.Model.ViewModels.Queries
 {
     public class PaginationQuery
     {

@@ -3,7 +3,7 @@ using App.Model.Dtos.ListItemDtos;
 using App.Model.Entities;
 using App.Model.ViewModels.Commands;
 using App.ServiceLayer.Models;
-using App.ServiceLayer.Queries;
+using App.Model.ViewModels.Queries;
 using App.ServiceLayer.Services;
 using App.UserMiddleware;
 using AutoMapper;

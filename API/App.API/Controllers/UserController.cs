@@ -3,11 +3,10 @@ using App.DataAccess.Configurations.Interfaces;
 using App.Model.Dtos;
 using App.Model.Dtos.ListItemDtos;
 using App.Model.Entities;
-using App.Model.Enums;
 using App.Model.ViewModels;
 using App.Model.ViewModels.Commands;
+using App.Model.ViewModels.Queries;
 using App.ServiceLayer.Models;
-using App.ServiceLayer.Queries;
 using App.ServiceLayer.Services;
 using App.UserMiddleware;
 using App.UserMiddleware.Helpers;
@@ -19,7 +18,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace App.API.Controllers

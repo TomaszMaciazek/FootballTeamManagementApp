@@ -1,7 +1,7 @@
 ﻿using App.Model.Enums;
 using System;
 
-namespace App.ServiceLayer.Queries
+namespace App.Model.ViewModels.Queries
 {
     public class MatchQuery : PaginationQuery
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace App.ServiceLayer.Queries
+namespace App.Model.ViewModels.Queries
 {
     public class SurveyAnswerQuery
     {

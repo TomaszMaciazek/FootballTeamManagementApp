@@ -2,7 +2,7 @@
 using App.Model.Entities;
 using App.Model.ViewModels.Commands;
 using App.ServiceLayer.Models;
-using App.ServiceLayer.Queries;
+using App.Model.ViewModels.Queries;
 using App.ServiceLayer.Services;
 using App.UserMiddleware;
 using AutoMapper;
@@ -33,7 +33,7 @@ namespace App.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginatedList<NewsDto>))]
         public async Task<ActionResult<PaginatedList<NewsDto>>> GetNews([FromQuery] NewsQuery query)
         {
-            var result = _mapper.Map<PaginatedList<News> ,PaginatedList <NewsDto>>(await _newsService.GetNews(query));
+            var result = await _newsService.GetNews(query);
             return Ok(result);
         }
 

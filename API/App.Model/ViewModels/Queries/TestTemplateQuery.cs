@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.ServiceLayer.Queries
+namespace App.Model.ViewModels.Queries
 {
     public class TestTemplateQuery : PaginationQuery
     {

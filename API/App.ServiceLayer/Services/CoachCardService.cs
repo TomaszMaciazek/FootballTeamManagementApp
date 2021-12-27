@@ -67,10 +67,10 @@ namespace App.ServiceLayer.Services
             return true;
         }
 
-        public async Task<List<CoachCard>> GetAllAsync() => await _cardRepository.GetAll().ToListAsync();
+        public async Task<List<CoachCard>> GetAllAsync() => await _cardRepository.GetAll().AsNoTracking().ToListAsync();
 
 
-        public async Task<CoachCard> GetByIdAsync(Guid id) => await _cardRepository.GetById(id).SingleOrDefaultAsync();
+        public async Task<CoachCard> GetByIdAsync(Guid id) => await _cardRepository.GetById(id).AsNoTracking().SingleOrDefaultAsync();
 
         public async Task RemoveAsync(Guid id)
         {

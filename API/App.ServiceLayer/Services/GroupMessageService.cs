@@ -4,7 +4,7 @@ using App.Repository.Repositories;
 using App.ServiceLayer.Common;
 using App.ServiceLayer.Extenstions;
 using App.ServiceLayer.Models;
-using App.ServiceLayer.Queries;
+using App.Model.ViewModels.Queries;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

@@ -6,7 +6,7 @@ using App.Model.ViewModels.Commands;
 using App.Repository.Repositories;
 using App.ServiceLayer.Extenstions;
 using App.ServiceLayer.Models;
-using App.ServiceLayer.Queries;
+using App.Model.ViewModels.Queries;
 using App.UserMiddleware.Helpers;
 using Microsoft.EntityFrameworkCore;
 using System;
