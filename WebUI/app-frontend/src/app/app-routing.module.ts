@@ -28,6 +28,10 @@ const routes: Routes = [
     path: 'results', component: BasicLayoutComponent,
     loadChildren: () => import('./modules/results/results.module').then(m => m.ResultsModule)
   },
+  {
+    path: 'teams', component: BasicLayoutComponent,
+    loadChildren: () => import('./modules/teams/teams.module').then(m => m.TeamsModule)
+  },
   { path: '**', redirectTo: 'login' }
 ];
 

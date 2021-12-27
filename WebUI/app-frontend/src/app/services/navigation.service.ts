@@ -93,25 +93,21 @@ export class NavigationService {
     return account;
   }
 
-  private getCalendar() : MenuItem{
-    let calendar = new MenuItem();
-    calendar.Title = "incoming_events";
-    calendar.FontAwesomeIcon = "fas fa-calendar-alt";
-    calendar.SubMenuItems = new Array<MenuItem>();
+  private getTeams() : MenuItem{
+    let teams = new MenuItem();
+    teams.Title = "teams";
+    teams.FontAwesomeIcon = "fas fa-tshirt";
+    teams.SubMenuItems = new Array<MenuItem>();
 
     let matches = new MenuItem();
-    matches.Title = "matches";
-    matches.Link = "calendar/matches";
-    matches.RequiredPermissions = "matches";
+    matches.Title = "preview";
+    matches.Link = "teams/preview";
+    matches.RequiredPermissions = "teams";
 
-    let trainings = new MenuItem();
-    trainings.Title = "trainings";
-    trainings.Link = "calendar/trainings";
-    trainings.RequiredPermissions = "trainings";
 
-    calendar.SubMenuItems.push(matches, trainings);
+    teams.SubMenuItems.push(matches);
 
-    return calendar;
+    return teams;
   }
 
   private getResults() : MenuItem{

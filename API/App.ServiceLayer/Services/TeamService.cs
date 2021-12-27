@@ -7,6 +7,8 @@ using App.Model.ViewModels.Queries;
 using App.Repository.Repositories;
 using App.ServiceLayer.Extenstions;
 using App.ServiceLayer.Models;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,22 +21,26 @@ namespace App.ServiceLayer.Services
         Task<bool> ActivateAsync(Guid id);
         Task AddAsync(Team entity);
         Task<bool> DeactivateAsync(Guid id);
-        Task<List<Team>> GetAllAsync();
+        Task<IEnumerable<SimpleTeamDto>> GetAllAsync();
         Task<Team> GetByIdAsync(Guid id);
-        Task<PaginatedList<Team>> GetTeams(TeamQuery query);
+        Task<PaginatedList<TeamListItemDto>> GetTeams(TeamQuery query);
         Task RemoveAsync(Guid id);
-        Task UpdateAsync(Team entity);
+        Task UpdateAsync(UpdateTeamVM entity);
     }
 
-    public class TeamService : IService<Team>, ITeamService
+    public class TeamService : ITeamService
     {
         private readonly ITeamRepository _teamRepository;
+        private readonly ICoachRepository _coachRepository;
         private readonly IApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public TeamService(ITeamRepository teamRepository, IApplicationDbContext context)
+        public TeamService(ITeamRepository teamRepository, ICoachRepository coachRepository, IApplicationDbContext context, IMapper mapper)
         {
             _teamRepository = teamRepository;
+            _coachRepository = coachRepository;
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<bool> ActivateAsync(Guid id)
@@ -69,9 +75,13 @@ namespace App.ServiceLayer.Services
             return true;
         }
 
-        public async Task<List<Team>> GetAllAsync() => await _teamRepository.GetAll().ToListAsync();
+        public async Task<IEnumerable<SimpleTeamDto>> GetAllAsync() => await _teamRepository
+            .GetAll()
+            .AsNoTracking()
+            .ProjectTo<SimpleTeamDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
 
-        public async Task<Team> GetByIdAsync(Guid id) => await _teamRepository.GetById(id).FirstOrDefaultAsync();
+        public async Task<Team> GetByIdAsync(Guid id) => await _teamRepository.GetByIdEager(id).FirstOrDefaultAsync();
 
         public async Task RemoveAsync(Guid id)
         {
@@ -79,24 +89,40 @@ namespace App.ServiceLayer.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(Team entity)
+        public async Task UpdateAsync(UpdateTeamVM command)
         {
+            var entity = await _teamRepository.GetById(command.Id)
+                .Include(x => x.History).ThenInclude(x => x.CoachAssignedToTeamEvents)
+                .Include(x => x.MainCoach).SingleOrDefaultAsync();
+
+            entity.Name = !string.IsNullOrEmpty(command.Name) ? command.Name : entity.Name;
+
+            if (command.MainCoachId.HasValue)
+            {
+                entity.MainCoach = await _coachRepository.GetById(command.MainCoachId.Value).SingleOrDefaultAsync();
+            }
+
             _teamRepository.Update(entity);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<PaginatedList<Team>> GetTeams(TeamQuery query)
+        public async Task<PaginatedList<TeamListItemDto>> GetTeams(TeamQuery query)
         {
 
-            var teams = query.CoachId.HasValue
-                ? _teamRepository.GetAllFromCoach(query.CoachId.Value)
-                : _teamRepository.GetAll().Include(x => x.MainCoach);
+            var teams = _teamRepository.GetAll()
+                .Include(x => x.Players)
+                .Include(x => x.MainCoach).ThenInclude(x => x.User)
+                .Include(x => x.History).ThenInclude(x => x.PlayerJoinedTeamEvents)
+                .AsNoTracking();
 
             teams = teams.WhereStringPropertyContains(x => x.Name, query.Name);
+            teams = teams.WhereGuidPropertyEquals(x => x.MainCoach.Id, query.CoachId);
 
             teams = teams.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
 
-            return await teams.PaginatedListAsync(query.PageNumber, query.PageSize);
+            return await teams
+                .ProjectTo<TeamListItemDto>(_mapper.ConfigurationProvider)
+                .PaginatedListAsync(query.PageNumber, query.PageSize);
         }
 
 

@@ -7,6 +7,8 @@ using App.Repository.Repositories;
 using App.ServiceLayer.Extenstions;
 using App.ServiceLayer.Models;
 using App.Model.ViewModels.Queries;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -27,6 +29,10 @@ namespace App.ServiceLayer.Services
         Task RemoveAsync(Guid id);
         Task UpdateAsync(UpdatePlayerVM command);
         Task<PaginatedList<Player>> GetPlayers(PlayerQuery query);
+        Task<IEnumerable<SimpleSelectPlayerDto>> GetPlayingPlayers();
+        Task AddPlayerToTeam(AddPlayersToTeamVM command);
+        Task RemovePlayerFromTeam(Guid playerId, Guid teamId);
+        Task<IEnumerable<SimpleSelectPlayerDto>> GetActivePlayersWithoutTeam();
     }
 
     public class PlayerService : IPlayerService
@@ -35,18 +41,21 @@ namespace App.ServiceLayer.Services
         private readonly ICountryRepository _countryRepository;
         private readonly ITeamRepository _teamRepository;
         private readonly IApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
         public PlayerService(
             IPlayerRepository playerRepository,
-            ICountryRepository countryRepository, 
-            ITeamRepository teamRepository, 
-            IApplicationDbContext context
+            ICountryRepository countryRepository,
+            ITeamRepository teamRepository,
+            IApplicationDbContext context,
+            IMapper mapper
             )
         {
             _playerRepository = playerRepository;
             _countryRepository = countryRepository;
             _teamRepository = teamRepository;
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<bool> ActivateAsync(Guid id)
@@ -137,5 +146,73 @@ namespace App.ServiceLayer.Services
 
             return await players.PaginatedListAsync(query.PageNumber, query.PageSize);
         }
+        public async Task<IEnumerable<SimpleSelectPlayerDto>> GetPlayingPlayers()
+            => await _playerRepository.GetAll()
+                .AsNoTracking()
+                .Include(x => x.User)
+                .Where(x => !x.FinishedPlaying.HasValue)
+                .ProjectTo<SimpleSelectPlayerDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+
+        public async Task AddPlayerToTeam(AddPlayersToTeamVM command)
+        {
+            var updateDate = DateTime.Now;
+            var team = await _teamRepository.GetById(command.TeamId).Include(x => x.History).SingleOrDefaultAsync();
+            if (team != null)
+            {
+                foreach (var playerId in command.PlayersIds)
+                {
+                    var player = await _playerRepository.GetById(playerId)
+                    .Include(x => x.Team)
+                    .Include(x => x.History).ThenInclude(x => x.PlayerJoinedTeamEvents)
+                    .SingleOrDefaultAsync();
+                    if (player != null)
+                    {
+                        player.History.PlayerJoinedTeamEvents.Add(new PlayerJoinedTeamEvent
+                        {
+                            PlayerHistory = player.History,
+                            Date = updateDate,
+                            TeamHistory = team.History
+                        });
+                        player.Team = team;
+
+                        _playerRepository.Update(player);
+                    }
+                }
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task RemovePlayerFromTeam(Guid playerId, Guid teamId)
+        {
+            var player = await _playerRepository.GetById(playerId)
+                .Include(x => x.Team).ThenInclude(team => team.History)
+                .Include(x => x.History).ThenInclude(x => x.PlayerLeftTeamEvents)
+                .SingleOrDefaultAsync();
+            if (player != null)
+            {
+                if(player.Team != null && player.Team.Id == teamId)
+                {
+                    player.History.PlayerLeftTeamEvents.Add(new PlayerLeftTeamEvent
+                    {
+                        Date = DateTime.Now,
+                        TeamHistory = player.Team.History,
+                        PlayerHistory = player.History
+                    });
+                    player.Team = null;
+                    _playerRepository.Update(player);
+                    await _context.SaveChangesAsync();
+                }
+            }
+        }
+
+        public async Task<IEnumerable<SimpleSelectPlayerDto>> GetActivePlayersWithoutTeam()
+            => await _playerRepository.GetAll()
+                .AsNoTracking()
+                .Include(x => x.Team)
+                .Include(x => x.User)
+                .Where(x => x.IsActive && x.Team == null)
+                .ProjectTo<SimpleSelectPlayerDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
     }
 }

@@ -1,0 +1,47 @@
+<div fxLayout="row">
+    <form [formGroup]="addTeamForm" fxFlex="100">
+        <p-card>
+            <div fxLayout="column">
+                <div fxLayout="row">
+                    <div class="form-group p-2" fxFlex="100">
+                        <h5>{{'name_team' | translate}}</h5>
+                        <input type="text" pInputText formControlName="Name"
+                        [style]="{'width':'100%'}" styleClass="mt-2">
+                    </div>
+                </div>
+                <div fxLayout="row">
+                    <div class="form-group p-2" fxFlex="100">
+                        <h5>{{'team_main_coach' | translate}} ({{'optional' | translate}})</h5>
+                        <p-dropdown [options]="coaches" [showClear]="true" formControlName="Coach" placeholder="{{'select_coach' | translate}}"
+                            autoWidth="false" [style]="{'width':'100%'}" styleClass="mt-2">
+                            <ng-template let-item pTemplate="selectedItem">
+                                <div *ngIf="item">
+                                    <div class="d-inline">
+                                        {{item.surname}} {{item.name}} {{item.middleName}}
+                                    </div>
+                                </div>
+                            </ng-template>
+                            <ng-template let-player pTemplate="item">
+                                <div class="d-inline">
+                                    {{player.surname}} {{player.name}} {{player.middleName}}
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                    </div>
+                </div>
+            </div>
+            <ng-template pTemplate="footer">
+                <button type="submit" [ngClass.lt-md]="'btn-block'"
+                [ngClass.gt-sm]="'btn-lg ml-3'"
+                class="btn btn-success" (click)="submit()">
+                    {{'save' | translate}}
+                </button>
+                <button type="reset" [ngClass.lt-md]="'btn-block'"
+                [ngClass.gt-sm]="'btn-lg ml-3'"  
+                class="btn btn-danger" (click)="reset()">
+                    {{'clear' | translate}}
+                </button>
+            </ng-template>
+        </p-card>
+    </form>
+</div>
