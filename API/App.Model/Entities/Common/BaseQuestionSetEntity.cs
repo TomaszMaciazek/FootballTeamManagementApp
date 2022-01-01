@@ -12,7 +12,5 @@ namespace App.Model.Entities.Common
         [Required(AllowEmptyStrings = false)]
         public string Description { get; set; }
 
-        [Required]
-        public int PagesCount { get; set; }
     }
 }

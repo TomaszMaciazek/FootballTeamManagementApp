@@ -32,14 +32,6 @@ namespace App.ServiceLayer
             services.AddScoped<IRoleService, RoleService>();
 
             services.AddScoped<ISurveyTemplateService, SurveyTemplateService>();
-            services.AddScoped<IBoolSurveyQuestionTemplateService, BoolSurveyQuestionTemplateService>();
-            services.AddScoped<ITextSurveyQuestionTemplateService, TextSurveyQuestionTemplateService>();
-            services.AddScoped<IRatingSurveyQuestionTemplateService, RatingSurveyQuestionTemplateService>();
-            services.AddScoped<IOptionsSurveyQuestionTemplateService, OptionsSurveyQuestionTemplateService>();
-            services.AddScoped<IUserBoolSurveyQuestionAnswerService, UserBoolSurveyQuestionAnswerService>();
-            services.AddScoped<IUserRatingSurveyQuestionAnswerService, UserRatingSurveyQuestionAnswerService>();
-            services.AddScoped<IUserOptionsSurveyQuestionAnswerService, UserOptionsSurveyQuestionAnswerService>();
-            services.AddScoped<IUserTextSurveyQuestionAnswerService, UserTextSurveyQuestionAnswerService>();
             services.AddScoped<IUserSurveyResultService, UserSurveyResultService>();
 
             services.AddScoped<ITestTemplateService, TestTemplateService>();

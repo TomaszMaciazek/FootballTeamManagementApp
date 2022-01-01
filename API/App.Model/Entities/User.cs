@@ -1,5 +1,4 @@
 ﻿using App.Model.Entities.SurveyEntities;
-using App.Model.Entities.SurveyEntities.AnswersResults;
 using App.Model.Entities.TestEntities;
 using App.Model.Entities.TestEntities.AnswersResults;
 using System;
@@ -43,10 +42,6 @@ namespace App.Model.Entities
         public ICollection<TestTemplate> UserTestsTemplates { get; set; }
         public ICollection<UserSurveyResult> SurveysResults { get; set; }
         public ICollection<UserTestResult> TestsResults { get; set; }
-        public ICollection<UserBoolSurveyQuestionAnswer> BooleanSurveyQuestionAnswers { get; set; }
-        public ICollection<UserTextSurveyQuestionAnswer> TextSurveyQuestionAnswers { get; set; }
-        public ICollection<UserOptionsSurveyQuestionAnswer> OptionsSurveyQuestionAnswers { get; set; }
-        public ICollection<UserRatingSurveyQuestionAnswer> RatingSurveyQuestionAnswers { get; set; }
         public ICollection<UserBoolTestQuestionAnswer> BoolTestQuestionAnswers { get; set; }
         public ICollection<UserOptionsTestQuestionAnswer> OptionsTestQuestionAnswers { get; set; }
         public ICollection<TrainingScore> CreatedTrainingScores { get; set; }

@@ -1,5 +1,6 @@
 ﻿using App.Model.Entities.Common;
 using App.Model.Entities.SurveyEntities;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace App.Model.Entities
@@ -11,5 +12,7 @@ namespace App.Model.Entities
 
         [Required]
         public bool IsCompleated { get; set; }
+        public ICollection<SurveyTextQuestionAnswer> TextQuestionAnswers { get; set; }
+        public ICollection<SurveySelectQuestionAnswer> SelectQuestionAnswers { get; set; }
     }
 }

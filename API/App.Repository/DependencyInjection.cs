@@ -24,11 +24,6 @@ namespace App.Repository
             service.AddScoped<IPlayerRepository, PlayerRepository>();
             
             service.AddScoped<ISurveyTemplateRepository, SurveyTemplateRepository>();
-            service.AddScoped<IBoolSurveyQuestionTemplateRepository, BoolSurveyQuestionTemplateRepository>();
-            service.AddScoped<IOptionsSurveyQuestionTemplateRepository, OptionsSurveyQuestionTemplateRepository>();
-            service.AddScoped<IRatingSurveyQuestionTemplateRepository, RatingSurveyQuestionTemplateRepository>();
-            service.AddScoped<ITextSurveyQuestionTemplateRepository, TextSurveyQuestionTemplateRepository>();
-            service.AddScoped<ISurveyOptionQuestionAnswerTemplateRepository, SurveyOptionQuestionAnswerTemplateRepository>();
 
             service.AddScoped<ITestTemplateRepository, TestTemplateRepository>();
             service.AddScoped<IBoolTestQuestionTemplateRepository, BoolTestQuestionTemplateRepository>();
@@ -41,11 +36,6 @@ namespace App.Repository
             
             service.AddScoped<IUserSurveyResultRepository, UserSurveyResultRepository>();
             service.AddScoped<IUserTestResultRepository, UserTestResultRepository>();
-
-            service.AddScoped<IUserBoolSurveyQuestionAnswerRepository, UserBoolSurveyQuestionAnswerRepository>();
-            service.AddScoped<IUserOptionsSurveyQuestionAnswerRepository, UserOptionsSurveyQuestionAnswerRepository>();
-            service.AddScoped<IUserRatingSurveyQuestionAnswerRepository, UserRatingSurveyQuestionAnswerRepository>();
-            service.AddScoped<IUserTextSurveyQuestionAnswerRepository, UserTextSurveyQuestionAnswerRepository>();
 
             service.AddScoped<IUserBoolTestQuestionAnswerRepository, UserBoolTestQuestionAnswerRepository>();
             service.AddScoped<IUserOptionsTestQuestionAnswerRepository, UserOptionsTestQuestionAnswerRepository>();

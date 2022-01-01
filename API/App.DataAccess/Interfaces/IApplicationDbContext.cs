@@ -1,8 +1,5 @@
 ﻿using App.Model.Entities;
 using App.Model.Entities.SurveyEntities;
-using App.Model.Entities.SurveyEntities.AnswersResults;
-using App.Model.Entities.SurveyEntities.AnswersTemplates;
-using App.Model.Entities.SurveyEntities.QuestionTemplates;
 using App.Model.Entities.TestEntities;
 using App.Model.Entities.TestEntities.AnswersResults;
 using App.Model.Entities.TestEntities.AnswersTemplates;
@@ -62,16 +59,11 @@ namespace App.DataAccess.Interfaces
 
         #region Survey Entites
         DbSet<SurveyTemplate> SurveyTemplates { get; set; }
-         DbSet<TextSurveyQuestionTemplate> TextSurveyQuestionsTemplates { get; set; }
-         DbSet<BoolSurveyQuestionTemplate> BoolSurveyQuestionsTemplates { get; set; }
-         DbSet<OptionsSurveyQuestionTemplate> OptionsSurveyQuestionsTemplates { get; set; }
-         DbSet<RatingSurveyQuestionTemplate> RatingSurveyQuestionsTemplates { get; set; }
-         DbSet<SurveyOptionQuestionAnswerTemplate> SurveyOptionQuestionsAnswerTemplates { get; set; }
-         DbSet<UserBoolSurveyQuestionAnswer> UserBoolSurveyQuestionsAnswers { get; set; }
-         DbSet<UserOptionsSurveyQuestionAnswer> UserOptionsSurveyQuestionsAnswers { get; set; }
-         DbSet<UserTextSurveyQuestionAnswer> UserTextSurveyQuestionsAnswers { get; set; }
-         DbSet<UserRatingSurveyQuestionAnswer> UserRatingSurveyQuestionsAnswers { get; set; }
-         DbSet<UserSurveyResult> UsersSurveyResults { get; set; }
+        public DbSet<SurveyQuestion> SurveyQuestions { get; set; }
+        public DbSet<SurveyQuestionOption> SurveyQuestionOptions { get; set; }
+        public DbSet<SurveySelectQuestionAnswer> SurveySelectQuestionAnswers { get; set; }
+        public DbSet<SurveyTextQuestionAnswer> SurveyTextQuestionAnswers { get; set; }
+        DbSet<UserSurveyResult> UsersSurveyResults { get; set; }
         #endregion
 
         #region Test Entities

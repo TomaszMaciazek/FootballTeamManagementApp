@@ -36,21 +36,6 @@ namespace App.Infrastructure.Configurations
             builder.HasMany(u => u.UserSurveysTemplates)
                 .WithOne(t => t.Author);
 
-            builder.HasMany(u => u.SurveysResults)
-                .WithOne(r => r.User);
-
-            builder.HasMany(u => u.BooleanSurveyQuestionAnswers)
-                .WithOne(x => x.User);
-
-            builder.HasMany(u => u.TextSurveyQuestionAnswers)
-                .WithOne(x => x.User);
-
-            builder.HasMany(u => u.OptionsSurveyQuestionAnswers)
-                .WithOne(x => x.User);
-
-            builder.HasMany(u => u.RatingSurveyQuestionAnswers)
-                .WithOne(x => x.User);
-
             builder.HasMany(u => u.UserTestsTemplates)
                 .WithOne(t => t.Author);
             builder.HasMany(u => u.TestsResults)

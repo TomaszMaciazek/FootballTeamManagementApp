@@ -2,9 +2,6 @@
 using App.Model.Entities;
 using App.Model.Entities.Common;
 using App.Model.Entities.SurveyEntities;
-using App.Model.Entities.SurveyEntities.AnswersResults;
-using App.Model.Entities.SurveyEntities.AnswersTemplates;
-using App.Model.Entities.SurveyEntities.QuestionTemplates;
 using App.Model.Entities.TestEntities;
 using App.Model.Entities.TestEntities.AnswersResults;
 using App.Model.Entities.TestEntities.AnswersTemplates;
@@ -67,15 +64,10 @@ namespace App.Infrastructure
 
         #region Survey Entites
         public DbSet<SurveyTemplate> SurveyTemplates { get; set; }
-        public DbSet<TextSurveyQuestionTemplate> TextSurveyQuestionsTemplates { get; set; }
-        public DbSet<BoolSurveyQuestionTemplate> BoolSurveyQuestionsTemplates { get; set; }
-        public DbSet<OptionsSurveyQuestionTemplate> OptionsSurveyQuestionsTemplates { get; set; }
-        public DbSet<RatingSurveyQuestionTemplate> RatingSurveyQuestionsTemplates { get; set; }
-        public DbSet<SurveyOptionQuestionAnswerTemplate> SurveyOptionQuestionsAnswerTemplates { get; set; }
-        public DbSet<UserBoolSurveyQuestionAnswer> UserBoolSurveyQuestionsAnswers { get; set; }
-        public DbSet<UserOptionsSurveyQuestionAnswer> UserOptionsSurveyQuestionsAnswers { get; set; }
-        public DbSet<UserTextSurveyQuestionAnswer> UserTextSurveyQuestionsAnswers { get; set; }
-        public DbSet<UserRatingSurveyQuestionAnswer> UserRatingSurveyQuestionsAnswers { get; set; }
+        public DbSet<SurveyQuestion> SurveyQuestions { get; set; }
+        public DbSet<SurveyQuestionOption> SurveyQuestionOptions { get; set; }
+        public DbSet<SurveySelectQuestionAnswer> SurveySelectQuestionAnswers { get; set; }
+        public DbSet<SurveyTextQuestionAnswer> SurveyTextQuestionAnswers { get; set; }
         public DbSet<UserSurveyResult> UsersSurveyResults { get; set; }
         #endregion
 
@@ -115,7 +107,7 @@ namespace App.Infrastructure
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            foreach (Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<AuditableEntity> entry in ChangeTracker.Entries<AuditableEntity>())
+            foreach (Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<EditableEntity> entry in ChangeTracker.Entries<EditableEntity>())
             {
                 switch (entry.State)
                 {
@@ -140,7 +132,7 @@ namespace App.Infrastructure
         }
         public override int SaveChanges()
         {
-            foreach (Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<AuditableEntity> entry in ChangeTracker.Entries<AuditableEntity>())
+            foreach (Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<EditableEntity> entry in ChangeTracker.Entries<EditableEntity>())
             {
                 switch (entry.State)
                 {

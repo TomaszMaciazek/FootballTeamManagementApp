@@ -20,10 +20,6 @@ namespace App.Repository.Repositories
         public IQueryable<SurveyTemplate> GetAllEager() => _dbSet
             .AsNoTracking()
             .Include(x => x.Author)
-            .Include(x => x.BoolQuestionTemplates)
-            .Include(x => x.OptionsQuestionTemplates).ThenInclude(x => x.AnswerTemplates)
-            .Include(x => x.RatingQuestionTemplates)
-            .Include(x => x.TextQuestionTemplates)
             .Include(x => x.RespondentsResults).ThenInclude(x => x.User);
     }
 }
