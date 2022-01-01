@@ -34,6 +34,15 @@ namespace App.ServiceLayer.Extenstions
             return source.Where(x => property(x) >= propertyValue.Value);
         }
 
+        public static IQueryable<T> WhereDateTimeDayPropertyGreaterOrEqual<T>(this IQueryable<T> source, Func<T, DateTime> property, DateTime? propertyValue)
+        {
+            if (!propertyValue.HasValue)
+            {
+                return source;
+            }
+            return source.Where(x => property(x).Date >= propertyValue.Value.Date);
+        }
+
         public static IQueryable<T> WhereDatetimePropertyLessOrEqual<T>(this IQueryable<T> source, Func<T, DateTime> property, DateTime? propertyValue)
         {
             if (!propertyValue.HasValue)
@@ -41,6 +50,15 @@ namespace App.ServiceLayer.Extenstions
                 return source;
             }
             return source.Where(x => property(x) <= propertyValue.Value);
+        }
+
+        public static IQueryable<T> WhereDateTimeDayPropertyLessOrEqual<T>(this IQueryable<T> source, Func<T, DateTime> property, DateTime? propertyValue)
+        {
+            if (!propertyValue.HasValue)
+            {
+                return source;
+            }
+            return source.Where(x => property(x).Date <= propertyValue.Value.Date);
         }
 
         public static IQueryable<T> WhereGuidPropertyEquals<T>(this IQueryable<T> source, Func<T, Guid> property, Guid? propertyValue)

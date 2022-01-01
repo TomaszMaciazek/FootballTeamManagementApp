@@ -21,6 +21,8 @@ export class CoachesComponent implements OnInit {
 
   public form: FormGroup;
 
+  showFilters: boolean = false;
+
   pageNumber : number = 1;
   rowNumbers : number = 20;
   rowNumbersOptions = [20, 30, 50];

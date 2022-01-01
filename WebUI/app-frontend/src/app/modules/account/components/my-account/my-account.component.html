@@ -1,0 +1,202 @@
+<div class="content-wrapper" *ngIf="user">
+    <p-dialog header="{{'change_password' | translate}}"
+    [(visible)]="displayChangePasswordDialog"
+    [style]="{width: '50vw'}">
+        <change-password
+            [userId]="user.id"
+            (confirmUpdatePassword)="logout($event)"
+        ></change-password>
+    </p-dialog>
+    <div class="text-center pb-3">
+        <h1>{{'my_account' | translate}}</h1>
+    </div>
+    <div fxLayout="row" class="pb-3">
+        <div fxFlex.sm="80" fxFlexOffset.sm="10" 
+        fxFlex.md="54" fxFlexOffset.md="23"
+        fxFlex.gt-md="50" fxFlexOffset.gt-md="25" 
+        fxFlex.xs="94" fxFlexOffset.xs="3"
+        fxLayout="column">
+            <p-card>
+                <div class="row">
+                    <div class="col-4">
+                        <h6 class="ml-3 mb-0">{{'name' | translate }}</h6>
+                    </div>
+                    <div class="col-8 text-secondary">
+                        <span *ngIf="user.middleName && user.middleName.length > 0; else noMiddleName">
+                            {{user.surname}} {{user.name}} {{user.middleName}}
+                        </span>
+                        <ng-template #noMiddleName>
+                            <span>{{user.surname}} {{user.name}}</span>
+                        </ng-template>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-4">
+                        <h6 class="ml-3 mb-0">{{'email' | translate }}</h6>
+                    </div>
+                    <div class="col-8 text-secondary">
+                        <span *ngIf="user.email; else noEmail">
+                            {{user.email}}
+                        </span>
+                        <ng-template #noEmail>
+                            <span>{{'not_exist' | translate }}</span>
+                        </ng-template>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-4">
+                        <h6 class="ml-3 mb-0">{{'role' | translate }}</h6>
+                    </div>
+                    <div class="col-8 text-secondary">
+                        {{user.role.name | translate }}
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-4">
+                        <h6 class="ml-3 mb-0">{{'last_password_set' | translate }}</h6>
+                    </div>
+                    <div class="col-8 text-secondary">
+                        {{user.lastPasswordSet | date: 'dd-MM-yyyy HH:mm'}}
+                    </div>
+                </div>
+                <hr>
+                <div *ngIf="user.role.name == 'player'">
+                    <div class="row">
+                        <div class="col-4">
+                            <h6 class="ml-3 mb-0">{{'date_of_birth' | translate }}</h6>
+                        </div>
+                        <div class="col-8 text-secondary">
+                            {{user.player.birthDate | date: 'dd-MM-yyyy'}}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-4">
+                            <h6 class="ml-3 mb-0">{{'country' | translate }}</h6>
+                        </div>
+                        <div class="col-8 text-secondary">
+                            {{user.player.country}}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-4">
+                            <h6 class="ml-3 mb-0">{{'gender' | translate }}</h6>
+                        </div>
+                        <div class="col-8 text-secondary">
+                            {{genderLabel.get(user.player.gender) | translate }}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-4">
+                            <h6 class="ml-3 mb-0">{{'team' | translate }}</h6>
+                        </div>
+                        <div class="col-8 text-secondary">
+                            <div *ngIf="user.player.team ;else playerWithoutTeam">
+                                {{user.player.team.name}}
+                            </div>
+                            <ng-template #playerWithoutTeam>
+                                <span>{{'no_team_assigned' | translate }}</span>
+                            </ng-template>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-4">
+                            <h6 class="ml-3 mb-0">{{'preferred_position' | translate }}</h6>
+                        </div>
+                        <div class="col-8 text-secondary">
+                            {{playerPositionsLabel.get(user.player.prefferedPosition) | translate }}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-4">
+                            <h6 class="ml-3 mb-0">{{'started_playing' | translate }}</h6>
+                        </div>
+                        <div class="col-8 text-secondary" *ngIf="user.player.startedPlaying != null">
+                            {{user.player.startedPlaying | date: 'dd-MM-yyyy'}}
+                        </div>
+                        <div class="col-8 text-secondary" *ngIf="user.player.startedPlaying == null">
+                            {{'not_playing' | translate}}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-4" *ngIf="user.player.gender == gender.Male">
+                            <h6 class="ml-3 mb-0">{{'finished_playing' | translate }}</h6>
+                        </div>
+                        <div class="col-4" *ngIf="user.player.gender == gender.Female">
+                            <h6 class="ml-3 mb-0">{{'finished_playing_f' | translate }}</h6>
+                        </div>
+                        <div class="col-8 text-secondary" *ngIf="user.player.finishedPlaying">
+                            {{user.player.finishedPlaying | date: 'dd-MM-yyyy'}}
+                        </div>
+                        <div class="col-8 text-secondary" *ngIf="!user.player.finishedPlaying">
+                            {{'is_still_playing' | translate}}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-4">
+                            <h6 class="ml-3 mb-0">{{'player_matches_count' | translate }}</h6>
+                        </div>
+                        <div class="col-8 text-secondary">
+                            {{user.player.matchCount}}
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div *ngIf="user.role.name == 'coach'">
+                    <div class="row">
+                        <div class="col-4">
+                            <h6 class="ml-3 mb-0">{{'date_of_birth' | translate }}</h6>
+                        </div>
+                        <div class="col-8 text-secondary">
+                            {{user.coach.birthDate | date: 'dd-MM-yyyy'}}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-4">
+                            <h6 class="ml-3 mb-0">{{'country' | translate }}</h6>
+                        </div>
+                        <div class="col-8 text-secondary">
+                            {{user.coach.country}}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-4">
+                            <h6 class="ml-3 mb-0">{{'coach_teams_count' | translate }}</h6>
+                        </div>
+                        <div class="col-8 text-secondary">
+                            <div *ngIf="user.coach.teams && user.coach.teams.length > 0 ;else coachWithoutTeam">
+                                <p-chips [(ngModel)]="user.coach.teams" disabled="true">
+                                    <ng-template let-item pTemplate="item">
+                                        {{item.name}}
+                                    </ng-template>
+                                </p-chips>
+                            </div>
+                            <ng-template #coachWithoutTeam>
+                                <span>{{'no_team_assigned' | translate }}</span>
+                            </ng-template>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p-button styleClass="p-button-info" label="{{'change_password' | translate}}" 
+                        (click)="displayChangePasswordDialog = true" icon="pi pi-key"></p-button>
+                    </div>
+                </div>
+            </p-card>
+        </div>
+        <div fxFlex.sm="10" fxFlex.md="23" fxFlex.gt-md="25" fxFlex.xs="3"></div>
+    </div>
+</div>

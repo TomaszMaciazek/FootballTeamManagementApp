@@ -23,6 +23,9 @@ import {AccordionModule} from 'primeng/accordion';
 import {FieldsetModule} from 'primeng/fieldset';
 import {ChipsModule} from 'primeng/chips';
 import {SelectButtonModule} from 'primeng/selectbutton';
+import {StepsModule} from 'primeng/steps';
+import {TimelineModule} from 'primeng/timeline';
+import {ChartModule} from 'primeng/chart';
 
 @NgModule({
   declarations: [],
@@ -50,7 +53,10 @@ import {SelectButtonModule} from 'primeng/selectbutton';
     AccordionModule,
     FieldsetModule,
     ChipsModule,
-    SelectButtonModule
+    SelectButtonModule,
+    StepsModule,
+    TimelineModule,
+    ChartModule
   ],
   exports: [
     ReactiveFormsModule,
@@ -75,7 +81,10 @@ import {SelectButtonModule} from 'primeng/selectbutton';
     AccordionModule,
     FieldsetModule,
     ChipsModule,
-    SelectButtonModule
+    SelectButtonModule,
+    StepsModule,
+    TimelineModule,
+    ChartModule
   ]
 })
 export class SharedModule { }

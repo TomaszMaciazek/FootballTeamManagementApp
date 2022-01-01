@@ -1,4 +1,5 @@
 import { SimpleCoach } from "../coach/simple-coach.model";
+import { TeamHistoryEvent } from "../history/team-history-event.model";
 import { SimplePlayer } from "../player/simple-player.model";
 
 export class Team {

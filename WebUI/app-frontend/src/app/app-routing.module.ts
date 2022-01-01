@@ -17,6 +17,10 @@ const routes: Routes = [
     ]
   },
   {
+    path: 'account', component: BasicLayoutComponent,
+    loadChildren: () => import('./modules/account/account.module').then(m => m.AccountModule)
+  },
+  {
     path: 'news', component: BasicLayoutComponent,
     loadChildren: () => import('./modules/news/news.module').then(m => m.NewsModule)
   },
@@ -35,6 +39,10 @@ const routes: Routes = [
   {
     path: 'members', component: BasicLayoutComponent,
     loadChildren: () => import('./modules/club-members/club-members.module').then(m => m.ClubMembersModule)
+  },
+  {
+    path: 'reports', component: BasicLayoutComponent,
+    loadChildren: () => import('./modules/reports/reports.module').then(m => m.ReportsModule)
   },
   { path: '**', redirectTo: 'login' }
 ];

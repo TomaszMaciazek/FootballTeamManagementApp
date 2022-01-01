@@ -1,0 +1,47 @@
+<div class="content-wrapper" *ngIf="history">
+    <div class="text-center pb-3">
+        <h1>{{'team_history' | translate}}</h1>
+    </div>
+    <div fxLayout="row" class="pt-3">
+        <div fxLayout="column" class="mt-2"
+            fxFlex.gt-xs="80" fxFlexOffset.gt-xs="10" 
+            fxFlex.xs="94" fxFlexOffset.xs="3">
+            <p-timeline [value]="events" align="alternate">
+                <ng-template pTemplate="marker" let-event>
+                    <span class="custom-marker p-shadow-2">
+                        <i *ngIf="event.eventType == teamHistoryEventType.Created" class="fas fa-users"></i>
+                        <i *ngIf="event.eventType == teamHistoryEventType.PlayerJoinedTeam" class="fas fa-user-plus"></i>
+                        <i *ngIf="event.eventType == teamHistoryEventType.MainCoachAssigned" class="fas fa-stopwatch"></i>
+                        <i *ngIf="event.eventType == teamHistoryEventType.MatchPlayed" class="fas fa-futbol"></i>
+                        <i *ngIf="event.eventType == teamHistoryEventType.PlayerLeftTeam" class="fas fa-shoe-prints"></i>
+                    </span>
+                </ng-template>
+                <ng-template pTemplate="content" let-event>
+                    <p-card [header]="getEventHeader(event.eventType) | translate" [subheader]="event.date | date: 'dd-MM-yyyy'">
+                        <div *ngIf="event.eventType == teamHistoryEventType.MatchPlayed">
+                            <match-event
+                            [event]="getMatchEvent(event.id)"
+                            ></match-event>
+                        </div>
+                        <div *ngIf="event.eventType == teamHistoryEventType.PlayerJoinedTeam">
+                            <player-joined-event
+                            [event]="getPlayerJoinedTeamEvent(event.id)"
+                            ></player-joined-event>
+                        </div>
+                        <div *ngIf="event.eventType == teamHistoryEventType.PlayerLeftTeam">
+                            <player-left-event
+                            [event]="getPlayerLeftTeamEvent(event.id)"
+                            ></player-left-event>
+                        </div>
+                        <div *ngIf="event.eventType == teamHistoryEventType.MainCoachAssigned">
+                            <main-coach-event
+                            [event]="getCoachAssignedEvent(event.id)"
+                            ></main-coach-event>
+                        </div>
+                    </p-card>
+                </ng-template>
+            </p-timeline>
+        </div>
+        <div fxFlex.gt-xs="10" fxFlex.xs="3"></div>
+    </div>
+</div>

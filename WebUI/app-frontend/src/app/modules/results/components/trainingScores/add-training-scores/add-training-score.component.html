@@ -11,10 +11,10 @@
                                 <div *ngIf="item">
                                     <div class="d-inline">
                                         {{item.name}} ({{item.yearOfBirth}} - 
-                                    <span *ngIf="item.teamName != null && item.teamName != undefined && item.teamName.length > 0 ">
-                                        {{item.teamName | translate}})
+                                    <span *ngIf="item.team != null && item.team != undefined">
+                                        {{item.team.name | translate}})
                                     </span>
-                                    <span *ngIf="!item.teamName || item.teamName.length == 0">
+                                    <span *ngIf="!item.team">
                                         {{'player_without_team' | translate}})
                                     </span>
                                     </div>
@@ -23,10 +23,10 @@
                             <ng-template let-player pTemplate="item">
                                 <div class="d-inline">
                                     {{player.name}} ({{player.yearOfBirth}} - 
-                                    <span *ngIf="player.teamName != null && player.teamName != undefined && player.teamName.length > 0 ">
-                                        {{player.teamName | translate}})
+                                    <span *ngIf="player.team != null && player.team != undefined">
+                                        {{player.team.name | translate}})
                                     </span>
-                                    <span *ngIf="!player.teamName || player.teamName.length == 0">
+                                    <span *ngIf="!player.team">
                                         {{'player_without_team' | translate}})
                                     </span>
                                 </div>

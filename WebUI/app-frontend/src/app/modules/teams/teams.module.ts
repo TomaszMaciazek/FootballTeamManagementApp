@@ -8,6 +8,11 @@ import { AddTeamComponent } from './components/teams/add-team/add-team.component
 import { EditTeamComponent } from './components/teams/edit-team/edit-team.component';
 import { TeamComponent } from './components/teams/team/team.component';
 import { TeamAddPlayersComponent } from './components/teams/team-add-player/team-add-players.component';
+import { TeamHistoryComponent } from './components/team-history/team-history.component';
+import { MatchEventComponent } from './components/team-history/match-event/match-event.component';
+import { PlayerJoinedEventComponent } from './components/team-history/player-joined-event/player-joined-event.component';
+import { PlayerLeftEventComponent } from './components/team-history/player-left-event/player-left-event.component';
+import { MainCoachEventComponent } from './components/team-history/main-coach-event/main-coach-event.component';
 
 
 @NgModule({
@@ -16,7 +21,12 @@ import { TeamAddPlayersComponent } from './components/teams/team-add-player/team
     AddTeamComponent,
     EditTeamComponent,
     TeamComponent,
-    TeamAddPlayersComponent
+    TeamAddPlayersComponent,
+    TeamHistoryComponent,
+    MatchEventComponent,
+    PlayerJoinedEventComponent,
+    PlayerLeftEventComponent,
+    MainCoachEventComponent
   ],
   imports: [
     CommonModule,

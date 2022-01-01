@@ -6,8 +6,10 @@ import { AddPlayersToTeam } from '../models/commands/add-player-to-team.model';
 import { RemovePlayerFromTeam } from '../models/commands/remove-player-from-team.model';
 import { PlayerItem } from '../models/listItems/player-item.model';
 import { PaginatedList } from '../models/paginated-list.model';
+import { Player } from '../models/player/player.model';
 import { SimpleSelectPlayer } from '../models/player/simple-select-player.model';
 import { PlayerQuery } from '../models/queries/player-query.model';
+import { PlayingPlayerQuery } from '../models/queries/playing-player-query.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +26,16 @@ export class PlayerService {
     return this.http.get<PaginatedList<PlayerItem>>(this.url, {params: toParams(query)}).toPromise();
   }
 
-  getPlayingPlayers(): Promise<Array<SimpleSelectPlayer>> {
-    return this.http.get<Array<SimpleSelectPlayer>>(`${this.url}/playing`).toPromise();
+  getPlayerById(id: string) : Promise<Player>{
+    return this.http.get<Player>(`${this.url}/${id}`).toPromise();
+  }
+
+  getAllPlayers(): Promise<Array<SimpleSelectPlayer>> {
+    return this.http.get<Array<SimpleSelectPlayer>>(`${this.url}/all`).toPromise();
+  }
+
+  getPlayingPlayers(query: PlayingPlayerQuery): Promise<Array<SimpleSelectPlayer>> {
+    return this.http.get<Array<SimpleSelectPlayer>>(`${this.url}/playing`, {params: toParams(query)}).toPromise();
   }
 
   getPlayersWithoutTeam(): Promise<Array<SimpleSelectPlayer>> {

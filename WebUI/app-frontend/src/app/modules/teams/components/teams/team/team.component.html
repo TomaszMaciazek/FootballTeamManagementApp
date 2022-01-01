@@ -24,38 +24,17 @@
             fxFlex.gt-xs="80" fxFlexOffset.gt-xs="10" 
             fxFlex.xs="94" fxFlexOffset.xs="3"
         >
-            <div class="mb-3">
-                <div class="mb-3">
-                    <h2>{{'team_main_coach' | translate}}</h2>
-                </div>
-            </div>
-            <div class="mb-3">
-                <div *ngIf="team.mainCoach; else noMainCoach" class="mt-2">
-                    <h4 *ngIf="team.mainCoach.middleName && team.mainCoach.middleName.length > 0; else noMiddleName">
-                        {{team.mainCoach.surname}} {{team.mainCoach.name}} {{team.mainCoach.middleName}}
-                    </h4>
-                    <ng-template #noMiddleName>
-                        <div class="mt-2">
-                            <h4>{{team.mainCoach.surname}} {{team.mainCoach.name}}</h4>
-                        </div>
-                    </ng-template>
-                </div>
-                <ng-template #noMainCoach>
-                    <div class="mt-2">
-                        <h4>{{'team_has_no_main_coach' | translate}}</h4>
-                    </div>
-                </ng-template>
-            </div>
-            <div class="mb-3 mt-3">
-                <h2>{{'players' | translate}}</h2>
-            </div>
-            <div fxLayout="row">
+            <div fxLayout="row" class="mb-3">
                 <div fxFlex.lt-lg="100" fxHide fxShow.lt-lg>
                     <p-toolbar>
                         <button class="btn btn-primary btn-block btn-lg btn-action" (click)="showAddPlayersDialog()">
                             <i class="far fa-plus-square"></i>    
                             {{'add_player_to_team' | translate}}
                         </button>
+                            <button class="btn btn-info btn-block btn-lg btn-action" [routerLink]="['/teams/history/'+id]">
+                            <i class="fas fa-scroll"></i>    
+                            {{'team_history' | translate}}
+                            </button>
                     </p-toolbar>
                 </div>
                 <div fxFlex.gt-md="100" fxHide fxShow.gt-md>
@@ -67,8 +46,40 @@
                                 {{'add_player_to_team' | translate}}
                             </button>
                         </div>
+                        <div class="p-toolbar-group-right">
+                            <a [routerLink]="['/teams/history/'+id]">
+                                <button role="button" [ngClass.lt-md]="'btn-block'"
+                                class="btn btn-info btn-lg btn-action">
+                                <i class="fas fa-scroll"></i>    
+                                {{'team_history' | translate}}
+                                </button>
+                            </a>
+                        </div>
                     </p-toolbar>
                 </div>
+            </div>
+            <div class="mb-3 mt-3">
+                <h3>{{'team_main_coach' | translate}}</h3>
+            </div>
+            <div class="mb-3">
+                <div *ngIf="team.mainCoach; else noMainCoach" class="mt-2">
+                    <h5 *ngIf="team.mainCoach.middleName && team.mainCoach.middleName.length > 0; else noMiddleName">
+                        {{team.mainCoach.surname}} {{team.mainCoach.name}} {{team.mainCoach.middleName}}
+                    </h5>
+                    <ng-template #noMiddleName>
+                        <div class="mt-2">
+                            <h5>{{team.mainCoach.surname}} {{team.mainCoach.name}}</h5>
+                        </div>
+                    </ng-template>
+                </div>
+                <ng-template #noMainCoach>
+                    <div class="mt-2">
+                        <h4>{{'team_has_no_main_coach' | translate}}</h4>
+                    </div>
+                </ng-template>
+            </div>
+            <div class="mb-3 mt-3">
+                <h3>{{'players' | translate}}</h3>
             </div>
             <div *ngIf="team.players && team.players.length > 0" class="mt-3 mb-2" 
                 fxFlex.gt-xs="80" fxFlexOffset.gt-xs="10" 
@@ -117,9 +128,6 @@
                 fxFlex.xs="94" fxFlexOffset.xs="3"
                 fxLayout="column">
                 <h3>{{'no_players' | translate}}</h3>
-            </div>
-            <div class="mb-3 mt-3">
-                <h2>{{'team_history' | translate}}</h2>
             </div>
         </div>
         <div fxFlex.gt-xs="10" fxFlex.xs="3"></div>

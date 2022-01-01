@@ -1,5 +1,6 @@
 ﻿using App.DataAccess.Interfaces;
 using App.Model.Dtos;
+using App.Model.Dtos.History;
 using App.Model.Dtos.ListItemDtos;
 using App.Model.Entities;
 using App.Model.ViewModels.Commands;
@@ -12,6 +13,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace App.ServiceLayer.Services
@@ -112,11 +114,13 @@ namespace App.ServiceLayer.Services
             var teams = _teamRepository.GetAll()
                 .Include(x => x.Players)
                 .Include(x => x.MainCoach).ThenInclude(x => x.User)
-                .Include(x => x.History).ThenInclude(x => x.PlayerJoinedTeamEvents)
                 .AsNoTracking();
 
             teams = teams.WhereStringPropertyContains(x => x.Name, query.Name);
-            teams = teams.WhereGuidPropertyEquals(x => x.MainCoach.Id, query.CoachId);
+
+            teams = query.CoachId.HasValue
+                ? teams.Where(x => x.MainCoach != null && x.MainCoach.Id == query.CoachId.Value)
+                : teams;
 
             teams = teams.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
 

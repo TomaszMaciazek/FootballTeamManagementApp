@@ -1,0 +1,95 @@
+<div fxLayout="column" class="p-3">
+    <div class="text-center mb-3 mt-3">
+        <h2>{{'players_cards' | translate}}</h2>
+    </div>
+    <form [formGroup]="form">
+        <div fxLayout.gt-sm="row" fxLayout.lt-md="column">
+            <div class="form-group p-2" fxFlex.gt-sm="45">
+                <h5>{{'player' | translate}}</h5>
+                <p-dropdown [options]="players" [showClear]="true" formControlName="Player"
+                placeholder="{{'select_player' | translate}}" filter="true" filterBy="name"
+                    autoWidth="false" [style]="{'width':'100%'}" styleClass="mt-2">
+                    <ng-template let-item pTemplate="selectedItem">
+                        <div *ngIf="item">
+                            {{item.name}}
+                        </div>
+                    </ng-template>
+                    <ng-template let-player pTemplate="item">
+                        <div class="d-inline">
+                            {{player.name}}
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+            <div fxFlex.gt-sm="2"></div>
+            <div class="form-group p-2" fxFlex.gt-sm="25">
+                <h5>{{'color' | translate}}</h5>
+                <p-dropdown [options]="cardColors" [showClear]="true" formControlName="Color" placeholder="{{'select_card_color' | translate}}"
+                    autoWidth="false" [style]="{'width':'100%'}" styleClass="mt-2">
+                    <ng-template let-item pTemplate="selectedItem">
+                        <div *ngIf="item">
+                            <div class="d-inline">{{item.label | translate}}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-type pTemplate="item">
+                        <div>{{type.label | translate}}</div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+            <div fxFlex.gt-sm="2"></div>
+            <div class="form-group p-2" fxFlex.gt-sm="20">
+                <h5>{{'count' | translate}}</h5>
+                <p-inputNumber formControlName="Count"
+                    [showButtons]="true" inputId="minmax-buttons"
+                    [min]="0" [step]="1" [max]="2"
+                    [style]="{'width':'100%'}" styleClass="mt-2">
+                </p-inputNumber>
+            </div>
+        </div>
+        <div fxLayout.gt-sm="row" fxLayout.lt-md="column">
+            <div class="form-group p-2" fxFlex.gt-sm="100">
+                <div class="form-group p-2">
+                    <button type="submit" [ngClass.lt-md]="'btn-block'"
+                    class="btn btn-success" (click)="addCard()">
+                    {{'add' | translate}}
+                    </button>
+                </div>
+            </div>
+            <div fxFlex.gt-sm="25"></div>
+        </div>
+    </form>
+    <div fxLayout="row" *ngIf="model.playersCardsAssignments && model.playersCardsAssignments.length > 0">
+        <div fxLayout="column" fxFlex="100">
+            <p-table [value]="model.playersCardsAssignments" responsiveLayout="scroll">
+                <ng-template pTemplate="caption">
+                    <div class="text-center">
+                        <h4 class="mt-1 mb-1">{{'cards' | translate }}</h4>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="text-center">{{'player' | translate}}</th>
+                        <th class="text-center">{{'color' | translate}}</th>
+                        <th class="text-center">{{'count' | translate}}</th>
+                        <th class="text-center">{{'actions' | translate}}</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-assignment>
+                    <tr>
+                        <td class="text-center">{{assignment.player.name}}</td>
+                        <td class="text-center">
+                            {{cardColorsLabels.get(assignment.color) | translate}}
+                        </td>
+                        <td class="text-center">
+                            {{assignment.count}}
+                        </td>
+                        <td class="text-center">
+                            <button pButton pRipple type="button" icon="fas fa-trash" 
+                            class="p-button-rounded p-button-danger ml-2" (click)="removeCard(assignment.player.id, assignment.color)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>

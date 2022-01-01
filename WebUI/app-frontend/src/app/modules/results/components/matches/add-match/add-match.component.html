@@ -1,0 +1,55 @@
+<div class="content-wrapper" fxLayout="column">
+    <p-confirmDialog #cd [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}">
+        <ng-template pTemplate="footer">
+            <button type="button" pButton icon="pi pi-times" label="{{'no' | translate}}" (click)="cd.reject()"></button>
+            <button type="button" pButton icon="pi pi-check" label="{{'yes' | translate}}" (click)="cd.accept()"></button>
+        </ng-template>
+    </p-confirmDialog>
+    <div class="text-center pb-3 mt-3 pt-3 mb-3" fxFlex="100">
+        <h1>{{'match_new' | translate}}</h1>
+    </div>
+    <div fxLayout="row">
+        <div fxFlex.gt-xs="80" fxFlexOffset.gt-xs="10" 
+        fxFlex.xs="94" fxFlexOffset.xs="3"
+        fxLayout="column">
+        <p-card styleClass="mb-3" fxFlex="100">
+            <p-steps [model]="[
+            { label: 'base_info' | translate },
+            { label: 'description' | translate },
+            { label: 'players' | translate },
+            { label: 'match_points' | translate },
+            { label: 'players_cards' | translate },
+            { label: 'coaches_cards' | translate }]"
+            [activeIndex]="currentStep" readonly="true" fxFlex="100">
+            </p-steps>
+        </p-card>
+        <p-card styleClass="mt-3">
+            <div fxLayout="row">
+                <div fxFlex="100"
+                fxLayout="column">
+                    <match-step-one *ngIf="currentStep==0" [model]="model"></match-step-one>
+                    <match-step-two *ngIf="currentStep==1" [model]="model"></match-step-two>
+                    <match-step-three *ngIf="currentStep==2" [model]="model"></match-step-three>
+                    <match-step-four *ngIf="currentStep==3" [model]="model"></match-step-four>
+                    <match-step-five *ngIf="currentStep==4" [model]="model"></match-step-five>
+                    <match-step-six *ngIf="currentStep==5" [model]="model"></match-step-six>
+                </div>
+            </div>
+            <ng-template pTemplate="footer">
+                <div class="flex-container" 
+                        fxLayout="row" 
+                        fxLayoutAlign="space-between center">
+                    <div class="flex-item"> 
+                        <p-button *ngIf="currentStep > 0" styleClass="ml-3" label="{{'back' | translate}}" (onClick)="previousStep()" icon="pi pi-angle-left"></p-button>
+                    </div>
+                    <div class="flex-item">
+                        <p-button *ngIf="currentStep < 5" styleClass="mr-3" label="{{'next' | translate}}" (onClick)="nextStep()" icon="pi pi-angle-right" iconPos="right"></p-button>
+                        <p-button *ngIf="currentStep == 5" styleClass="mr-3 p-button-success" label="{{'save' | translate}}" (onClick)="confirmSubmit()"></p-button>
+                    </div>
+                </div>
+            </ng-template>
+        </p-card>
+        </div>
+        <div fxFlex.gt-xs="10" fxFlex.xs="3"></div>
+    </div>
+</div>

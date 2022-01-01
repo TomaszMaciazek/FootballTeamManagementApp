@@ -22,8 +22,12 @@ export class CoachService {
     return this.http.get<PaginatedList<CoachItem>>(this.url, {params: toParams(query)}).toPromise();
   }
 
-  getWorkingCoaches(): Promise<Array<SimpleCoach>> {
-    return this.http.get<Array<SimpleCoach>>(`${this.url}/working`).toPromise();
+  getAllCoaches(): Promise<Array<SimpleCoach>> {
+    return this.http.get<Array<SimpleCoach>>(`${this.url}/all`).toPromise();
+  }
+
+  getWorkingCoaches(date: string): Promise<Array<SimpleCoach>> {
+    return this.http.get<Array<SimpleCoach>>(`${this.url}/working`, {params: toParams({date: date})}).toPromise();
   }
 
   private async handleError(error: any) {

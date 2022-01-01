@@ -7,6 +7,7 @@ import { SelectItem } from 'primeng/api';
 import { TrainingScoreType } from 'src/app/enums/training-score-type';
 import { AddTrainingScoreCommand } from 'src/app/models/commands/add-training-score.model';
 import { SimpleSelectPlayer } from 'src/app/models/player/simple-select-player.model';
+import { PlayingPlayerQuery } from 'src/app/models/queries/playing-player-query.model';
 import { TrainingScore } from 'src/app/models/training-score.model';
 import { TranslationProvider } from 'src/app/providers/translation-provider.model';
 import { PlayerService } from 'src/app/services/player.service';
@@ -19,6 +20,7 @@ import { TrainingScoreService } from 'src/app/services/training-score.service';
 export class AddTrainingScoreComponent implements OnInit {
 
   @Input() trainingId: string;
+  @Input() trainingDate: Date;
   @Input() existingTrainingScores: Array<TrainingScore>;
   @Output() confirmUpdateScore = new EventEmitter<boolean>();
 
@@ -87,7 +89,9 @@ export class AddTrainingScoreComponent implements OnInit {
 
   getPlayers(){
     this.spinner.show();
-    this.playerService.getPlayingPlayers().then(res => {
+    var date = new Date(this.trainingDate);
+    var dateString = date.toISOString();
+    this.playerService.getPlayingPlayers(new PlayingPlayerQuery({date: dateString, playersGender: null})).then(res => {
       this.preparePlayers(res);
       this.spinner.hide()
     });

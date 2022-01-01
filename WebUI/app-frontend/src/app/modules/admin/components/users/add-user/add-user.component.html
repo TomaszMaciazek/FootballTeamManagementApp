@@ -66,7 +66,7 @@
                         <div class="form-group p-2" *ngIf="(showPlayerControls | async) || (showCoachControls | async)" fxFlex.gt-sm="25">
                             <h5>{{'country' | translate}}</h5>
                             <p-dropdown id="select-country" [options]="countries" [showClear]="true"
-                                optionLabel="code" filterBy="code" placeholder="{{'select_country' | translate}}"
+                                optionLabel="code" filter="true" filterBy="code" placeholder="{{'select_country' | translate}}"
                                 [style]="{'min-width': '80%'}" [formControl]="form.controls['CountryId']">
                             </p-dropdown>
                         </div>

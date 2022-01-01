@@ -7,6 +7,6 @@ namespace App.Model.Dtos
         public Guid Id { get; set; }
         public string Name { get; set; }
         public int YearOfBirth { get; set; }
-        public string TeamName { get; set; }
+        public SimpleTeamDto Team { get; set; }
     }
 }

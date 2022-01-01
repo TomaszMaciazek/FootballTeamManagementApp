@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using App.Model.Dtos.ListItemDtos;
+using App.Model.ViewModels.Commands;
+using App.Model.Entities;
 
 namespace App.API.Controllers
 {
@@ -27,10 +30,11 @@ namespace App.API.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginatedList<MatchDto>))]
-        public async Task<ActionResult<PaginatedList<MatchDto>>> GetMatches([FromQuery] MatchQuery query)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.MatchesPolicy)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginatedList<MatchListItemDto>))]
+        public async Task<ActionResult<PaginatedList<MatchListItemDto>>> GetMatches([FromQuery] MatchQuery query)
         {
-            return Ok(_mapper.Map<PaginatedList<MatchDto>>(await _matchService.GetPaginatedMatches(query)));
+            return Ok(await _matchService.GetMatches(query));
         }
 
         [HttpGet("{id}")]
@@ -40,6 +44,16 @@ namespace App.API.Controllers
         {
             var match = _mapper.Map<TranslationDto>(await _matchService.GetByIdAsync(id));
             return Ok(match);
+        }
+
+        [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.MatchesAddPolicy)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> CreateMatch([FromBody] CreateMatchVM model)
+        {
+            var match = _mapper.Map<Match>(model);
+            await _matchService.AddAsync(match);
+            return NoContent();
         }
 
         [HttpPatch]

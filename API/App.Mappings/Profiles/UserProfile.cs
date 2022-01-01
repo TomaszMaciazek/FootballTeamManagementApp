@@ -23,6 +23,10 @@ namespace App.Mappings.Profiles
                 .ForMember(dest => dest.LastPasswordSet, opt => opt.MapFrom(src=>  DateTime.Now))
                 .ForMember(dest => dest.BadLogonCount, opt => opt.MapFrom(src => 0))
                 .ForMember(dest => dest.Role, opt => opt.MapFrom< CreateAdminRoleResolver>());
+
+            CreateMap<User, UserAccountDto>()
+                .ForMember(dest => dest.Coach, opt => opt.MapFrom(src => src.CoachDetails))
+                .ForMember(dest => dest.Player, opt => opt.MapFrom(src => src.PlayerDetails));
         }
     }
 }

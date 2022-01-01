@@ -58,6 +58,9 @@ namespace App.Repository
 
             service.AddScoped<INewsRepository, NewsRepository>();
 
+            service.AddScoped<ITeamHistoryEventsRepository, TeamHistoryEventsRepository>();
+            service.AddScoped<IPlayerHistoryRepository, PlayerHistoryRepository>();
+
             return service;
         }
     }

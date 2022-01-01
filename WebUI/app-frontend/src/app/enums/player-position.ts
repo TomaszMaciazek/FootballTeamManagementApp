@@ -5,5 +5,6 @@ export enum PlayerPosition {
     CenterBack = 3,
     AttackingMidfielder = 4,
     DefensiveMiedfielder = 5,
-    Striker = 6
+    Striker = 6,
+    Reserve = 7
 }

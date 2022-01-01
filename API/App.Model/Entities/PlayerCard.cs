@@ -11,5 +11,7 @@ namespace App.Model.Entities
 
         [Required]
         public CardColor Color { get; set; }
+        [Required]
+        public int Count { get; set; }
     }
 }

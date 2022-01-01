@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using App.Model.Enums;
 
 namespace App.ServiceLayer.Services
 {
@@ -22,14 +23,14 @@ namespace App.ServiceLayer.Services
         Task<bool> ActivateAsync(Guid id);
         Task AddAsync(Player entity);
         Task<bool> DeactivateAsync(Guid id);
-        Task<List<Player>> GetAllAsync();
+        Task<List<SimpleSelectPlayerDto>> GetAllAsync();
         Task<Player> GetByIdAsync(Guid id);
-        Task<Player> GetByIdEagerAsync(Guid id);
+        Task<PlayerDto> GetByIdEagerAsync(Guid id);
         Task<Player> GetByUserIdEagerAsync(Guid id);
         Task RemoveAsync(Guid id);
         Task UpdateAsync(UpdatePlayerVM command);
         Task<PaginatedList<PlayerListItemDto>> GetPlayers(PlayerQuery query);
-        Task<IEnumerable<SimpleSelectPlayerDto>> GetPlayingPlayers();
+        Task<IEnumerable<SimpleSelectPlayerDto>> GetPlayingPlayers(DateTime? Date = null, PlayersGender? PlayersGender = null);
         Task AddPlayerToTeam(AddPlayersToTeamVM command);
         Task RemovePlayerFromTeam(Guid playerId, Guid teamId);
         Task<IEnumerable<SimpleSelectPlayerDto>> GetActivePlayersWithoutTeam();
@@ -90,11 +91,19 @@ namespace App.ServiceLayer.Services
             return true;
         }
 
-        public async Task<List<Player>> GetAllAsync() => await _playerRepository.GetAll().ToListAsync();
+        public async Task<List<SimpleSelectPlayerDto>> GetAllAsync() => await _playerRepository.GetAll()
+            .AsNoTracking()
+            .Include(x => x.User)
+            .Include(x => x.Team)
+            .ProjectTo<SimpleSelectPlayerDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
 
         public async Task<Player> GetByIdAsync(Guid id) => await _playerRepository.GetById(id).FirstOrDefaultAsync();
 
-        public async Task<Player> GetByIdEagerAsync(Guid id) => await _playerRepository.GetByIdEager(id).FirstOrDefaultAsync();
+        public async Task<PlayerDto> GetByIdEagerAsync(Guid id) 
+            => await _playerRepository.GetByIdEager(id)
+            .ProjectTo<PlayerDto>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync();
 
         public async Task<Player> GetByUserIdEagerAsync(Guid id) => await _playerRepository.GetByUserIdEager(id).FirstOrDefaultAsync();
 
@@ -179,13 +188,30 @@ namespace App.ServiceLayer.Services
                 .PaginatedListAsync(query.PageNumber, query.PageSize);
         }
 
-        public async Task<IEnumerable<SimpleSelectPlayerDto>> GetPlayingPlayers()
-            => await _playerRepository.GetAll()
-                .AsNoTracking()
+        public async Task<IEnumerable<SimpleSelectPlayerDto>> GetPlayingPlayers(DateTime? date = null, PlayersGender? playersGender = null)
+        {
+            var players = _playerRepository.GetAll()
                 .Include(x => x.User)
-                .Where(x => !x.FinishedPlaying.HasValue)
-                .ProjectTo<SimpleSelectPlayerDto>(_mapper.ConfigurationProvider)
-                .ToListAsync();
+                .AsNoTracking();
+
+
+            players = date.HasValue
+                ? players.Where(x => !x.FinishedPlaying.HasValue || (x.StartedPlaying.HasValue && x.StartedPlaying.Value.Date <= date.Value.Date && x.FinishedPlaying.HasValue && x.FinishedPlaying.Value.Date >= date.Value.Date))
+                : players.Where(x => !x.FinishedPlaying.HasValue);
+
+            if (playersGender.HasValue && playersGender.Value != PlayersGender.Both)
+            {
+                if(playersGender == PlayersGender.Females) {
+                    players = players.Where(x => x.Gender == Gender.Female);
+                }
+                else if(playersGender == PlayersGender.Males)
+                {
+                    players = players.Where(x => x.Gender == Gender.Male);
+                }
+            }
+
+            return await players.ProjectTo<SimpleSelectPlayerDto>(_mapper.ConfigurationProvider).ToListAsync();
+        }
 
         public async Task AddPlayerToTeam(AddPlayersToTeamVM command)
         {

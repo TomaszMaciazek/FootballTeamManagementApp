@@ -1,5 +1,6 @@
 ﻿using App.API.Models;
 using App.DataAccess.Configurations.Interfaces;
+using App.DataAccess.Exceptions;
 using App.Model.Dtos;
 using App.Model.Dtos.ListItemDtos;
 using App.Model.Entities;
@@ -65,6 +66,15 @@ namespace App.API.Controllers
         public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsers()
         {
             return Ok(await _userService.GetAll());
+        }
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserAccountDto>))]
+        [Route("Account/{id}")]
+        public async Task<ActionResult<UserAccountDto>> GetMyAccount(Guid id)
+        {
+            var account = await _userService.GetUserAccount(id);
+            return Ok(account);
         }
 
         [HttpPost]
@@ -163,6 +173,29 @@ namespace App.API.Controllers
         {
             await _coachService.UpdateAsync(model);
             return NoContent();
+        }
+
+        [HttpPatch]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Route("Account/ChangePassword")]
+        public async Task<IActionResult> UpdateAccountPassword([FromBody] UpdatePasswordVM model)
+        {
+            try
+            {
+                await _userService.UpdatePassword(model);
+                return Ok();
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch (IncorrectPasswordException)
+            {
+                return Forbid();
+            }
+
         }
     }
 }

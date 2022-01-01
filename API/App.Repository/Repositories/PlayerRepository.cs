@@ -30,12 +30,10 @@ namespace App.Repository.Repositories
 
         public IQueryable<Player> GetByIdEager(Guid id) => _dbSet
             .AsNoTracking()
-            .Include(x => x.Matches)
             .Include(x => x.Team)
             .Include(x => x.User)
-            .Include(x => x.TrainingScores).ThenInclude(x => x.Training)
-            .Include(x => x.Cards).ThenInclude(x => x.Match)
-            .Include(x => x.MatchPoints).ThenInclude(x => x.Match)
+            .Include(x => x.Country)
+            .Include(x => x.Matches)
             .Where(x => x.Id == id);
 
         public IQueryable<Player> GetByUserIdEager(Guid userId) => _dbSet

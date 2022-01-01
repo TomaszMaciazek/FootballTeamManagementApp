@@ -6,8 +6,33 @@
         <div fxFlex.gt-xs="80" fxFlexOffset.gt-xs="10" 
         fxFlex.xs="94" fxFlexOffset.xs="3"
         fxLayout="column">
+
+            <div fxLayout="row" class="mb-3 mt-3">
+                <div fxFlex="100" fxHide fxShow.lt-lg>
+                    <p-toolbar>
+                        <button class="btn btn-warning btn-block btn-lg btn-action" (click)="showFilters = !showFilters">
+                            <i class="fas mr-2" [ngClass]="{'fa-eye': !showFilters, 'fa-eye-slash': showFilters}"></i> 
+                            <span *ngIf="!showFilters">{{'show_filters' | translate}}</span>
+                            <span *ngIf="showFilters">{{'hide_filters' | translate}}</span>
+                        </button>
+                    </p-toolbar>
+                </div>
+                <div fxFlex.gt-md="100" fxHide fxShow.gt-md>
+                    <p-toolbar>
+                        <div class="p-toolbar-group-right">
+                            <button role="button" [ngClass.lt-md]="'btn-block'"
+                            class="btn btn-warning btn-lg btn-action"
+                            (click)="showFilters = !showFilters">
+                                <i class="fas mr-2" [ngClass]="{'fa-eye': !showFilters, 'fa-eye-slash': showFilters}"></i> 
+                                <span *ngIf="!showFilters">{{'show_filters' | translate}}</span>
+                                <span *ngIf="showFilters">{{'hide_filters' | translate}}</span>
+                            </button>
+                        </div>
+                    </p-toolbar>
+                </div>
+            </div>
             <form fxFlex="100" [formGroup]="form" fxLayout="row" class="mb-3">
-                <p-card fxFlex="100">
+                <p-card fxFlex="100" *ngIf="showFilters">
                     <div fxLayout="column" fxFlex="100">
                         <div fxLayout.gt-sm="row" fxLayout.lt-md="column">
                             <div class="form-group p-3" fxFlex.gt-sm="50">

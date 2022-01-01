@@ -18,11 +18,16 @@ namespace App.Mappings.Profiles
                     + (!string.IsNullOrEmpty(src.User.MiddleName) ? $" {src.User.MiddleName}" : "")
                     )
                 )
-                .ForMember(dest => dest.TeamName, opt => opt.MapFrom(
-                    src => (src.Team != null ? $" {src.Team.Name}" : "")
-                    )
-                )
                 .ForMember(dest => dest.YearOfBirth, opt => opt.MapFrom(src => src.BirthDate.Year));
+
+            CreateMap<Player, SimplePlayerNameDto>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.User.Name))
+                .ForMember(dest => dest.MiddleName, opt => opt.MapFrom(src => src.User.MiddleName))
+                .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.User.Surname));
+
+            CreateMap<Player, PlayerAccountDto>()
+                .ForMember(dest => dest.Country, opt => opt.MapFrom(src => src.Country.Code))
+                .ForMember(dest => dest.MatchCount, opt => opt.MapFrom(src => src.Matches != null ? src.Matches.Count : 0));
 
             CreateMap<Player, PlayerListItemDto>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.User.Name))
@@ -44,7 +49,10 @@ namespace App.Mappings.Profiles
             CreateMap<Player, PlayerDto>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.User.Name))
                 .ForMember(dest => dest.MiddleName, opt => opt.MapFrom(src => src.User.MiddleName))
-                .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.User.Surname));
+                .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.User.Surname))
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.User.Email))
+                .ForMember(dest => dest.Country, opt => opt.MapFrom(src => src.Country.Code))
+                .ForMember(dest => dest.MatchCount, opt => opt.MapFrom(src => src.Matches != null ? src.Matches.Count : 0));
 
             CreateMap<CreatePlayerVM, Player>()
                 .ForMember(dest => dest.Country, opt => opt.MapFrom<PlayerCountryResolver>())

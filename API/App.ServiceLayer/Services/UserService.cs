@@ -13,6 +13,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using App.DataAccess.Exceptions;
 
 namespace App.ServiceLayer.Services
 {
@@ -27,17 +30,21 @@ namespace App.ServiceLayer.Services
         Task Remove(Guid id);
         Task Update(UpdateUserCommandVM command);
         Task<PaginatedList<UserListItemDto>> GetUsers(UserQuery query);
+        Task<UserAccountDto> GetUserAccount(Guid id);
+        Task UpdatePassword(UpdatePasswordVM command);
     }
 
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
         private readonly IApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public UserService(IUserRepository userRepository, IApplicationDbContext context)
+        public UserService(IUserRepository userRepository, IApplicationDbContext context, IMapper mapper)
         {
             _userRepository = userRepository;
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<bool> Activate(Guid id)
@@ -146,6 +153,39 @@ namespace App.ServiceLayer.Services
                     }
                 )
                 .PaginatedListAsync(query.PageNumber, query.PageSize);
+        }
+
+        public async Task<UserAccountDto> GetUserAccount(Guid id)
+        {
+            return await _userRepository.GetById(id)
+                .AsNoTracking()
+                .Include(x => x.PlayerDetails).ThenInclude(x => x.Team)
+                .Include(x => x.PlayerDetails).ThenInclude(x => x.Matches)
+                .Include(x => x.CoachDetails).ThenInclude(x => x.Teams)
+                .ProjectTo<UserAccountDto>(_mapper.ConfigurationProvider)
+                .SingleOrDefaultAsync();
+        }
+
+        public async Task UpdatePassword(UpdatePasswordVM command)
+        {
+            var user = await _userRepository.GetById(command.UserId).SingleOrDefaultAsync();
+            if(user != null)
+            {
+                if(PasswordHashHelper.Verify(command.OldPassword, user.PasswordHash))
+                {
+                    user.PasswordHash = PasswordHashHelper.HashPassword(command.NewPassword);
+                    _userRepository.Update(user);
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    throw new IncorrectPasswordException();
+                }
+            }
+            else
+            {
+                throw new NotFoundException();
+            }
         }
     }
 }

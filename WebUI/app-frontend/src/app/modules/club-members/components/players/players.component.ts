@@ -23,6 +23,8 @@ export class PlayersComponent implements OnInit {
 
   public form: FormGroup;
 
+  showFilters: boolean = false;
+
   pageNumber : number = 1;
   rowNumbers : number = 20;
   rowNumbersOptions = [20, 30, 50];
@@ -54,11 +56,11 @@ export class PlayersComponent implements OnInit {
 
   playerPositionLabel = new Map<number, string>([
     [PlayerPosition.AttackingMidfielder, 'position_attackingMidfielder'],
-    [PlayerPosition.CenterBack, 'position_center_back'],
+    [PlayerPosition.CenterBack, 'position_centerBack'],
     [PlayerPosition.DefensiveMiedfielder, 'position_defensiveMidfielder'],
     [PlayerPosition.Goalkeeper, 'position_goalkeeper'],
-    [PlayerPosition.LeftBack, 'position_left_back'],
-    [PlayerPosition.RightBack, 'position_right_back'],
+    [PlayerPosition.LeftBack, 'position_leftBack'],
+    [PlayerPosition.RightBack, 'position_rightBack'],
     [PlayerPosition.Striker, 'position_striker']
   ]);
 

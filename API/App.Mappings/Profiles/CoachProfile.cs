@@ -17,6 +17,9 @@ namespace App.Mappings.Profiles
                 .ForMember(dest => dest.MiddleName, opt => opt.MapFrom(src => src.User.MiddleName))
                 .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.User.Surname));
 
+            CreateMap<Coach, CoachAccountDto>()
+                .ForMember(dest => dest.Country, opt => opt.MapFrom(src => src.Country.Code));
+
             CreateMap<Coach, CoachListItemDto>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.User.Name))
                 .ForMember(dest => dest.MiddleName, opt => opt.MapFrom(src => src.User.MiddleName))

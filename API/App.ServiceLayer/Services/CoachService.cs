@@ -23,14 +23,14 @@ namespace App.ServiceLayer.Services
         Task<bool> ActivateAsync(Guid id);
         Task AddAsync(Coach entity);
         Task<bool> DeactivateAsync(Guid id);
-        Task<List<Coach>> GetAllAsync();
+        Task<IEnumerable<SimpleCoachDto>> GetAllAsync();
         Task<Coach> GetByIdAsync(Guid id);
         Task<Coach> GetByIdEager(Guid id);
         Task<Coach> GetByUserId(Guid userId);
         Task RemoveAsync(Guid id);
         Task UpdateAsync(UpdateCoachVM entity);
         Task<PaginatedList<CoachListItemDto>> GetCoaches(CoachQuery query);
-        Task<IEnumerable<SimpleCoachDto>> GetWorkingCoaches();
+        Task<IEnumerable<SimpleCoachDto>> GetWorkingCoaches(DateTime? date);
     }
 
     public class CoachService : ICoachService
@@ -83,7 +83,9 @@ namespace App.ServiceLayer.Services
             return true;
         }
 
-        public async Task<List<Coach>> GetAllAsync() => await _coachRepository.GetAll().ToListAsync();
+        public async Task<IEnumerable<SimpleCoachDto>> GetAllAsync() => await _coachRepository.GetAll().AsNoTracking()
+            .ProjectTo<SimpleCoachDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
 
         public async Task<Coach> GetByIdAsync(Guid id) => await _coachRepository.GetById(id).FirstOrDefaultAsync();
 
@@ -178,9 +180,13 @@ namespace App.ServiceLayer.Services
                 .PaginatedListAsync(query.PageNumber, query.PageSize);
         }
 
-        public async Task<IEnumerable<SimpleCoachDto>> GetWorkingCoaches()
+        public async Task<IEnumerable<SimpleCoachDto>> GetWorkingCoaches(DateTime? date = null)
         {
-            var coaches = _coachRepository.GetAll().Include(x => x.User).AsNoTracking().Where(x => !x.FinishedWorking.HasValue);
+            var coaches = _coachRepository.GetAll().Include(x => x.User).AsNoTracking();
+                
+                coaches = date.HasValue 
+                    ? coaches.Where(x => !x.FinishedWorking.HasValue || (x.StartedWorking.HasValue && x.StartedWorking.Value.Date <= date.Value.Date && x.FinishedWorking.HasValue && x.FinishedWorking.Value.Date >= date.Value.Date))
+                    : coaches.Where(x => !x.FinishedWorking.HasValue);
 
             return await coaches.ProjectTo<SimpleCoachDto>(_mapper.ConfigurationProvider).ToListAsync();
 

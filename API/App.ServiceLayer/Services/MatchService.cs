@@ -10,6 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using App.Model.Dtos.ListItemDtos;
+using AutoMapper.QueryableExtensions;
+
 namespace App.ServiceLayer.Services
 {
     public interface IMatchService
@@ -21,8 +25,7 @@ namespace App.ServiceLayer.Services
         Task<IEnumerable<Match>> GetAllFromPlayer(Guid playerId);
         Task<Match> GetByIdAsync(Guid id);
         Task<Match> GetByIdEager(Guid id);
-        Task<PaginatedList<Match>> GetPaginatedMatches(MatchQuery query);
-        Task<PaginatedList<Match>> GetPaginatedMatchesFromPlayer(Guid playerId, MatchQuery query);
+        Task<PaginatedList<MatchListItemDto>> GetMatches(MatchQuery query);
         Task RemoveAsync(Guid id);
         Task UpdateAsync(Match entity);
     }
@@ -31,11 +34,13 @@ namespace App.ServiceLayer.Services
     {
         private readonly IMatchRepository _matchRepository;
         private readonly IApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public MatchService(IMatchRepository matchRepository, IApplicationDbContext context)
+        public MatchService(IMatchRepository matchRepository, IApplicationDbContext context, IMapper mapper)
         {
             _matchRepository = matchRepository;
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<bool> ActivateAsync(Guid id)
@@ -93,48 +98,44 @@ namespace App.ServiceLayer.Services
             .Where(x => x.Players.Any(x => x.Player.Id == playerId) && x.IsActive)
             .ToListAsync();
 
-        public async Task<PaginatedList<Match>> GetPaginatedMatches(MatchQuery query)
-        {
-            var matches = _matchRepository.GetAll().Where(x => x.IsActive);
-
-            matches = matches.WhereStringPropertyContains(x => x.OpponentsClubName, query.OpponentsClubName);
-
-            matches = matches.WhereStringPropertyContains(x => x.Location, query.Location);
-
-            matches = matches.WhereDatetimePropertyLessOrEqual(x => x.Date, query.MaxDate);
-
-            matches = matches.WhereDatetimePropertyGreaterOrEqual(x => x.Date, query.MinDate);
-
-            matches = query.PlayersGender.HasValue
-                ? matches.Where(x => x.PlayersGender == query.PlayersGender.Value)
-                : matches;
-
-            matches = matches.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
-
-            return await matches.PaginatedListAsync(query.PageNumber, query.PageSize);
-        }
-
-        public async Task<PaginatedList<Match>> GetPaginatedMatchesFromPlayer(Guid playerId, MatchQuery query)
+        public async Task<PaginatedList<MatchListItemDto>> GetMatches(MatchQuery query)
         {
             var matches = _matchRepository.GetAll()
-                .Include(x => x.Players).ThenInclude(x => x.Player)
-                .Where(x => x.Players.Any(x => x.Player.Id == playerId) && x.IsActive);
+                .Include(x => x.Players).ThenInclude(x => x.Player).ThenInclude(x => x.Team)
+                .AsNoTracking();
 
-            matches = matches.WhereStringPropertyContains(x => x.OpponentsClubName, query.OpponentsClubName);
+            if (query.MinDate.HasValue)
+            {
+                matches = matches.Where(x => x.Date.Date >= query.MinDate.Value.Date);
+            }
 
-            matches = matches.WhereStringPropertyContains(x => x.Location, query.Location);
+            if (query.MaxDate.HasValue)
+            {
+                matches = matches.Where(x => x.Date.Date <= query.MaxDate.Value.Date);
+            }
 
-            matches = matches.WhereDatetimePropertyLessOrEqual(x => x.Date, query.MaxDate);
+            if (query.PlayersGenders != null && query.PlayersGenders.Any())
+            {
+                matches = matches.Where(x => query.PlayersGenders.Contains(x.PlayersGender));
+            }
 
-            matches = matches.WhereDatetimePropertyGreaterOrEqual(x => x.Date, query.MinDate);
+            if (query.MatchTypes != null && query.MatchTypes.Any())
+            {
+                matches = matches.Where(x => query.MatchTypes.Contains(x.MatchType));
+            }
 
-            matches = query.PlayersGender.HasValue
-                ? matches.Where(x => x.PlayersGender == query.PlayersGender.Value)
-                : matches;
+            if (query.TeamsIds != null && query.TeamsIds.Any())
+            {
+                matches = matches.Where(x => query.TeamsIds.Any(y => x.Players.Any(z => z.Player.Team.Id == y)));
+            }
+
+            matches = query.IsActive.HasValue ? matches.Where(x => x.IsActive == query.IsActive.Value) : matches;
 
             matches = matches.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
 
-            return await matches.PaginatedListAsync(query.PageNumber, query.PageSize);
+            return await matches
+                .ProjectTo<MatchListItemDto>(_mapper.ConfigurationProvider)
+                .PaginatedListAsync(query.PageNumber, query.PageSize);
         }
     }
 }

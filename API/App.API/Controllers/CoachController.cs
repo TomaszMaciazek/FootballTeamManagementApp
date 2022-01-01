@@ -30,7 +30,7 @@ namespace App.API.Controllers
         }
 
         [HttpGet]
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.CoachesPolicy)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.CoachesPolicy)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginatedList<CoachListItemDto>))]
         public async Task<ActionResult<PaginatedList<CoachListItemDto>>> GetCoaches([FromQuery] CoachQuery query)
         {
@@ -40,10 +40,19 @@ namespace App.API.Controllers
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.CoachesPolicy)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SimpleCoachDto>))]
-        [Route("Working")]
-        public async Task<ActionResult<IEnumerable<SimpleCoachDto>>> GetPlayingPlayers()
+        [Route("All")]
+        public async Task<ActionResult<IEnumerable<SimpleCoachDto>>> GetAllPlayers()
         {
-            return Ok(await _coachService.GetWorkingCoaches());
+            return Ok(await _coachService.GetAllAsync());
+        }
+
+        [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.CoachesPolicy)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SimpleCoachDto>))]
+        [Route("Working")]
+        public async Task<ActionResult<IEnumerable<SimpleCoachDto>>> GetPlayingPlayers([FromQuery] DateTime? date = null)
+        {
+            return Ok(await _coachService.GetWorkingCoaches(date));
         }
     }
 }

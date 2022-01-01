@@ -20,6 +20,8 @@ export class TeamsComponent implements OnInit {
 
   @ViewChild(EditTeamComponent) editTeam: EditTeamComponent;
 
+  showFilters : boolean = false;
+
   pageNumber : number = 1;
   rowNumbers : number = 20;
   rowNumbersOptions = [20, 30, 50];
@@ -53,15 +55,12 @@ export class TeamsComponent implements OnInit {
       name: null,
       coachId: null
     });
-
-    forkJoin([
-      this.teamService.getTeams(query).then(res => {
-        this.teams = res.items;
-        this.totalCount = res.totalCount;
-      }),
-      this.coachService.getWorkingCoaches().then(res => this.prepareCoaches(res))
-    ])
-    .subscribe(res => this.spinner.hide());
+    this.spinner.show();
+    this.teamService.getTeams(query).then(res => {
+      this.teams = res.items;
+      this.totalCount = res.totalCount;
+      this.spinner.hide();
+    });
   }
 
   getTeams(){
@@ -163,9 +162,35 @@ export class TeamsComponent implements OnInit {
   }
 
   showEditDialog(id : string){
-    var team = this.teams.find(x => x.id === id);
-    this.editTeam.setValues(id, team.mainCoach, team.name);
-    this.displayEditTeamDialog = true;
+    if(this.coaches == null || this.coaches == undefined || this.coaches.length == 0){
+      this.spinner.show();
+      this.coachService.getWorkingCoaches(null).then(res => {
+        this.prepareCoaches(res);
+        var team = this.teams.find(x => x.id === id);
+        this.editTeam.setValues(id, team.mainCoach, team.name);
+        this.displayEditTeamDialog = true;
+        this.spinner.hide();
+      });
+    }
+    else{
+      var team = this.teams.find(x => x.id === id);
+      this.editTeam.setValues(id, team.mainCoach, team.name);
+      this.displayEditTeamDialog = true;
+    }
+  }
+
+  showCreateTeamDialog(){
+    if(this.coaches == null || this.coaches == undefined || this.coaches.length == 0){
+      this.spinner.show();
+      this.coachService.getWorkingCoaches(null).then(res => {
+        this.prepareCoaches(res);
+        this.displayCreateTeamDialog = true;
+        this.spinner.hide();
+      });
+    }
+    else{
+      this.displayCreateTeamDialog = true;
+    }
   }
 
 }

@@ -1,0 +1,9 @@
+.stick-left-bottom-parent{
+    position: relative;
+
+    .stick-left-bottom{
+    position:absolute;
+    bottom:0;
+    left:0;
+}
+}

@@ -1,4 +1,5 @@
 ﻿using App.Model.Dtos.Common;
+using App.Model.Dtos.History;
 using System;
 using System.Collections.Generic;
 

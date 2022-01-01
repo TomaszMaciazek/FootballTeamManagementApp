@@ -35,13 +35,30 @@ namespace App.API.Controllers
             return Ok(await _playerService.GetPlayers(query));
         }
 
+        [HttpGet("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.PlayersPolicy)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PlayerDto))]
+        public async Task<ActionResult<PlayerDto>> GetPlayerById(Guid id)
+        {
+            return Ok(await _playerService.GetByIdEagerAsync(id));
+        }
+
+        [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.PlayersPolicy)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SimpleSelectPlayerDto>))]
+        [Route("All")]
+        public async Task<ActionResult<IEnumerable<SimpleSelectPlayerDto>>> GetAllPlayers()
+        {
+            return Ok(await _playerService.GetAllAsync());
+        }
+
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.PlayersPolicy)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SimpleSelectPlayerDto>))]
         [Route("Playing")]
-        public async Task<ActionResult<IEnumerable<SimpleSelectPlayerDto>>> GetPlayingPlayers()
+        public async Task<ActionResult<IEnumerable<SimpleSelectPlayerDto>>> GetPlayingPlayers([FromQuery] PlayingPlayerQuery query)
         {
-            return Ok(await _playerService.GetPlayingPlayers());
+            return Ok(await _playerService.GetPlayingPlayers(query.Date, query.PlayersGender));
         }
 
         [HttpGet]

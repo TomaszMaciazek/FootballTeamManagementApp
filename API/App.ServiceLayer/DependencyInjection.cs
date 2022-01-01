@@ -54,6 +54,11 @@ namespace App.ServiceLayer
             services.AddScoped<ICountryService, CountryService>();
 
             services.AddScoped<INewsService, NewsService>();
+
+            services.AddScoped<ITeamHistoryService, TeamHistoryService>();
+            services.AddScoped<IPlayerHistoryService, PlayerHistoryService>();
+
+            services.AddScoped<IStatisticsService, StatisticsService>();
             return services;
         }
     }
