@@ -85,6 +85,7 @@ namespace App.API
 
                 options.AddPolicy(Permissions.PlayersPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.Players));
                 options.AddPolicy(Permissions.PlayersTeamsEditPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.PlayersTeamsEdit));
+                options.AddPolicy(Permissions.PlayersHistoriesPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.PlayersHistories));
 
                 options.AddPolicy(Permissions.CoachesPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.Coaches));
                 options.AddPolicy(Permissions.CoachesTeamsEditPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.CoachesTeamsEdit));
@@ -144,6 +145,7 @@ namespace App.API
                 options.AddPolicy(Permissions.TeamsAddPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TeamsAdd));
                 options.AddPolicy(Permissions.TeamsEditPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TeamsEdit));
                 options.AddPolicy(Permissions.TeamsDeletePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TeamsDelete));
+                options.AddPolicy(Permissions.TeamsHistoriesPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TeamsHistories));
             });
 
             services.AddSwaggerGen(c =>

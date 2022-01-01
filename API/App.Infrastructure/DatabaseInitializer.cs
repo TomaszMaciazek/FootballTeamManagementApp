@@ -55,6 +55,7 @@ namespace App.Infrastructure
                         Permissions.AdminSettings,
                         Permissions.Players,
                         Permissions.PlayersTeamsEdit,
+                        Permissions.PlayersHistories,
                         Permissions.Coaches,
                         Permissions.CoachesTeamsEdit,
                         Permissions.Trainings,
@@ -105,11 +106,13 @@ namespace App.Infrastructure
                         Permissions.TeamsActivate,
                         Permissions.TeamsDeactivate,
                         Permissions.TeamsAdd,
-                        Permissions.TeamsDelete
+                        Permissions.TeamsDelete,
+                        Permissions.TeamsHistories
                     } },
                     { "coach", new List<Permission>() {
                         Permissions.Players,
                         Permissions.PlayersTeamsEdit,
+                        Permissions.PlayersHistories,
                         Permissions.Coaches,
                         Permissions.Trainings,
                         Permissions.TrainingsEdit,
@@ -156,7 +159,8 @@ namespace App.Infrastructure
                         Permissions.TeamsActivate,
                         Permissions.TeamsDeactivate,
                         Permissions.TeamsAdd,
-                        Permissions.TeamsDelete
+                        Permissions.TeamsDelete,
+                        Permissions.TeamsHistories
                     } },
                     { $"player", new List<Permission>() {
                         Permissions.Players,

@@ -24,6 +24,10 @@ namespace App.UserMiddleware
         public static Permission Players { get => new("Zawodnicy", PlayersPolicy, PlayersGroup, ""); }
         public const string PlayersTeamsEditPolicy = "players.teams.edit";
         public static Permission PlayersTeamsEdit { get => new("Edycja drużyn zawodników", PlayersTeamsEditPolicy, PlayersGroup, ""); }
+        public const string PlayersHistoriesPolicy = "players.history";
+        public static Permission PlayersHistories { get => new("Przeglądanie historii zawodników", PlayersHistoriesPolicy, PlayersGroup, ""); }
+
+
         #endregion
 
         #region Coaches
@@ -164,7 +168,8 @@ namespace App.UserMiddleware
         public static Permission TeamsAdd { get => new("Dodanie drużyny", TeamsAddPolicy, TeamsGroup, ""); }
         public const string TeamsDeletePolicy = "teams.delete";
         public static Permission TeamsDelete { get => new("Usuwanie drużyny", TeamsDeletePolicy, TeamsGroup, ""); }
-        public const string TeamsResultsPolicy = "teams.results";
+        public const string TeamsHistoriesPolicy = "teams.history";
+        public static Permission TeamsHistories { get => new("Historia drużyny", TeamsHistoriesPolicy, TeamsGroup, ""); }
         #endregion
 
         static Permissions()
@@ -178,6 +183,7 @@ namespace App.UserMiddleware
                 // Players
                 Players,
                 PlayersTeamsEdit,
+                PlayersHistories,
 
                 //Coaches
                 Coaches,
@@ -247,6 +253,7 @@ namespace App.UserMiddleware
                 TeamsDeactivate,
                 TeamsAdd,
                 TeamsDelete,
+                TeamsHistories,
 
             }.AsReadOnly();
         }
