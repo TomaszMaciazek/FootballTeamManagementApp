@@ -30,6 +30,7 @@ import { TopbarComponent } from './components/topbar/topbar.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LocaleCalendarProvider } from './providers/locale-calendar-provider.model';
 import { ConfirmationService } from 'primeng/api';
+import { UserSecurityModule } from './directives/user-security.directive';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -48,9 +49,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     RefreshComponent,
     BasicLayoutComponent,
     FooterComponent,
-    TopbarComponent,
+    TopbarComponent
   ],
   imports: [
+    UserSecurityModule,
     SharedModule,
     BrowserModule,
     BrowserAnimationsModule,

@@ -5,7 +5,6 @@ using App.Model.ViewModels.Commands;
 using App.UserMiddleware.Helpers;
 using AutoMapper;
 using System;
-using System.Collections.Generic;
 
 namespace App.Mappings.Profiles
 {
@@ -14,6 +13,7 @@ namespace App.Mappings.Profiles
         public UserProfile()
         {
             CreateMap<User, UserDto>();
+            CreateMap<User, SimpleUserDto>();
             CreateMap<CreateUserVM, User>()
                 .ForMember(dest => dest.PasswordHash, opt => opt.MapFrom(src => PasswordHashHelper.HashPassword(src.Password)))
                 .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.Email.ToLower()));
@@ -25,6 +25,10 @@ namespace App.Mappings.Profiles
                 .ForMember(dest => dest.Role, opt => opt.MapFrom< CreateAdminRoleResolver>());
 
             CreateMap<User, UserAccountDto>()
+                .ForMember(dest => dest.Coach, opt => opt.MapFrom(src => src.CoachDetails))
+                .ForMember(dest => dest.Player, opt => opt.MapFrom(src => src.PlayerDetails));
+
+            CreateMap<User, SelectUserDto>()
                 .ForMember(dest => dest.Coach, opt => opt.MapFrom(src => src.CoachDetails))
                 .ForMember(dest => dest.Player, opt => opt.MapFrom(src => src.PlayerDetails));
         }

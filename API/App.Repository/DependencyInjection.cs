@@ -37,6 +37,11 @@ namespace App.Repository
             service.AddScoped<IUserSurveyResultRepository, UserSurveyResultRepository>();
             service.AddScoped<IUserTestResultRepository, UserTestResultRepository>();
 
+            service.AddScoped<ISurveyQuestionRepository, SurveyQuestionRepository>();
+            service.AddScoped<ISurveyQuestionOptionRepository, SurveyQuestionOptionRepository>();
+            service.AddScoped<ISurveySelectQuestionAnswerRepository, SurveySelectQuestionAnswerRepository>();
+            service.AddScoped<ISurveyTextQuestionAnswerRepository, SurveyTextQuestionAnswerRepository>();
+
             service.AddScoped<IUserBoolTestQuestionAnswerRepository, UserBoolTestQuestionAnswerRepository>();
             service.AddScoped<IUserOptionsTestQuestionAnswerRepository, UserOptionsTestQuestionAnswerRepository>();
 

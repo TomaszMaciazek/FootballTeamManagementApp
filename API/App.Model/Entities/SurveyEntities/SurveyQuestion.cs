@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace App.Model.Entities.SurveyEntities
 {
-    public class SurveyQuestion : AuditableEntity
+    public class SurveyQuestion : EditableEntity
     {
         [Required]
         public int Number { get; set; }

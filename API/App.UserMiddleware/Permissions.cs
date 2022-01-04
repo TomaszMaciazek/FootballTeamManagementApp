@@ -93,12 +93,16 @@ namespace App.UserMiddleware
         public const string SurveysGroup = "Ankiety";
         public const string SurveysPolicy = "surveys";
         public static Permission Surveys { get => new("Ankiety", SurveysPolicy, SurveysGroup, ""); }
+        public const string SurveysAllPolicy = "surveys.all";
+        public static Permission SurveysAll { get => new("Ankiety wszystkie", SurveysAllPolicy, SurveysGroup, ""); }
+        public const string SurveysCreatedByMePolicy = "surveys.created";
+        public static Permission SurveysCreatedByMe { get => new("Ankiety autorskie", SurveysCreatedByMePolicy, SurveysGroup, ""); }
+        public const string SurveysAssignedToMePolicy = "surveys.assigned";
+        public static Permission SurveysAssignedToMe { get => new("Ankiety przypisane", SurveysAssignedToMePolicy, SurveysGroup, ""); }
+        public const string SurveysRespondentsPolicy = "surveys.respondents";
+        public static Permission SurveysRespondents { get => new("Ankiety respondenci", SurveysRespondentsPolicy, SurveysGroup, ""); }
         public const string SurveysEditPolicy = "surveys.edit";
         public static Permission SurveysEdit { get => new("Edycja ankiety", SurveysEditPolicy, SurveysGroup, ""); }
-        public const string SurveysActivatePolicy = "surveys.activate";
-        public static Permission SurveysActivate { get => new("Aktywacja ankiety", SurveysActivatePolicy, SurveysGroup, ""); }
-        public const string SurveysDeactivatePolicy = "surveys.deactivate";
-        public static Permission SurveysDeactivate { get => new("Dezaktywacja ankiety", SurveysDeactivatePolicy, SurveysGroup, ""); }
         public const string SurveysAddPolicy = "surveys.add";
         public static Permission SurveysAdd { get => new("Dodanie ankiety", SurveysAddPolicy, SurveysGroup, ""); }
         public const string SurveysDeletePolicy = "surveys.delete";
@@ -216,9 +220,11 @@ namespace App.UserMiddleware
 
                 //Surveys
                 Surveys,
+                SurveysAll,
+                SurveysRespondents,
                 SurveysEdit,
-                SurveysActivate,
-                SurveysDeactivate,
+                SurveysCreatedByMe,
+                SurveysAssignedToMe,
                 SurveysAdd,
                 SurveysDelete,
 

@@ -26,6 +26,10 @@ import {SelectButtonModule} from 'primeng/selectbutton';
 import {StepsModule} from 'primeng/steps';
 import {TimelineModule} from 'primeng/timeline';
 import {ChartModule} from 'primeng/chart';
+import {TooltipModule} from 'primeng/tooltip';
+import {RatingModule} from 'primeng/rating';
+
+
 
 @NgModule({
   declarations: [],
@@ -56,7 +60,9 @@ import {ChartModule} from 'primeng/chart';
     SelectButtonModule,
     StepsModule,
     TimelineModule,
-    ChartModule
+    ChartModule,
+    TooltipModule,
+    RatingModule
   ],
   exports: [
     ReactiveFormsModule,
@@ -84,7 +90,9 @@ import {ChartModule} from 'primeng/chart';
     SelectButtonModule,
     StepsModule,
     TimelineModule,
-    ChartModule
+    ChartModule,
+    TooltipModule,
+    RatingModule
   ]
 })
 export class SharedModule { }

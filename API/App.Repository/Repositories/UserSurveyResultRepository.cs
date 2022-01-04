@@ -9,7 +9,6 @@ namespace App.Repository.Repositories
 {
     public interface IUserSurveyResultRepository : IRepository<UserSurveyResult>
     {
-        IQueryable<UserSurveyResult> GetAllEager();
     }
 
     public class UserSurveyResultRepository : BaseRepository<UserSurveyResult>, IUserSurveyResultRepository
@@ -17,9 +16,5 @@ namespace App.Repository.Repositories
         public UserSurveyResultRepository(IApplicationDbContext dbContext) : base(dbContext)
         {
         }
-
-        public IQueryable<UserSurveyResult> GetAllEager() => _dbSet
-            .AsNoTracking()
-            .Include(x => x.User);
     }
 }

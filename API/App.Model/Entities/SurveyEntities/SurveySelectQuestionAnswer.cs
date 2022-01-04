@@ -6,6 +6,6 @@ namespace App.Model.Entities.SurveyEntities
     {
         public SurveyQuestion Question { get; set; }
         public UserSurveyResult UserResult { get; set; }
-        public int AnswerValue { get; set; }
+        public int? AnswerValue { get; set; }
     }
 }

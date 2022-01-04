@@ -1,0 +1,160 @@
+<div class="content-wrapper">
+    <p-confirmDialog #cd [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}">
+        <ng-template pTemplate="footer">
+            <button type="button" pButton icon="pi pi-times" label="{{'no' | translate}}" (click)="cd.reject()"></button>
+            <button type="button" pButton icon="pi pi-check" label="{{'yes' | translate}}" (click)="cd.accept()"></button>
+        </ng-template>
+    </p-confirmDialog>
+    <div class="text-center pb-3">
+        <h1>{{'surveys' | translate}}</h1>
+    </div>
+    <div fxLayout="row">
+        <div 
+            fxFlexOffset.lt-lg="10" fxFlex.lt-lg="80"
+            fxFlex.xs="94"fxFlexOffset.xs="3"
+            fxHide fxShow.lt-lg>
+            <p-toolbar>
+                <button class="btn btn-primary btn-block btn-lg btn-action" [routerLink]="['/surveys/create']">
+                    <i class="far fa-plus-square"></i>
+                    {{'add' | translate}}
+                </button>
+                <button class="btn btn-warning btn-block btn-lg btn-action" (click)="showFilters = !showFilters">
+                    <i class="fas mr-2" [ngClass]="{'fa-eye': !showFilters, 'fa-eye-slash': showFilters}"></i> 
+                    <span *ngIf="!showFilters">{{'show_filters' | translate}}</span>
+                    <span *ngIf="showFilters">{{'hide_filters' | translate}}</span>
+                </button>
+            </p-toolbar>
+        </div>
+        <div fxFlex.gt-md="80" fxFlexOffset.gt-md="10"
+            fxHide fxShow.gt-md>
+            <p-toolbar>
+                <div class="p-toolbar-group-left">
+                    <button role="button" [ngClass.lt-md]="'btn-block'" [routerLink]="['/surveys/create']"
+                    class="btn btn-primary btn-lg btn-action">
+                        <i class="far fa-plus-square"></i>    
+                        {{'add' | translate}}
+                    </button>
+                </div>
+                <div class="p-toolbar-group-right">
+                    <button role="button" [ngClass.lt-md]="'btn-block'"
+                    class="btn btn-warning btn-lg btn-action"
+                    (click)="showFilters = !showFilters">
+                        <i class="fas mr-2" [ngClass]="{'fa-eye': !showFilters, 'fa-eye-slash': showFilters}"></i> 
+                        <span *ngIf="!showFilters">{{'show_filters' | translate}}</span>
+                        <span *ngIf="showFilters">{{'hide_filters' | translate}}</span>
+                    </button>
+                </div>
+            </p-toolbar>
+        </div>
+        <div fxFlex.gt-md="10" fxFlex.lt-lg="10" fxFlex.xs="3"></div>
+    </div>
+    <div fxLayout="row">
+        <div fxFlex.gt-xs="80" fxFlexOffset.gt-xs="10" 
+        fxFlex.xs="94" fxFlexOffset.xs="3"
+        fxLayout="column" class="card mt-2">
+            <form fxFlex="100" [formGroup]="form" fxLayout="row" class="mb-3">
+                <p-card *ngIf="showFilters" fxFlex="100">
+                    <div fxLayout="column" fxFlex="100">
+                        <div fxLayout.gt-sm="row" fxLayout.lt-md="column">
+                            <div class="form-group p-3" fxFlex.gt-sm="50">
+                                <h5 class="mb-3">{{'title' | translate}}</h5>
+                                <input type="text" class="form-control" formControlName="Title"/>
+                            </div>
+                            <div class="form-group p-3" fxFlex.gt-sm="50">
+                                <h5 class="mb-3">{{'survey_type' | translate}}</h5>
+                                <p-selectButton [options]="isAnonymousOptions"
+                                    formControlName="IsAnonymous"
+                                    optionLabel="label" optionValue="value">
+                                    <ng-template let-item>
+                                        {{item.label | translate}}
+                                    </ng-template>
+                                </p-selectButton>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <ng-template pTemplate="footer">
+                        <div fxLayout="row" fxFlex="100">
+                            <div fxFlex="100" fxHide fxShow.lt-lg>
+                                <button class="btn btn-primary btn-block btn-action" (click)="filter()">
+                                    <i class="fas fa-search"></i>  
+                                    {{'filter' | translate}}
+                                </button>
+                                <button class="btn btn-danger btn-block btn-action" (click)="resetFilter()">
+                                    <i class="fas fa-sync-alt"></i>
+                                    {{'clear' | translate}}
+                                </button>
+                            </div>
+                            <div fxFlex="100" fxHide fxShow.gt-md fxLayoutAlign="end start">
+                                <button role="button" [ngClass.lt-md]="'btn-block'"
+                                class="btn btn-danger btn-action mr-3"
+                                (click)="resetFilter()">
+                                    <i class="fas fa-sync-alt"></i>
+                                    {{'clear' | translate}}
+                                </button>
+                                <button role="button" [ngClass.lt-md]="'btn-block'"
+                                class="btn btn-primary btn-action mr-3"
+                                (click)="filter()">
+                                    <i class="fas fa-search"></i>  
+                                    {{'filter' | translate}}
+                                </button>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-card>
+            </form>
+            <p-table [value]="surveys" responsiveLayout="scroll" styleClass="p-datatable-striped"
+                [paginator]="true" [rows]="rowNumbers" [totalRecords]="totalCount" [rowsPerPageOptions]="rowNumbersOptions"
+                [resizableColumns]="true" [autoLayout]="true" fxFlex="100" [lazy]="true" (onLazyLoad)="loadSurveys($event)">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="text-center" pSortableColumn="Title">
+                            {{'title' | translate}}
+                            <p-sortIcon [field]="title"></p-sortIcon>
+                        </th>
+                        <th class="text-center">
+                            {{'author' | translate}}
+                        </th>
+                        <th class="text-center">
+                            {{'respondents_count' | translate}}
+                        </th>
+                        <th class="text-center">
+                            {{'compleated_count' | translate}}
+                        </th>
+                        <th class="text-center">
+                            {{'actions' | translate}}
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-survey>
+                    <tr>
+                        <td class="text-center">{{survey.title}}</td>
+                        <td class="text-center">
+                            <span *ngIf="survey.author.middleName && survey.author.middleName.length > 0; else noMiddleName">
+                                {{survey.author.surname}} {{survey.author.name}} {{survey.author.middleName}}
+                            </span>
+                            <ng-template #noMiddleName>
+                                <span>{{survey.author.surname}} {{survey.author.name}}</span>
+                            </ng-template>
+                        </td>
+                        <td class="text-center">
+                            {{survey.respondentsCount}}
+                        </td>
+                        <td class="text-center">
+                            {{survey.numberOfCompleatedResults}}
+                        </td>
+                        <td class="text-center">
+                            <a [routerLink]="['/surveys/results/all/'+survey.id]">
+                                <button pButton pRipple type="button" icon="fas fa-info" 
+                                class="p-button-rounded p-button-info"></button>
+                            </a>
+                            <button pButton pRipple type="button" icon="fas fa-trash" 
+                            class="p-button-rounded p-button-danger ml-2" (click)="deleteSurvey(survey.id)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <div fxFlex.gt-xs="10" fxFlex.xs="3"></div>
+    </div>
+</div>

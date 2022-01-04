@@ -105,8 +105,10 @@ namespace App.API
                 options.AddPolicy(Permissions.MatchesDeletePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.MatchesDelete));
 
                 options.AddPolicy(Permissions.SurveysPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.Surveys));
-                options.AddPolicy(Permissions.SurveysActivatePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.SurveysActivate));
-                options.AddPolicy(Permissions.SurveysDeactivatePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.SurveysDeactivate));
+                options.AddPolicy(Permissions.SurveysAllPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.SurveysAll));
+                options.AddPolicy(Permissions.SurveysAssignedToMePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.SurveysAssignedToMe));
+                options.AddPolicy(Permissions.SurveysCreatedByMePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.SurveysCreatedByMe));
+                options.AddPolicy(Permissions.SurveysRespondentsPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.SurveysRespondents));
                 options.AddPolicy(Permissions.SurveysAddPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.SurveysAdd));
                 options.AddPolicy(Permissions.SurveysEditPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.SurveysEdit));
                 options.AddPolicy(Permissions.SurveysDeletePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.SurveysDelete));

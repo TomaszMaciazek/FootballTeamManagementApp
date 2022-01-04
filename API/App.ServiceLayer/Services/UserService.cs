@@ -24,7 +24,7 @@ namespace App.ServiceLayer.Services
         Task<bool> Activate(Guid id);
         Task Add(User entity);
         Task<bool> Deactivate(Guid id);
-        Task<IEnumerable<UserDto>> GetAll();
+        Task<IEnumerable<SelectUserDto>> GetAll();
         Task<User> GetByLogin(string login);
         Task<User> GetById(Guid id);
         Task Remove(Guid id);
@@ -81,16 +81,13 @@ namespace App.ServiceLayer.Services
 
         public async Task<User> GetByLogin(string login) => await _userRepository.GetByEmailOrUsername(login);
 
-        public async Task<IEnumerable<UserDto>> GetAll() => await _userRepository.GetAll()
-            .Select(x => new UserDto
-            {
-                Id = x.Id,
-                IsActive = x.IsActive,
-                Email = x.Email,
-                Name = $"{x.Name} {x.MiddleName} {x.Surname}",
-                UserName = x.Username,
-                Role = new RoleDto { Id = x.Role.Id, Name = x.Role.Name }
-            })
+        public async Task<IEnumerable<SelectUserDto>> GetAll() => await _userRepository.GetAll()
+            .AsNoTracking()
+            .Include(x => x.PlayerDetails).ThenInclude(x => x.Country)
+            .Include(x => x.PlayerDetails).ThenInclude(x => x.Team)
+            .Include(x => x.CoachDetails).ThenInclude(x => x.Country)
+            .Include(x => x.Role)
+            .ProjectTo<SelectUserDto>(_mapper.ConfigurationProvider)
             .ToListAsync();
 
         public async Task<User> GetById(Guid id) => await _userRepository.GetById(id).SingleOrDefaultAsync();

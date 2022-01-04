@@ -10,16 +10,31 @@ namespace App.Repository.Repositories
 {
     public interface ISurveyTemplateRepository : IRepository<SurveyTemplate>
     {
-        IQueryable<SurveyTemplate> GetAllEager();
     }
 
     public class SurveyTemplateRepository : BaseRepository<SurveyTemplate>, ISurveyTemplateRepository
     {
         public SurveyTemplateRepository(IApplicationDbContext dbContext) : base(dbContext){}
 
-        public IQueryable<SurveyTemplate> GetAllEager() => _dbSet
-            .AsNoTracking()
-            .Include(x => x.Author)
-            .Include(x => x.RespondentsResults).ThenInclude(x => x.User);
+
+        public new void Remove(Guid id)
+        {
+            var survey = _dbContext.SurveyTemplates
+                .AsNoTracking()
+                .Include(x => x.RespondentsResults)
+                .SingleOrDefault(x => x.Id == id);
+            if (survey != null)
+            {
+                if (survey.RespondentsResults.Any())
+                {
+                    _dbContext.UsersSurveyResults.RemoveRange(survey.RespondentsResults);
+                }
+                _dbSet.Remove(survey);
+            }
+            else
+            {
+                throw new InvalidOperationException("There is no object with designated Id");
+            }
+        }
     }
 }

@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace App.Repository.Common.Implementation
 {
-    public abstract class BaseRepository<T> : IRepository<T> where T : AuditableEntity
+    public abstract class BaseRepository<T> : IRepository<T> where T : EditableEntity
     {
         protected readonly IApplicationDbContext _dbContext;
         protected readonly DbSet<T> _dbSet;

@@ -44,6 +44,10 @@ const routes: Routes = [
     path: 'reports', component: BasicLayoutComponent,
     loadChildren: () => import('./modules/reports/reports.module').then(m => m.ReportsModule)
   },
+  {
+    path: 'surveys', component: BasicLayoutComponent,
+    loadChildren: () => import('./modules/surveys/surveys.module').then(m => m.SurveysModule)
+  },
   { path: '**', redirectTo: 'login' }
 ];
 

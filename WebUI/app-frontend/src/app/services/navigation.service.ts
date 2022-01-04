@@ -141,22 +141,27 @@ export class NavigationService {
     surveys.FontAwesomeIcon = "fas fa-pencil-ruler"
     surveys.SubMenuItems = new Array<MenuItem>();
 
+    let newSurvey = new MenuItem();
+    newSurvey.Title = "create_survey";
+    newSurvey.Link = "surveys/create";
+    newSurvey.RequiredPermissions = "surveys.add";
+
     let allSurveys = new MenuItem();
     allSurveys.Title = "all";
     allSurveys.Link = "surveys/all";
     allSurveys.RequiredPermissions = "surveys";
 
     let awaitingSurveys = new MenuItem();
-    awaitingSurveys.Title = "awaiting";
-    awaitingSurveys.Link = "surveys/awaiting";
+    awaitingSurveys.Title = "created_by_myself";
+    awaitingSurveys.Link = "surveys/created";
     awaitingSurveys.RequiredPermissions = "surveys";
 
     let filledSurveys = new MenuItem();
-    filledSurveys.Title = "filled";
-    filledSurveys.Link = "surveys/filled";
+    filledSurveys.Title = "surveys_assigned_to_me";
+    filledSurveys.Link = "surveys/assigned";
     filledSurveys.RequiredPermissions = "surveys";
 
-    surveys.SubMenuItems.push(allSurveys, awaitingSurveys, filledSurveys);
+    surveys.SubMenuItems.push(newSurvey, allSurveys, awaitingSurveys, filledSurveys);
     return surveys
   }
 
@@ -258,7 +263,7 @@ export class NavigationService {
     gainedPoints.RequiredPermissions = "reports.match.points";
 
     let playersPoints = new MenuItem();
-    playersPoints.Title = "players_match_points";
+    playersPoints.Title = "players_points";
     playersPoints.Link = "reports/points/players";
     playersPoints.RequiredPermissions = "reports.match.points";
 

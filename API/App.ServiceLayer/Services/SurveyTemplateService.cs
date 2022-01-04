@@ -10,6 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using App.Model.Dtos.ListItemDtos;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using App.Model.Dtos;
 
 namespace App.ServiceLayer.Services
 {
@@ -19,22 +23,28 @@ namespace App.ServiceLayer.Services
         Task AddAsync(SurveyTemplate entity);
         Task<bool> DeactivateAsync(Guid id);
         Task<List<SurveyTemplate>> GetAllAsync();
-        Task<SurveyTemplate> GetByIdAsync(Guid id);
-        Task<PaginatedList<SurveyTemplate>> GetSurveysFromAuthor(Guid authorId, SurveyTemplateQuery query);
-        Task<PaginatedList<SurveyTemplate>> GetSurveysFromRespondent(Guid authorId, SurveyTemplateQuery query);
+        Task<SurveyWithResultsDto> GetByIdAsync(Guid id);
         Task RemoveAsync(Guid id);
         Task UpdateAsync(SurveyTemplate entity);
+        Task<PaginatedList<MySurveyListItemDto>> GetSurveysFromAuthor(SurveyTemplateQuery query);
+        Task<PaginatedList<SurveyListItemDto>> GetSurveys(SurveyTemplateQuery query);
+        Task<FillSurveyDto> GetSurveyTemplateToFill(Guid id);
+        Task<IEnumerable<SurveyQuestionDto>> GetQuestionsFromSurvey(Guid surveyId);
     }
 
-    public class SurveyTemplateService : IService<SurveyTemplate>, ISurveyTemplateService
+    public class SurveyTemplateService : ISurveyTemplateService
     {
         private readonly ISurveyTemplateRepository _surveyTemplateRepository;
+        private readonly ISurveyQuestionRepository _surveyQuestionRepository;
         private readonly IApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public SurveyTemplateService(ISurveyTemplateRepository surveyTemplateRepository, IApplicationDbContext context)
+        public SurveyTemplateService(ISurveyTemplateRepository surveyTemplateRepository, ISurveyQuestionRepository surveyQuestionRepository, IApplicationDbContext context, IMapper mapper)
         {
             _surveyTemplateRepository = surveyTemplateRepository;
+            _surveyQuestionRepository = surveyQuestionRepository;
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<bool> ActivateAsync(Guid id)
@@ -71,8 +81,15 @@ namespace App.ServiceLayer.Services
 
         public async Task<List<SurveyTemplate>> GetAllAsync() => await _surveyTemplateRepository.GetAll().ToListAsync();
 
-        public async Task<SurveyTemplate> GetByIdAsync(Guid id) => await _surveyTemplateRepository
-            .GetAllEager().FirstOrDefaultAsync(x => x.Id == id);
+        public async Task<SurveyWithResultsDto> GetByIdAsync(Guid id) => await _surveyTemplateRepository
+            .GetAll()
+            .AsNoTracking()
+            .Include(x => x.Questions).ThenInclude(x => x.Options)
+            .Include(x => x.Questions).ThenInclude(x => x.TextQuestionAnswers).ThenInclude(x => x.UserResult)
+            .Include(x => x.Questions).ThenInclude(x => x.SelectQuestionAnswers).ThenInclude(x => x.UserResult)
+            .Where(x => x.Id == id)
+            .ProjectTo<SurveyWithResultsDto>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync();
 
         public async Task RemoveAsync(Guid id)
         {
@@ -86,31 +103,63 @@ namespace App.ServiceLayer.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<PaginatedList<SurveyTemplate>> GetSurveysFromAuthor(Guid authorId, SurveyTemplateQuery query)
+        public async Task<PaginatedList<SurveyListItemDto>> GetSurveys(SurveyTemplateQuery query)
         {
-            var surveys = _surveyTemplateRepository.GetAllEager().Where(x => x.IsActive && x.Author.Id == authorId);
+            var surveys = _surveyTemplateRepository.GetAll()
+                .AsNoTracking()
+                .Include(x => x.Author)
+                .Include(x => x.RespondentsResults);
 
-            surveys = surveys.WhereStringPropertyContains(x => x.Title, query.Title);
+            var result = !string.IsNullOrEmpty(query.Title) 
+                ? surveys.Where(x => x.Title.ToLower().Contains(query.Title.ToLower()))
+                : surveys;
 
-            surveys = surveys.WhereBoolPropertyEquals(x => x.IsAnonymous, query.IsAnonymous);
+            result = query.AuthorId.HasValue ? result.Where(x => x.Author.Id == query.AuthorId.Value) : result;
 
-            surveys = surveys.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
+            result = query.IsAnonymous.HasValue ? result.Where(x => x.IsAnonymous == query.IsAnonymous.Value) : result;
 
-            return await surveys.PaginatedListAsync(query.PageNumber, query.PageSize);
+            result = result.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
+
+            return await result.ProjectTo<SurveyListItemDto>(_mapper.ConfigurationProvider)
+                .PaginatedListAsync(query.PageNumber, query.PageSize);
         }
 
-        public async Task<PaginatedList<SurveyTemplate>> GetSurveysFromRespondent(Guid respondentId, SurveyTemplateQuery query)
+        public async Task<PaginatedList<MySurveyListItemDto>> GetSurveysFromAuthor(SurveyTemplateQuery query)
         {
-            var surveys = _surveyTemplateRepository.GetAllEager().Where(x => x.IsActive && x.RespondentsResults.Any(x => x.User.Id == respondentId));
+            var surveys = _surveyTemplateRepository.GetAll()
+                .AsNoTracking()
+                .Include(x => x.Author)
+                .Include(x => x.RespondentsResults)
+                .Where(x => x.Author.Id == query.AuthorId.Value);
 
-            surveys = surveys.WhereStringPropertyContains(x => x.Title, query.Title);
+            var result = !string.IsNullOrEmpty(query.Title)
+                ? surveys.Where(x => x.Title.ToLower().Contains(query.Title.ToLower()))
+                : surveys;
 
-            surveys = surveys.WhereBoolPropertyEquals(x => x.IsAnonymous, query.IsAnonymous);
+            result = query.IsAnonymous.HasValue ? result.Where(x => x.IsAnonymous == query.IsAnonymous.Value) : result;
 
-            surveys = surveys.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
+            result = result.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
 
-            return await surveys.PaginatedListAsync(query.PageNumber, query.PageSize);
+            return await surveys.ProjectTo<MySurveyListItemDto>(_mapper.ConfigurationProvider)
+                .PaginatedListAsync(query.PageNumber, query.PageSize);
         }
+
+        public async Task<FillSurveyDto> GetSurveyTemplateToFill(Guid id)
+        {
+            return await _surveyTemplateRepository.GetAll().AsNoTracking()
+            .Include(x => x.Questions).ThenInclude(x => x.Options)
+            .Where(x => x.Id == id)
+            .ProjectTo<FillSurveyDto>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<SurveyQuestionDto>> GetQuestionsFromSurvey(Guid surveyId) => await _surveyQuestionRepository
+            .GetAll().AsNoTracking()
+            .Include(x => x.Survey)
+            .Include(x => x.Options)
+            .Where(x => x.Survey.Id == surveyId)
+            .ProjectTo<SurveyQuestionDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
 
     }
 }

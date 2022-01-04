@@ -49,7 +49,6 @@ export class MyAccountComponent implements OnInit {
     this.spinner.show();
     this.userService.getMyAccount(id).then(res =>{
       this.user = res;
-      console.log(this.user);
       this.spinner.hide();
     });
   }

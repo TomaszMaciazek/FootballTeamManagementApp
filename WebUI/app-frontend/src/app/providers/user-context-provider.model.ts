@@ -13,11 +13,6 @@ export class UserContextProvider {
         private http: HttpClient,
         ){}
 
-    tmp(){
-        console.log(this.tokenStorageProvider.getTokenDecoded());
-        console.log(this.tokenStorageProvider.getPermissions());
-    }
-
     public hasPermission(permission: string): boolean {
         return this.tokenStorageProvider.hasPermission(permission);
     }
