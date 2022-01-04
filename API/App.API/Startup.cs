@@ -148,6 +148,13 @@ namespace App.API
                 options.AddPolicy(Permissions.TeamsEditPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TeamsEdit));
                 options.AddPolicy(Permissions.TeamsDeletePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TeamsDelete));
                 options.AddPolicy(Permissions.TeamsHistoriesPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TeamsHistories));
+
+                options.AddPolicy(Permissions.CardsPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.Cards));
+                options.AddPolicy(Permissions.CardsActivatePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.CardsActivate));
+                options.AddPolicy(Permissions.CardsDeactivatePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.CardsDeactivate));
+                options.AddPolicy(Permissions.CardsAddPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.CardsAdd));
+                options.AddPolicy(Permissions.CardsEditPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.CardsEdit));
+                options.AddPolicy(Permissions.CardsDeletePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.CardsDelete));
             });
 
             services.AddSwaggerGen(c =>

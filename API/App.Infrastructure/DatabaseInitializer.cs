@@ -104,7 +104,13 @@ namespace App.Infrastructure
                         Permissions.TeamsDeactivate,
                         Permissions.TeamsAdd,
                         Permissions.TeamsDelete,
-                        Permissions.TeamsHistories
+                        Permissions.TeamsHistories,
+                        Permissions.Cards,
+                        Permissions.CardsEdit,
+                        Permissions.CardsActivate,
+                        Permissions.CardsDeactivate,
+                        Permissions.CardsAdd,
+                        Permissions.CardsDelete
                     } },
                     { "coach", new List<Permission>() {
                         Permissions.Players,
@@ -113,20 +119,14 @@ namespace App.Infrastructure
                         Permissions.Coaches,
                         Permissions.Trainings,
                         Permissions.TrainingsEdit,
-                        Permissions.TrainingsActivate,
-                        Permissions.TrainingsDeactivate,
                         Permissions.TrainingsAdd,
                         Permissions.TrainingsDelete,
                         Permissions.TrainingScores,
-                        Permissions.TrainingScoresActivate,
                         Permissions.TrainingScoresAdd,
-                        Permissions.TrainingScoresDeactivate,
                         Permissions.TrainingScoresEdit,
                         Permissions.TrainingScoresDelete,
                         Permissions.Matches,
                         Permissions.MatchesEdit,
-                        Permissions.MatchesActivate,
-                        Permissions.MatchesDeactivate,
                         Permissions.MatchesAdd,
                         Permissions.MatchesDelete,
                         Permissions.MatchesResults,
@@ -145,8 +145,6 @@ namespace App.Infrastructure
                         Permissions.TestsDelete,
                         Permissions.Chats,
                         Permissions.ChatsEdit,
-                        Permissions.ChatsActivate,
-                        Permissions.ChatsDeactivate,
                         Permissions.ChatsAdd,
                         Permissions.ChatsDelete,
                         Permissions.News,
@@ -154,11 +152,13 @@ namespace App.Infrastructure
                         Permissions.NewsEdit,
                         Permissions.Teams,
                         Permissions.TeamsEdit,
-                        Permissions.TeamsActivate,
-                        Permissions.TeamsDeactivate,
                         Permissions.TeamsAdd,
                         Permissions.TeamsDelete,
-                        Permissions.TeamsHistories
+                        Permissions.TeamsHistories,
+                        Permissions.Cards,
+                        Permissions.CardsEdit,
+                        Permissions.CardsAdd,
+                        Permissions.CardsDelete
                     } },
                     { $"player", new List<Permission>() {
                         Permissions.Players,
@@ -172,7 +172,8 @@ namespace App.Infrastructure
                         Permissions.Tests,
                         Permissions.Chats,
                         Permissions.News,
-                        Permissions.Teams
+                        Permissions.Teams,
+                        Permissions.Cards,
                     } }
                 };
 

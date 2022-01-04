@@ -26,8 +26,6 @@ namespace App.UserMiddleware
         public static Permission PlayersTeamsEdit { get => new("Edycja drużyn zawodników", PlayersTeamsEditPolicy, PlayersGroup, ""); }
         public const string PlayersHistoriesPolicy = "players.history";
         public static Permission PlayersHistories { get => new("Przeglądanie historii zawodników", PlayersHistoriesPolicy, PlayersGroup, ""); }
-
-
         #endregion
 
         #region Coaches
@@ -57,17 +55,17 @@ namespace App.UserMiddleware
         #region TrainingScores
         public const string TrainingScoresGroup = "Rezultaty treningow";
         public const string TrainingScoresPolicy = "trainings_scores";
-        public static Permission TrainingScores { get => new("Re", TrainingsPolicy, TrainingsGroup, "Rezultaty treningów"); }
+        public static Permission TrainingScores { get => new("Re", TrainingsPolicy, TrainingScoresGroup, "Rezultaty treningów"); }
         public const string TrainingScoresEditPolicy = "trainings_scores.edit";
-        public static Permission TrainingScoresEdit { get => new("Edycja rezultatów treningów", TrainingsEditPolicy, TrainingsGroup, ""); }
+        public static Permission TrainingScoresEdit { get => new("Edycja rezultatów treningów", TrainingsEditPolicy, TrainingScoresGroup, ""); }
         public const string TrainingScoresActivatePolicy = "trainings_scores.activate";
-        public static Permission TrainingScoresActivate { get => new("Aktywacja rezultatów treningów", TrainingsActivatePolicy, TrainingsGroup, ""); }
+        public static Permission TrainingScoresActivate { get => new("Aktywacja rezultatów treningów", TrainingsActivatePolicy, TrainingScoresGroup, ""); }
         public const string TrainingScoresDeactivatePolicy = "trainings_scores.deactivate";
-        public static Permission TrainingScoresDeactivate { get => new("Dezaktywacja rezultatów treningów", TrainingsDeactivatePolicy, TrainingsGroup, ""); }
+        public static Permission TrainingScoresDeactivate { get => new("Dezaktywacja rezultatów treningów", TrainingsDeactivatePolicy, TrainingScoresGroup, ""); }
         public const string TrainingScoresAddPolicy = "trainings_scores.add";
-        public static Permission TrainingScoresAdd { get => new("Dodanie rezultatów treningów", TrainingsAddPolicy, TrainingsGroup, ""); }
+        public static Permission TrainingScoresAdd { get => new("Dodanie rezultatów treningów", TrainingsAddPolicy, TrainingScoresGroup, ""); }
         public const string TrainingScoresDeletePolicy = "trainings_scores.delete";
-        public static Permission TrainingScoresDelete { get => new("Usuwanie rezultatów treningów", TrainingsDeletePolicy, TrainingsGroup, ""); }
+        public static Permission TrainingScoresDelete { get => new("Usuwanie rezultatów treningów", TrainingsDeletePolicy, TrainingScoresGroup, ""); }
         #endregion
 
 
@@ -87,6 +85,22 @@ namespace App.UserMiddleware
         public static Permission MatchesDelete { get => new("Usuwanie meczu", MatchesDeletePolicy, MatchesGroup, ""); }
         public const string MatchesResultsPolicy = "matches.results";
         public static Permission MatchesResults { get => new("Wyniki meczow", MatchesResultsPolicy, MatchesGroup, ""); }
+        #endregion
+
+        #region Cards
+        public const string CardsGroup = "Kartki";
+        public const string CardsPolicy = "cards";
+        public static Permission Cards { get => new("Kartki", CardsPolicy, CardsGroup, "Kartki"); }
+        public const string CardsEditPolicy = "cards.edit";
+        public static Permission CardsEdit { get => new("Edycja kartek", CardsEditPolicy, CardsGroup, ""); }
+        public const string CardsActivatePolicy = "cards.activate";
+        public static Permission CardsActivate { get => new("Aktywacja kartek", CardsActivatePolicy, CardsGroup, ""); }
+        public const string CardsDeactivatePolicy = "cards.deactivate";
+        public static Permission CardsDeactivate { get => new("Dezaktywacja kartek", CardsDeactivatePolicy, CardsGroup, ""); }
+        public const string CardsAddPolicy = "cards.add";
+        public static Permission CardsAdd { get => new("Dodanie kartek", CardsAddPolicy, CardsGroup, ""); }
+        public const string CardsDeletePolicy = "cards.delete";
+        public static Permission CardsDelete { get => new("Usuwanie kartek", CardsDeletePolicy, CardsGroup, ""); }
         #endregion
 
         #region Surveys
@@ -260,6 +274,14 @@ namespace App.UserMiddleware
                 TeamsAdd,
                 TeamsDelete,
                 TeamsHistories,
+
+                //Cards
+                Cards,
+                CardsEdit,
+                CardsActivate,
+                CardsDeactivate,
+                CardsAdd,
+                CardsDelete
 
             }.AsReadOnly();
         }
