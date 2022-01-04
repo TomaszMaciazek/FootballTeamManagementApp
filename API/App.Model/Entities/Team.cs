@@ -14,5 +14,6 @@ namespace App.Model.Entities
         public TeamHistory History { get; set; }
         public ICollection<MatchPoint> MatchPoints { get; set; }
         public ICollection<PlayerCard> PlayersCards { get; set; }
+        public ICollection<MatchPlayerPerformance> PlayerPerformances { get; set; }
     }
 }

@@ -13,6 +13,9 @@ namespace App.Infrastructure.Configurations
 
             builder.HasMany(x => x.PlayersCards)
                 .WithOne(x => x.Team);
+
+            builder.HasMany(x => x.PlayerPerformances)
+                .WithOne(x => x.Team);
         }
     }
 }
