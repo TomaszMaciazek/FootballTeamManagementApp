@@ -11,6 +11,7 @@ import { Country } from 'src/app/models/country.model';
 import { PlayerItem } from 'src/app/models/listItems/player-item.model';
 import { PlayerQuery } from 'src/app/models/queries/player-query.model';
 import { SimpleTeam } from 'src/app/models/team/simple-team.model';
+import { TranslationProvider } from 'src/app/providers/translation-provider.model';
 import { CountryService } from 'src/app/services/country.service';
 import { PlayerService } from 'src/app/services/player.service';
 import { TeamService } from 'src/app/services/team.service';
@@ -76,7 +77,9 @@ export class PlayersComponent implements OnInit {
     private playerService: PlayerService,
     private countryService: CountryService,
     private teamService: TeamService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private toastr : ToastrService,
+    private translationProvider: TranslationProvider,
   ) { }
 
   ngOnInit(): void {
@@ -96,11 +99,27 @@ export class PlayersComponent implements OnInit {
     });
 
     forkJoin([
-      this.teamService.getAllTeams().then(res => this.teams = res),
-      this.countryService.getCountries().then(res => this.countries = res.sort((a, b) => (a.code > b.code) ? 1 : -1)),
-      this.playerService.getPlayers(query).then(res => {
-        this.players = res.items;
-        this.totalCount = res.totalCount;
+      this.teamService.getAllTeams()
+        .then(res => this.teams = res)
+        .catch(error => {
+          this.toastr.error(this.translationProvider.getTranslation(error));
+          this.spinner.hide();
+        }),
+      this.countryService.getCountries()
+        .then(res => this.countries = res.sort((a, b) => (a.code > b.code) ? 1 : -1))
+        .catch(error => {
+          this.toastr.error(this.translationProvider.getTranslation(error));
+          this.spinner.hide();
+        }),
+      this.playerService.getPlayers(query)
+        .then(res => {
+          this.players = res.items;
+          this.totalCount = res.totalCount;
+        }
+      )
+      .catch(error => {
+        this.toastr.error(this.translationProvider.getTranslation(error));
+        this.spinner.hide();
       })
     ])
     .subscribe(res => this.spinner.hide());
@@ -123,6 +142,10 @@ export class PlayersComponent implements OnInit {
     .then(res => {
       this.players = res.items;
       this.totalCount = res.totalCount;
+      this.spinner.hide();
+    })
+    .catch(error => {
+      this.toastr.error(this.translationProvider.getTranslation(error));
       this.spinner.hide();
     });
   }

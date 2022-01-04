@@ -52,6 +52,10 @@ export class PlayerComponent implements OnInit {
       this.playerService.getPlayerById(this.id).then(res => {
         this.player = res;
         this.spinner.hide();
+      })
+      .catch(error => {
+        this.toastr.error(this.translationProvider.getTranslation(error));
+        this.spinner.hide();
       });
     });
   }

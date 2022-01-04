@@ -1,0 +1,80 @@
+<div class="content-wrapper" *ngIf="coach">
+    <div class="text-center pb-3 mt-3 mb-3">
+        <h1>{{'coach' | translate}}</h1>
+    </div>
+    <div fxLayout="row" class="pb-3">
+        <div fxFlex.sm="80" fxFlexOffset.sm="10" 
+        fxFlex.md="54" fxFlexOffset.md="23"
+        fxFlex.gt-md="50" fxFlexOffset.gt-md="25" 
+        fxFlex.xs="94" fxFlexOffset.xs="3"
+        fxLayout="column">
+            <p-card>
+                <div class="row">
+                    <div class="col-4">
+                        <h6 class="ml-3 mb-0">{{'name' | translate }}</h6>
+                    </div>
+                    <div class="col-8 text-secondary">
+                        <span *ngIf="coach.middleName && coach.middleName.length > 0; else noMiddleName">
+                            {{coach.name}} {{coach.middleName}} {{coach.surname}}
+                        </span>
+                        <ng-template #noMiddleName>
+                            <span>{{coach.name}} {{coach.surname}}</span>
+                        </ng-template>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-4">
+                        <h6 class="ml-3 mb-0">{{'email' | translate }}</h6>
+                    </div>
+                    <div class="col-8 text-secondary">
+                        <span *ngIf="coach.email; else noEmail">
+                            {{coach.email}}
+                        </span>
+                        <ng-template #noEmail>
+                            <span>{{'not_exist' | translate }}</span>
+                        </ng-template>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-4">
+                        <h6 class="ml-3 mb-0">{{'date_of_birth' | translate }}</h6>
+                    </div>
+                    <div class="col-8 text-secondary">
+                        {{coach.birthDate | date: 'dd-MM-yyyy'}}
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-4">
+                        <h6 class="ml-3 mb-0">{{'country' | translate }}</h6>
+                    </div>
+                    <div class="col-8 text-secondary">
+                        {{coach.country}}
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-4">
+                        <h6 class="ml-3 mb-0">{{'coach_teams_count' | translate }}</h6>
+                    </div>
+                    <div class="col-8 text-secondary">
+                        <div *ngIf="coach.teams && coach.teams.length > 0 ;else coachWithoutTeam">
+                            <p-chips [(ngModel)]="coach.teams" disabled="true">
+                                <ng-template let-item pTemplate="item">
+                                    {{item.name}}
+                                </ng-template>
+                            </p-chips>
+                        </div>
+                        <ng-template #coachWithoutTeam>
+                            <span>{{'no_team_assigned' | translate }}</span>
+                        </ng-template>
+                    </div>
+                </div>
+                <hr>
+            </p-card>
+        </div>
+        <div fxFlex.sm="10" fxFlex.md="23" fxFlex.gt-md="25" fxFlex.xs="3"></div>
+    </div>
+</div>

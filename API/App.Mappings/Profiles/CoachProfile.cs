@@ -15,9 +15,14 @@ namespace App.Mappings.Profiles
             CreateMap<Coach, CoachDto>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.User.Name))
                 .ForMember(dest => dest.MiddleName, opt => opt.MapFrom(src => src.User.MiddleName))
-                .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.User.Surname));
+                .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.User.Surname))
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.User.Email))
+                .ForMember(dest => dest.Country, opt => opt.MapFrom(src => src.Country.Code));
 
             CreateMap<Coach, CoachAccountDto>()
+                .ForMember(dest => dest.Country, opt => opt.MapFrom(src => src.Country.Code));
+
+            CreateMap<Coach, SelectUserCoachDetailsDto>()
                 .ForMember(dest => dest.Country, opt => opt.MapFrom(src => src.Country.Code));
 
             CreateMap<Coach, CoachListItemDto>()

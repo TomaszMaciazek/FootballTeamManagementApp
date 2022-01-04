@@ -37,11 +37,19 @@ namespace App.API.Controllers
             return Ok(await _coachService.GetCoaches(query));
         }
 
+        [HttpGet("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.CoachesPolicy)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CoachDto))]
+        public async Task<ActionResult<CoachDto>> GetPlayerById(Guid id)
+        {
+            return Ok(await _coachService.GetByIdAsync(id));
+        }
+
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.CoachesPolicy)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SimpleCoachDto>))]
         [Route("All")]
-        public async Task<ActionResult<IEnumerable<SimpleCoachDto>>> GetAllPlayers()
+        public async Task<ActionResult<IEnumerable<SimpleCoachDto>>> GetAllCoaches()
         {
             return Ok(await _coachService.GetAllAsync());
         }

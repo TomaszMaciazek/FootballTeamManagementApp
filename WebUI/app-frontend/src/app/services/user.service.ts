@@ -10,6 +10,7 @@ import { ChangePassword } from '../models/commands/change-password.model';
 import { PaginatedList } from '../models/paginated-list.model';
 import { UserQuery } from '../models/queries/user-query.model';
 import { User } from '../models/user.model';
+import { SelectUser } from '../models/user/select-user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +30,8 @@ export class UserService {
   getUsers(query: UserQuery): Promise<PaginatedList<User>> {
     return this.http.get<PaginatedList<User>>(this.url, {params: toParams(query)}).toPromise();
   }
-  getAllUsers(): Promise<Array<User>> {
-    return this.http.get<Array<User>>(`${this.url}/all`).toPromise();
+  getAllUsers(): Promise<Array<SelectUser>> {
+    return this.http.get<Array<SelectUser>>(`${this.url}/all`).toPromise();
   }
 
   createPlayer(command: AddPlayerCommand){

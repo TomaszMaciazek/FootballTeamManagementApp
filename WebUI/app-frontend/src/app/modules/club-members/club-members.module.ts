@@ -10,6 +10,7 @@ import { PlayerMatchEventComponent } from './components/players/player-history/p
 import { PlayerJoinedTeamEventComponent } from './components/players/player-history/player-joined-team-event/player-joined-team-event.component';
 import { PlayerLeftTeamEventComponent } from './components/players/player-history/player-left-team-event/player-left-team-event.component';
 import { PlayerComponent } from './components/players/player/player.component';
+import { CoachComponent } from './components/coaches/coach/coach.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { PlayerComponent } from './components/players/player/player.component';
     PlayerMatchEventComponent,
     PlayerJoinedTeamEventComponent,
     PlayerLeftTeamEventComponent,
-    PlayerComponent
+    PlayerComponent,
+    CoachComponent
   ],
   imports: [
     CommonModule,
