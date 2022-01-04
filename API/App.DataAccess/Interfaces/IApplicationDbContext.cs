@@ -77,8 +77,6 @@ namespace App.DataAccess.Interfaces
         #endregion
 
         #region Site Entities
-        DbSet<Language> Languages { get; set; }
-        DbSet<Translation> Translations { get; set; }
         DbSet<Country> Countries { get; set; }
         #endregion
 

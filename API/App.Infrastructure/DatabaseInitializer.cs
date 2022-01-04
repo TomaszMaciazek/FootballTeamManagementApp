@@ -39,11 +39,6 @@ namespace App.Infrastructure
         {
             var directoryInfo = new DirectoryInfo(Environment.CurrentDirectory + "/InitialData");
 
-            if (!await _context.Languages.AnyAsync())
-            {
-                await SeedLanguagesAsync(directoryInfo.GetFiles("*languages*").SingleOrDefault());
-            }
-
             if(!await _context.Countries.AnyAsync())
             {
                 await SeedCountries(directoryInfo.GetFiles("*countries*").SingleOrDefault());
@@ -193,16 +188,6 @@ namespace App.Infrastructure
             }
         }
 
-        private async Task SeedLanguagesAsync(FileInfo file)
-        {
-            _logger.LogInformation("Started seeding language data");
-
-            string json = File.ReadAllText(file.FullName);
-            var languages = JsonConvert.DeserializeObject<List<Language>>(json);
-            _context.Languages.AddRange(languages);
-            await _context.SaveChangesAsync();
-        }
-
         private async Task EnsureRoleAsync(string roleName)
         {
             var role = await _context.Roles.FirstOrDefaultAsync(x => x.Name == roleName);
@@ -291,12 +276,7 @@ namespace App.Infrastructure
 
             string json = File.ReadAllText(file.FullName);
             var countriesData = JsonConvert.DeserializeAnonymousType(json, template);
-
-            var englishLanguage = await _context.Languages.FirstOrDefaultAsync(x => x.Code == "EN");
-            var polishLanguage = await _context.Languages.FirstOrDefaultAsync(x => x.Code == "PL");
             _context.Countries.AddRange(countriesData.Select(x => new Country { Code = x.Code }).OrderBy(x => x.Code));
-            _context.Translations.AddRange(countriesData.Select(x => new Translation { Key = x.Code, Value = x.Name_en, Language = englishLanguage }));
-            _context.Translations.AddRange(countriesData.Select(x => new Translation { Key = x.Code, Value = x.Name_pl, Language = polishLanguage }));
 
             await _context.SaveChangesAsync();
         }

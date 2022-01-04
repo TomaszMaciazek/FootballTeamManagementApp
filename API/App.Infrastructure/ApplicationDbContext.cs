@@ -85,8 +85,6 @@ namespace App.Infrastructure
 
         #region Site Entities
         public DbSet<Country> Countries { get; set; }
-        public DbSet<Language> Languages { get; set; }
-        public DbSet<Translation> Translations { get; set; }
         #endregion
 
         public ApplicationDbContext(

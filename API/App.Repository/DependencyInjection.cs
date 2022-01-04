@@ -46,9 +46,6 @@ namespace App.Repository
             service.AddScoped<IUserOptionsTestQuestionAnswerRepository, UserOptionsTestQuestionAnswerRepository>();
 
             service.AddScoped<IRoleRepository, RoleRepository>();
-
-            service.AddScoped<ILanguageRepository, LanguageRepository>();
-            service.AddScoped<ITranslationRepository, TranslationRepository>();
             service.AddScoped<ICountryRepository, CountryRepository>();
 
             service.AddScoped<INewsRepository, NewsRepository>();

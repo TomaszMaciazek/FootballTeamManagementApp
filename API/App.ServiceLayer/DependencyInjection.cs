@@ -41,8 +41,6 @@ namespace App.ServiceLayer
             services.AddScoped<IUserOptionsTestQuestionAnswerService, UserOptionsTestQuestionAnswerService>();
             services.AddScoped<IGroupChatImageService, GroupChatImageService>();
 
-            services.AddScoped<ILanguageService, LanguageService>();
-            services.AddScoped<ITranslationService, TranslationService>();
             services.AddScoped<ICountryService, CountryService>();
 
             services.AddScoped<INewsService, NewsService>();
