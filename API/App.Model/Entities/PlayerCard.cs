@@ -8,6 +8,7 @@ namespace App.Model.Entities
     {
         public Player Player { get; set; }
         public Match Match { get; set; }
+        public Team Team { get; set; }
 
         [Required]
         public CardColor Color { get; set; }

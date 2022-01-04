@@ -8,6 +8,7 @@ namespace App.Model.Entities
     {
         public Match Match { get; set; }
         public Player GoalScorer { get; set; }
+        public Team Team { get; set; }
 
         [Required]
         public MatchPointType Point { get; set; }

@@ -2,6 +2,7 @@
 using App.Model.Entities;
 using App.Model.ViewModels.Commands;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -20,7 +21,7 @@ namespace App.Mappings.Resolvers
         {
             var points = new List<MatchPoint>();
             var playersIds = source.MatchPoints.Select(x => x.PlayerId);
-            var players = _dbContext.Players.Where(x => playersIds.Any(y => y == x.Id)).ToList();
+            var players = _dbContext.Players.Include(x => x.Team).Where(x => playersIds.Any(y => y == x.Id)).ToList();
             foreach (var command in source.MatchPoints)
             {
                 var player = players.SingleOrDefault(x => x.Id == command.PlayerId);
@@ -28,7 +29,8 @@ namespace App.Mappings.Resolvers
                 {
                     Point = command.Point,
                     GoalScorer = player,
-                    MinuteOfMatch = command.MinuteOfMatch
+                    MinuteOfMatch = command.MinuteOfMatch,
+                    Team = player.Team
                 });
             }
 
