@@ -55,7 +55,7 @@ namespace App.UserMiddleware
         #region TrainingScores
         public const string TrainingScoresGroup = "Rezultaty treningow";
         public const string TrainingScoresPolicy = "trainings_scores";
-        public static Permission TrainingScores { get => new("Re", TrainingsPolicy, TrainingScoresGroup, "Rezultaty treningów"); }
+        public static Permission TrainingScores { get => new("Rezultaty treningów", TrainingsPolicy, TrainingScoresGroup, "Rezultaty treningów"); }
         public const string TrainingScoresEditPolicy = "trainings_scores.edit";
         public static Permission TrainingScoresEdit { get => new("Edycja rezultatów treningów", TrainingsEditPolicy, TrainingScoresGroup, ""); }
         public const string TrainingScoresActivatePolicy = "trainings_scores.activate";
@@ -66,6 +66,22 @@ namespace App.UserMiddleware
         public static Permission TrainingScoresAdd { get => new("Dodanie rezultatów treningów", TrainingsAddPolicy, TrainingScoresGroup, ""); }
         public const string TrainingScoresDeletePolicy = "trainings_scores.delete";
         public static Permission TrainingScoresDelete { get => new("Usuwanie rezultatów treningów", TrainingsDeletePolicy, TrainingScoresGroup, ""); }
+        #endregion
+
+        #region MatchScores
+        public const string MatchScoresGroup = "Rezultaty meczów";
+        public const string MatchScoresPolicy = "matches_scores";
+        public static Permission MatchScores { get => new("Rezultaty meczów", MatchScoresPolicy, MatchScoresGroup, "Rezultaty meczów"); }
+        public const string MatchScoresEditPolicy = "matches_scores.edit";
+        public static Permission MatchScoresEdit { get => new("Edycja rezultatów meczów", MatchScoresEditPolicy, MatchScoresGroup, ""); }
+        public const string MatchScoresActivatePolicy = "matches_scores.activate";
+        public static Permission MatchScoresActivate { get => new("Aktywacja rezultatów meczów", MatchScoresActivatePolicy, MatchScoresGroup, ""); }
+        public const string MatchScoresDeactivatePolicy = "matches_scores.deactivate";
+        public static Permission MatchScoresDeactivate { get => new("Dezaktywacja rezultatów meczów", MatchScoresDeactivatePolicy, MatchScoresGroup, ""); }
+        public const string MatchScoresAddPolicy = "matches_scores.add";
+        public static Permission MatchScoresAdd { get => new("Dodanie rezultatów meczów", MatchScoresAddPolicy, MatchScoresGroup, ""); }
+        public const string MatchScoresDeletePolicy = "matches_scores.delete";
+        public static Permission MatchScoresDelete { get => new("Usuwanie rezultatów mecżów", MatchScoresDeletePolicy, MatchScoresGroup, ""); }
         #endregion
 
 
@@ -123,20 +139,60 @@ namespace App.UserMiddleware
         public static Permission SurveysDelete { get => new("Usuwanie ankiety", SurveysDeletePolicy, SurveysGroup, ""); }
         #endregion
 
+        #region Player Performances
+        public const string MatchPlayerPerformancesGroup = "Udziały zawodników w meczach";
+        public const string MatchPlayerPerformancesPolicy = "match_performances";
+        public static Permission MatchPlayerPerformances { get => new("Udziały", MatchPlayerPerformancesPolicy, MatchPlayerPerformancesGroup, ""); }
+        public const string MatchPlayerPerformancesEditPolicy = "match_performances.edit";
+        public static Permission MatchPlayerPerformancesEdit { get => new("Edycja udziałów", MatchPlayerPerformancesEditPolicy, MatchPlayerPerformancesGroup, ""); }
+        public const string MatchPlayerPerformancesAddPolicy = "match_performances.add";
+        public static Permission MatchPlayerPerformancesAdd { get => new("Dodanie udziałów", MatchPlayerPerformancesAddPolicy, MatchPlayerPerformancesGroup, ""); }
+        public const string MatchPlayerPerformancesDeletePolicy = "match_performances.delete";
+        public static Permission MatchPlayerPerformancesDelete { get => new("Usuwanie udziałów", MatchPlayerPerformancesDeletePolicy, MatchPlayerPerformancesGroup, ""); }
+        public const string MatchPlayerPerformancesActivatePolicy = "match_performances.activate";
+        public static Permission MatchPlayerPerformancesActivate { get => new("Aktywacja udziałów", MatchPlayerPerformancesActivatePolicy, MatchPlayerPerformancesGroup, ""); }
+        public const string MatchPlayerPerformancesDeactivatePolicy = "match_performances.deactivate";
+        public static Permission MatchPlayerPerformancesDeactivate { get => new("Dezaktywacja udziałów", MatchPlayerPerformancesDeactivatePolicy, MatchPlayerPerformancesGroup, ""); }
+        #endregion
+
+        #region Match Points
+        public const string MatchPointsGroup = "Zdobyte bramki";
+        public const string MatchPointsPolicy = "match_performances";
+        public static Permission MatchPoints { get => new("Zdobyte bramki", MatchPointsPolicy, MatchPointsGroup, ""); }
+        public const string MatchPointsEditPolicy = "match_performances.edit";
+        public static Permission MatchPointsEdit { get => new("Edycja bramek", MatchPointsEditPolicy, MatchPointsGroup, ""); }
+        public const string MatchPointsAddPolicy = "match_performances.add";
+        public static Permission MatchPointsAdd { get => new("Dodanie bramek", MatchPointsAddPolicy, MatchPointsGroup, ""); }
+        public const string MatchPointsDeletePolicy = "match_performances.delete";
+        public static Permission MatchPointsDelete { get => new("Usuwanie bramek", MatchPointsDeletePolicy, MatchPointsGroup, ""); }
+        public const string MatchPointsActivatePolicy = "match_performances.activate";
+        public static Permission MatchPointsActivate { get => new("Aktywacja bramek", MatchPointsActivatePolicy, MatchPointsGroup, ""); }
+        public const string MatchPointsDeactivatePolicy = "match_performances.deactivate";
+        public static Permission MatchPointsDeactivate { get => new("Dezaktywacja bramek", MatchPointsDeactivatePolicy, MatchPointsGroup, ""); }
+        #endregion
+
         #region Tests
         public const string TestsGroup = "Testy";
         public const string TestsPolicy = "tests";
         public static Permission Tests { get => new("Testy", TestsPolicy, TestsGroup, ""); }
-        public const string TestsEditPolicy = "surveys.edit";
+        public const string TestsAllPolicy = "tests.all";
+        public static Permission TestsAll { get => new("Testy wszystkie", TestsAllPolicy, TestsGroup, ""); }
+        public const string TestsCreatedByMePolicy = "tests.created";
+        public static Permission TestsCreatedByMe { get => new("Testy autorskie", TestsCreatedByMePolicy, TestsGroup, ""); }
+        public const string TestsAssignedToMePolicy = "tests.assigned";
+        public static Permission TestsAssignedToMe { get => new("Testy przypisane", TestsAssignedToMePolicy, TestsGroup, ""); }
+        public const string TestsEditPolicy = "tests.edit";
         public static Permission TestsEdit { get => new("Edycja testu", TestsEditPolicy, TestsGroup, ""); }
-        public const string TestsActivatePolicy = "surveys.activate";
+        public const string TestsActivatePolicy = "tests.activate";
         public static Permission TestsActivate { get => new("Aktywacja testu", TestsActivatePolicy, TestsGroup, ""); }
-        public const string TestsDeactivatePolicy = "surveys.deactivate";
+        public const string TestsDeactivatePolicy = "tests.deactivate";
         public static Permission TestsDeactivate { get => new("Dezaktywacja testu", TestsDeactivatePolicy, TestsGroup, ""); }
-        public const string TestsAddPolicy = "surveys.add";
+        public const string TestsAddPolicy = "tests.add";
         public static Permission TestsAdd { get => new("Dodanie testu", TestsAddPolicy, TestsGroup, ""); }
-        public const string TestsDeletePolicy = "surveys.delete";
+        public const string TestsDeletePolicy = "tests.delete";
         public static Permission TestsDelete { get => new("Usuwanie testu", TestsDeletePolicy, TestsGroup, ""); }
+        public const string TestsRespondentsPolicy = "tests.respondents";
+        public static Permission TestsRespondents { get => new("Testy respondenci", TestsRespondentsPolicy, TestsGroup, ""); }
         #endregion
 
         #region Chats
@@ -223,6 +279,14 @@ namespace App.UserMiddleware
                 TrainingScoresEdit,
                 TrainingScoresDelete,
 
+                //MatchScores
+                MatchScores,
+                MatchScoresActivate,
+                MatchScoresAdd,
+                MatchScoresDeactivate,
+                MatchScoresEdit,
+                MatchScoresDelete,
+
                 //Matches
                 Matches,
                 MatchesEdit,
@@ -244,11 +308,15 @@ namespace App.UserMiddleware
 
                 //Tests
                 Tests,
+                TestsAll,
+                TestsCreatedByMe,
+                TestsAssignedToMe,
                 TestsEdit,
                 TestsActivate,
                 TestsDeactivate,
                 TestsAdd,
                 TestsDelete,
+                TestsRespondents,
 
                 //Chats
                 Chats,
@@ -281,7 +349,23 @@ namespace App.UserMiddleware
                 CardsActivate,
                 CardsDeactivate,
                 CardsAdd,
-                CardsDelete
+                CardsDelete,
+
+                //Match Player Performances
+                MatchPlayerPerformances,
+                MatchPlayerPerformancesEdit,
+                MatchPlayerPerformancesActivate,
+                MatchPlayerPerformancesDeactivate,
+                MatchPlayerPerformancesAdd,
+                MatchPlayerPerformancesDelete,
+
+                //Match Points
+                MatchPoints,
+                MatchPointsEdit,
+                MatchPointsActivate,
+                MatchPointsDeactivate,
+                MatchPointsAdd,
+                MatchPointsDelete
 
             }.AsReadOnly();
         }

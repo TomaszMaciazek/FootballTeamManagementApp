@@ -114,11 +114,15 @@ namespace App.API
                 options.AddPolicy(Permissions.SurveysDeletePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.SurveysDelete));
 
                 options.AddPolicy(Permissions.TestsPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.Tests));
+                options.AddPolicy(Permissions.TestsAllPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TestsAll));
+                options.AddPolicy(Permissions.TestsAssignedToMePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TestsAssignedToMe));
+                options.AddPolicy(Permissions.TestsCreatedByMePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TestsCreatedByMe));
                 options.AddPolicy(Permissions.TestsActivatePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TestsActivate));
                 options.AddPolicy(Permissions.TestsDeactivatePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TestsDeactivate));
                 options.AddPolicy(Permissions.TestsAddPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TestsAdd));
                 options.AddPolicy(Permissions.TestsEditPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TestsEdit));
                 options.AddPolicy(Permissions.TestsDeletePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TestsDelete));
+                options.AddPolicy(Permissions.TestsRespondentsPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TestsRespondents));
 
                 options.AddPolicy(Permissions.ChatsPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.Chats));
                 options.AddPolicy(Permissions.ChatsActivatePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.ChatsActivate));
@@ -141,6 +145,13 @@ namespace App.API
                 options.AddPolicy(Permissions.TrainingScoresEditPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TrainingScoresEdit));
                 options.AddPolicy(Permissions.TrainingScoresDeletePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TrainingScoresDelete));
 
+                options.AddPolicy(Permissions.MatchScoresPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.MatchScores));
+                options.AddPolicy(Permissions.MatchScoresActivatePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.MatchScoresActivate));
+                options.AddPolicy(Permissions.MatchScoresDeactivatePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.MatchScoresDeactivate));
+                options.AddPolicy(Permissions.MatchScoresAddPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.MatchScoresAdd));
+                options.AddPolicy(Permissions.MatchScoresEditPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.MatchScoresEdit));
+                options.AddPolicy(Permissions.MatchScoresDeletePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.MatchScoresDelete));
+
                 options.AddPolicy(Permissions.TeamsPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.Teams));
                 options.AddPolicy(Permissions.TeamsActivatePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TeamsActivate));
                 options.AddPolicy(Permissions.TeamsDeactivatePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TeamsDeactivate));
@@ -155,6 +166,20 @@ namespace App.API
                 options.AddPolicy(Permissions.CardsAddPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.CardsAdd));
                 options.AddPolicy(Permissions.CardsEditPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.CardsEdit));
                 options.AddPolicy(Permissions.CardsDeletePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.CardsDelete));
+
+                options.AddPolicy(Permissions.MatchPlayerPerformancesPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.MatchPlayerPerformances));
+                options.AddPolicy(Permissions.MatchPlayerPerformancesActivatePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.MatchPlayerPerformancesActivate));
+                options.AddPolicy(Permissions.MatchPlayerPerformancesDeactivatePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.MatchPlayerPerformancesDeactivate));
+                options.AddPolicy(Permissions.MatchPlayerPerformancesAddPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.MatchPlayerPerformancesAdd));
+                options.AddPolicy(Permissions.MatchPlayerPerformancesEditPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.MatchPlayerPerformancesEdit));
+                options.AddPolicy(Permissions.MatchPlayerPerformancesDeletePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.MatchPlayerPerformancesDelete));
+
+                options.AddPolicy(Permissions.MatchPointsPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.MatchPoints));
+                options.AddPolicy(Permissions.MatchPointsActivatePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.MatchPointsActivate));
+                options.AddPolicy(Permissions.MatchPointsDeactivatePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.MatchPointsDeactivate));
+                options.AddPolicy(Permissions.MatchPointsAddPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.MatchPointsAdd));
+                options.AddPolicy(Permissions.MatchPointsEditPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.MatchPointsEdit));
+                options.AddPolicy(Permissions.MatchPointsDeletePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.MatchPointsDelete));
             });
 
             services.AddSwaggerGen(c =>
