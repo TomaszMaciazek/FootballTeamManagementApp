@@ -8,7 +8,11 @@ namespace App.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<MatchPlayerScore> builder)
         {
-            builder.HasOne(x => x.PlayerPerformance)
+            builder.HasOne(x => x.Player)
+                .WithMany(x => x.MatchScores)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(x => x.Match)
                 .WithMany(x => x.PlayerScores)
                 .OnDelete(DeleteBehavior.Restrict);
         }

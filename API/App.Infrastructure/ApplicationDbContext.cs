@@ -3,9 +3,6 @@ using App.Model.Entities;
 using App.Model.Entities.Common;
 using App.Model.Entities.SurveyEntities;
 using App.Model.Entities.TestEntities;
-using App.Model.Entities.TestEntities.AnswersResults;
-using App.Model.Entities.TestEntities.AnswersTemplates;
-using App.Model.Entities.TestEntities.QuestionTemplates;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading;
@@ -73,11 +70,6 @@ namespace App.Infrastructure
 
         #region Test Entities
         public DbSet<TestTemplate> TestTemplates { get; set; }
-        public DbSet<BoolTestQuestionTemplate> BoolTestQuestionsTemplates { get; set; }
-        public DbSet<OptionsTestQuestionTemplate> OptionsTestQuestionsTemplates { get; set; }
-        public DbSet<TestOptionQuestionAnswerTemplate> TestOptionQuestionsAnswerTemplates { get; set; }
-        public DbSet<UserBoolTestQuestionAnswer> UserBoolTestQuestionsAnswers { get; set; }
-        public DbSet<UserOptionsTestQuestionAnswer> UserOptionsTestQuestionsAnswers { get; set; }
         public DbSet<UserTestResult> UsersTestResults { get; set; }
         #endregion
 

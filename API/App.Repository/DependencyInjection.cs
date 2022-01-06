@@ -26,9 +26,7 @@ namespace App.Repository
             service.AddScoped<ISurveyTemplateRepository, SurveyTemplateRepository>();
 
             service.AddScoped<ITestTemplateRepository, TestTemplateRepository>();
-            service.AddScoped<IBoolTestQuestionTemplateRepository, BoolTestQuestionTemplateRepository>();
-            service.AddScoped<IOptionsTestQuestionTemplateRepository, OptionsTestQuestionTemplateRepository>();
-            service.AddScoped<ITestOptionQuestionAnswerTemplateRepository, TestOptionQuestionAnswerTemplateRepository>();
+            service.AddScoped<ITestQuestionRepository, TestQuestionRepository>();
 
             service.AddScoped<ITeamRepository, TeamRepository>();
             service.AddScoped<ITrainingRepository, TrainingRepository>();
@@ -41,9 +39,6 @@ namespace App.Repository
             service.AddScoped<ISurveyQuestionOptionRepository, SurveyQuestionOptionRepository>();
             service.AddScoped<ISurveySelectQuestionAnswerRepository, SurveySelectQuestionAnswerRepository>();
             service.AddScoped<ISurveyTextQuestionAnswerRepository, SurveyTextQuestionAnswerRepository>();
-
-            service.AddScoped<IUserBoolTestQuestionAnswerRepository, UserBoolTestQuestionAnswerRepository>();
-            service.AddScoped<IUserOptionsTestQuestionAnswerRepository, UserOptionsTestQuestionAnswerRepository>();
 
             service.AddScoped<IRoleRepository, RoleRepository>();
             service.AddScoped<ICountryRepository, CountryRepository>();

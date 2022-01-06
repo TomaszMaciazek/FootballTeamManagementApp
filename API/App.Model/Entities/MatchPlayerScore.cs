@@ -7,7 +7,8 @@ namespace App.Model.Entities
 {
     public class MatchPlayerScore : AuditableEntity
     {
-        public MatchPlayerPerformance PlayerPerformance { get; set; }
+        public Player Player { get; set; }
+        public Match Match { get; set; }
         [Required]
         public MatchScoreType ScoreType { get; set; }
 

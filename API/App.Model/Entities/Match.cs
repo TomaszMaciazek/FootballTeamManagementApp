@@ -32,5 +32,6 @@ namespace App.Model.Entities
         public ICollection<PlayerCard> PlayersCards { get; set; }
         public ICollection<CoachCard> CoachesCards { get; set; }
         public ICollection<TeamPlayersPlayedMatchEvent> TeamPlayersPlayedMatchEvents { get; set; }
+        public ICollection<MatchPlayerScore> PlayerScores { get; set; }
     }
 }

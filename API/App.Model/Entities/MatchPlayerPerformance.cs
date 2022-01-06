@@ -14,6 +14,5 @@ namespace App.Model.Entities
 
         [Required]
         public PlayerPosition PlayerPosition { get; set; }
-        public ICollection<MatchPlayerScore> PlayerScores { get; set; }
     }
 }

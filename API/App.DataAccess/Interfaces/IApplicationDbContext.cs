@@ -1,9 +1,6 @@
 ﻿using App.Model.Entities;
 using App.Model.Entities.SurveyEntities;
 using App.Model.Entities.TestEntities;
-using App.Model.Entities.TestEntities.AnswersResults;
-using App.Model.Entities.TestEntities.AnswersTemplates;
-using App.Model.Entities.TestEntities.QuestionTemplates;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System.Threading;
@@ -68,11 +65,6 @@ namespace App.DataAccess.Interfaces
 
         #region Test Entities
          DbSet<TestTemplate> TestTemplates { get; set; }
-         DbSet<BoolTestQuestionTemplate> BoolTestQuestionsTemplates { get; set; }
-         DbSet<OptionsTestQuestionTemplate> OptionsTestQuestionsTemplates { get; set; }
-         DbSet<TestOptionQuestionAnswerTemplate> TestOptionQuestionsAnswerTemplates { get; set; }
-         DbSet<UserBoolTestQuestionAnswer> UserBoolTestQuestionsAnswers { get; set; }
-         DbSet<UserOptionsTestQuestionAnswer> UserOptionsTestQuestionsAnswers { get; set; }
          DbSet<UserTestResult> UsersTestResults { get; set; }
         #endregion
 

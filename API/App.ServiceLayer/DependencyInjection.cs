@@ -20,6 +20,7 @@ namespace App.ServiceLayer
             services.AddScoped<ITeamService, TeamService>();
             services.AddScoped<ITrainingService, TrainingService>();
             services.AddScoped<ITrainingScoreService, TrainingScoreService>();
+            services.AddScoped<IMatchPointService, MatchPointService>();
 
             services.AddScoped<IGroupChatService, GroupChatService>();
             services.AddScoped<IIndividualChatService, IndividualChatService>();
@@ -35,10 +36,7 @@ namespace App.ServiceLayer
             services.AddScoped<IUserSurveyResultService, UserSurveyResultService>();
 
             services.AddScoped<ITestTemplateService, TestTemplateService>();
-            services.AddScoped<IBoolTestQuestionTemplateService, BoolTestQuestionTemplateService>();
-            services.AddScoped<IOptionsTestQuestionTemplateService, OptionsTestQuestionTemplateService>();
-            services.AddScoped<IUserBoolTestQuestionAnswerService, UserBoolTestQuestionAnswerService>();
-            services.AddScoped<IUserOptionsTestQuestionAnswerService, UserOptionsTestQuestionAnswerService>();
+            services.AddScoped<IUserTestResultService, UserTestResultService>();
             services.AddScoped<IGroupChatImageService, GroupChatImageService>();
 
             services.AddScoped<ICountryService, CountryService>();

@@ -37,15 +37,8 @@ namespace App.Infrastructure.Configurations
                 .WithOne(t => t.Author);
 
             builder.HasMany(u => u.UserTestsTemplates)
-                .WithOne(t => t.Author);
-            builder.HasMany(u => u.TestsResults)
-                .WithOne(r => r.User);
-
-            builder.HasMany(u => u.OptionsTestQuestionAnswers)
-                .WithOne(x => x.User);
-
-            builder.HasMany(u => u.BoolTestQuestionAnswers)
-                .WithOne(x => x.User);
+                .WithOne(t => t.Author)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(u => u.TokenRefresh)
                 .WithOne(x => x.User)

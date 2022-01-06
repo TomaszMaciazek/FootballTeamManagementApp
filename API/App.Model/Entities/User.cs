@@ -1,6 +1,5 @@
 ﻿using App.Model.Entities.SurveyEntities;
 using App.Model.Entities.TestEntities;
-using App.Model.Entities.TestEntities.AnswersResults;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -42,8 +41,6 @@ namespace App.Model.Entities
         public ICollection<TestTemplate> UserTestsTemplates { get; set; }
         public ICollection<UserSurveyResult> SurveysResults { get; set; }
         public ICollection<UserTestResult> TestsResults { get; set; }
-        public ICollection<UserBoolTestQuestionAnswer> BoolTestQuestionAnswers { get; set; }
-        public ICollection<UserOptionsTestQuestionAnswer> OptionsTestQuestionAnswers { get; set; }
         public ICollection<TrainingScore> CreatedTrainingScores { get; set; }
         public Role Role { get; set; }
         public Player PlayerDetails { get; set; }

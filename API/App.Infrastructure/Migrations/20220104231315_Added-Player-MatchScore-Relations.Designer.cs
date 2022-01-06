@@ -4,14 +4,16 @@ using App.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace App.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220104231315_Added-Player-MatchScore-Relations")]
+    partial class AddedPlayerMatchScoreRelations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1073,7 +1075,179 @@ namespace App.Infrastructure.Migrations
                     b.ToTable("TeamPlayersPlayedMatchEvents");
                 });
 
-            modelBuilder.Entity("App.Model.Entities.TestEntities.TestQuestion", b =>
+            modelBuilder.Entity("App.Model.Entities.TestEntities.AnswersResults.UserBoolTestQuestionAnswer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("QuestionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool?>("Value")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserBoolTestQuestionsAnswers");
+                });
+
+            modelBuilder.Entity("App.Model.Entities.TestEntities.AnswersResults.UserOptionsTestQuestionAnswer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("QuestionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("Value")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserOptionsTestQuestionsAnswers");
+                });
+
+            modelBuilder.Entity("App.Model.Entities.TestEntities.AnswersTemplates.TestOptionQuestionAnswerTemplate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsCorrect")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("PointsForAnswer")
+                        .HasColumnType("float");
+
+                    b.Property<Guid?>("QuestionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("QuestionNumber")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Value")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("TestOptionQuestionsAnswerTemplates");
+                });
+
+            modelBuilder.Entity("App.Model.Entities.TestEntities.QuestionTemplates.BoolTestQuestionTemplate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("CorrectAnswer")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("PageNumber")
+                        .HasColumnType("int");
+
+                    b.Property<double>("PointsToEarn")
+                        .HasColumnType("float");
+
+                    b.Property<int>("QuestionNumber")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("TestId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TestId");
+
+                    b.ToTable("BoolTestQuestionsTemplates");
+                });
+
+            modelBuilder.Entity("App.Model.Entities.TestEntities.QuestionTemplates.OptionsTestQuestionTemplate", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1086,9 +1260,19 @@ namespace App.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Number")
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("PageNumber")
+                        .HasColumnType("int");
+
+                    b.Property<double>("PointsToEarn")
+                        .HasColumnType("float");
+
+                    b.Property<int>("QuestionNumber")
                         .HasColumnType("int");
 
                     b.Property<Guid?>("TestId")
@@ -1107,81 +1291,7 @@ namespace App.Infrastructure.Migrations
 
                     b.HasIndex("TestId");
 
-                    b.ToTable("TestQuestion");
-                });
-
-            modelBuilder.Entity("App.Model.Entities.TestEntities.TestQuestionAnswer", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int?>("AnswerValue")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("QuestionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UpdatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("UserResultId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuestionId");
-
-                    b.HasIndex("UserResultId");
-
-                    b.ToTable("TestQuestionAnswer");
-                });
-
-            modelBuilder.Entity("App.Model.Entities.TestEntities.TestQuestionOption", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Label")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Points")
-                        .HasColumnType("float");
-
-                    b.Property<Guid?>("QuestionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UpdatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Value")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuestionId");
-
-                    b.ToTable("TestQuestionOption");
+                    b.ToTable("OptionsTestQuestionsTemplates");
                 });
 
             modelBuilder.Entity("App.Model.Entities.TestEntities.TestTemplate", b =>
@@ -1205,9 +1315,6 @@ namespace App.Infrastructure.Migrations
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
-
-                    b.Property<double>("PassedMinimalValue")
-                        .HasColumnType("float");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -1244,12 +1351,6 @@ namespace App.Infrastructure.Migrations
                     b.Property<bool>("IsCompleated")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("Passed")
-                        .HasColumnType("bit");
-
-                    b.Property<double?>("ScoredPoints")
-                        .HasColumnType("float");
-
                     b.Property<Guid?>("TestId")
                         .HasColumnType("uniqueidentifier");
 
@@ -1261,6 +1362,9 @@ namespace App.Infrastructure.Migrations
 
                     b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("UserScore")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -1892,48 +1996,68 @@ namespace App.Infrastructure.Migrations
                     b.Navigation("TeamHistory");
                 });
 
-            modelBuilder.Entity("App.Model.Entities.TestEntities.TestQuestion", b =>
+            modelBuilder.Entity("App.Model.Entities.TestEntities.AnswersResults.UserBoolTestQuestionAnswer", b =>
+                {
+                    b.HasOne("App.Model.Entities.TestEntities.QuestionTemplates.BoolTestQuestionTemplate", "Question")
+                        .WithMany("UsersAnswers")
+                        .HasForeignKey("QuestionId");
+
+                    b.HasOne("App.Model.Entities.User", "User")
+                        .WithMany("BoolTestQuestionAnswers")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Question");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("App.Model.Entities.TestEntities.AnswersResults.UserOptionsTestQuestionAnswer", b =>
+                {
+                    b.HasOne("App.Model.Entities.TestEntities.QuestionTemplates.OptionsTestQuestionTemplate", "Question")
+                        .WithMany("UserAnswers")
+                        .HasForeignKey("QuestionId");
+
+                    b.HasOne("App.Model.Entities.User", "User")
+                        .WithMany("OptionsTestQuestionAnswers")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Question");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("App.Model.Entities.TestEntities.AnswersTemplates.TestOptionQuestionAnswerTemplate", b =>
+                {
+                    b.HasOne("App.Model.Entities.TestEntities.QuestionTemplates.OptionsTestQuestionTemplate", "Question")
+                        .WithMany("Answers")
+                        .HasForeignKey("QuestionId");
+
+                    b.Navigation("Question");
+                });
+
+            modelBuilder.Entity("App.Model.Entities.TestEntities.QuestionTemplates.BoolTestQuestionTemplate", b =>
                 {
                     b.HasOne("App.Model.Entities.TestEntities.TestTemplate", "Test")
-                        .WithMany("Questions")
-                        .HasForeignKey("TestId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany("BoolTestQuestions")
+                        .HasForeignKey("TestId");
 
                     b.Navigation("Test");
                 });
 
-            modelBuilder.Entity("App.Model.Entities.TestEntities.TestQuestionAnswer", b =>
+            modelBuilder.Entity("App.Model.Entities.TestEntities.QuestionTemplates.OptionsTestQuestionTemplate", b =>
                 {
-                    b.HasOne("App.Model.Entities.TestEntities.TestQuestion", "Question")
-                        .WithMany("QuestionAnswers")
-                        .HasForeignKey("QuestionId");
+                    b.HasOne("App.Model.Entities.TestEntities.TestTemplate", "Test")
+                        .WithMany("OptionsTestQuestions")
+                        .HasForeignKey("TestId");
 
-                    b.HasOne("App.Model.Entities.TestEntities.UserTestResult", "UserResult")
-                        .WithMany("QuestionAnswers")
-                        .HasForeignKey("UserResultId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("Question");
-
-                    b.Navigation("UserResult");
-                });
-
-            modelBuilder.Entity("App.Model.Entities.TestEntities.TestQuestionOption", b =>
-                {
-                    b.HasOne("App.Model.Entities.TestEntities.TestQuestion", "Question")
-                        .WithMany("Options")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("Question");
+                    b.Navigation("Test");
                 });
 
             modelBuilder.Entity("App.Model.Entities.TestEntities.TestTemplate", b =>
                 {
                     b.HasOne("App.Model.Entities.User", "Author")
                         .WithMany("UserTestsTemplates")
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("AuthorId");
 
                     b.Navigation("Author");
                 });
@@ -1942,13 +2066,11 @@ namespace App.Infrastructure.Migrations
                 {
                     b.HasOne("App.Model.Entities.TestEntities.TestTemplate", "Test")
                         .WithMany("UserResults")
-                        .HasForeignKey("TestId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("TestId");
 
                     b.HasOne("App.Model.Entities.User", "User")
                         .WithMany("TestsResults")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Test");
 
@@ -2186,23 +2308,25 @@ namespace App.Infrastructure.Migrations
                     b.Navigation("TeamPlayersPlayedMatchEvents");
                 });
 
-            modelBuilder.Entity("App.Model.Entities.TestEntities.TestQuestion", b =>
+            modelBuilder.Entity("App.Model.Entities.TestEntities.QuestionTemplates.BoolTestQuestionTemplate", b =>
                 {
-                    b.Navigation("Options");
+                    b.Navigation("UsersAnswers");
+                });
 
-                    b.Navigation("QuestionAnswers");
+            modelBuilder.Entity("App.Model.Entities.TestEntities.QuestionTemplates.OptionsTestQuestionTemplate", b =>
+                {
+                    b.Navigation("Answers");
+
+                    b.Navigation("UserAnswers");
                 });
 
             modelBuilder.Entity("App.Model.Entities.TestEntities.TestTemplate", b =>
                 {
-                    b.Navigation("Questions");
+                    b.Navigation("BoolTestQuestions");
+
+                    b.Navigation("OptionsTestQuestions");
 
                     b.Navigation("UserResults");
-                });
-
-            modelBuilder.Entity("App.Model.Entities.TestEntities.UserTestResult", b =>
-                {
-                    b.Navigation("QuestionAnswers");
                 });
 
             modelBuilder.Entity("App.Model.Entities.Training", b =>
@@ -2212,6 +2336,8 @@ namespace App.Infrastructure.Migrations
 
             modelBuilder.Entity("App.Model.Entities.User", b =>
                 {
+                    b.Navigation("BoolTestQuestionAnswers");
+
                     b.Navigation("CoachDetails");
 
                     b.Navigation("CreatedTrainingScores");
@@ -2219,6 +2345,8 @@ namespace App.Infrastructure.Migrations
                     b.Navigation("GroupMessages");
 
                     b.Navigation("IndividualMessages");
+
+                    b.Navigation("OptionsTestQuestionAnswers");
 
                     b.Navigation("PlayerDetails");
 

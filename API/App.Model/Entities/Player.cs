@@ -28,6 +28,7 @@ namespace App.Model.Entities
         public ICollection<MatchPoint> MatchPoints { get; set; }
         public ICollection<PlayerCard> Cards { get; set; }
         public ICollection<TrainingScore> TrainingScores { get; set; }
+        public ICollection<MatchPlayerScore> MatchScores { get; set; }
         public PlayerHistory History { get; set; }
 
     }
