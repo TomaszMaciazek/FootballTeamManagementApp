@@ -24,12 +24,10 @@ namespace App.Infrastructure
         public DbSet<MatchPlayerScore> MatchPlayersScores { get; set; }
         #endregion
 
-        #region Chat Entities
-        public DbSet<GroupChat> GroupChats { get; set; }
-        public DbSet<GroupChatImage> GroupChatImages { get; set; }
-        public DbSet<IndividualChat> IndividualChats { get; set; }
-        public DbSet<GroupMessage> GroupMessages { get; set; }
-        public DbSet<IndividualMessage> IndividualMessages { get; set; }
+        #region Message Entities
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<MessageTransmission> MessageTransmissions { get; set; }
+        public DbSet<MessageRecipient> MessageUsers { get; set; }
         #endregion
 
         #region Identity Entites

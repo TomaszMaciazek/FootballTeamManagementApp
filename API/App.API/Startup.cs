@@ -108,7 +108,7 @@ namespace App.API
                 options.AddPolicy(Permissions.SurveysAllPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.SurveysAll));
                 options.AddPolicy(Permissions.SurveysAssignedToMePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.SurveysAssignedToMe));
                 options.AddPolicy(Permissions.SurveysCreatedByMePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.SurveysCreatedByMe));
-                options.AddPolicy(Permissions.SurveysRespondentsPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.SurveysRespondents));
+                options.AddPolicy(Permissions.RespondentsPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.GetRespondents));
                 options.AddPolicy(Permissions.SurveysAddPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.SurveysAdd));
                 options.AddPolicy(Permissions.SurveysEditPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.SurveysEdit));
                 options.AddPolicy(Permissions.SurveysDeletePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.SurveysDelete));
@@ -122,14 +122,8 @@ namespace App.API
                 options.AddPolicy(Permissions.TestsAddPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TestsAdd));
                 options.AddPolicy(Permissions.TestsEditPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TestsEdit));
                 options.AddPolicy(Permissions.TestsDeletePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TestsDelete));
-                options.AddPolicy(Permissions.TestsRespondentsPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.TestsRespondents));
 
-                options.AddPolicy(Permissions.ChatsPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.Chats));
-                options.AddPolicy(Permissions.ChatsActivatePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.ChatsActivate));
-                options.AddPolicy(Permissions.ChatsDeactivatePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.ChatsDeactivate));
-                options.AddPolicy(Permissions.ChatsAddPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.ChatsAdd));
-                options.AddPolicy(Permissions.ChatsEditPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.ChatsEdit));
-                options.AddPolicy(Permissions.ChatsDeletePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.ChatsDelete));
+                options.AddPolicy(Permissions.MessagesPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.Messages));
 
                 options.AddPolicy(Permissions.NewsPolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.News));
                 options.AddPolicy(Permissions.NewsActivatePolicy, policy => policy.RequireClaim(Permissions.ClaimType, Permissions.NewsActivate));

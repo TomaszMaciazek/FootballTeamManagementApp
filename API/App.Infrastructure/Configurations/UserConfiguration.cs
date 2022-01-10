@@ -19,20 +19,6 @@ namespace App.Infrastructure.Configurations
                 .HasForeignKey<Coach>(c => c.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasMany(u => u.IndividualChats)
-                .WithMany(chat => chat.Users)
-                .UsingEntity(join => join.ToTable("IndividualChatsMembers"));
-
-            builder.HasMany(u => u.GroupChats)
-                .WithMany(chat => chat.Users)
-                .UsingEntity(join => join.ToTable("GroupChatsMembers"));
-
-            builder.HasMany(u => u.IndividualMessages)
-                .WithOne(m => m.Sender);
-
-            builder.HasMany(u => u.GroupMessages)
-                .WithOne(m => m.Sender);
-
             builder.HasMany(u => u.UserSurveysTemplates)
                 .WithOne(t => t.Author);
 

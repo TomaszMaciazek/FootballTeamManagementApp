@@ -4,14 +4,16 @@ using App.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace App.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220107165109_Removed-Group-Chats")]
+    partial class RemovedGroupChats
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -147,6 +149,81 @@ namespace App.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Countries");
+                });
+
+            modelBuilder.Entity("App.Model.Entities.IndividualChat", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsHidden")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("IndividualChats");
+                });
+
+            modelBuilder.Entity("App.Model.Entities.IndividualMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ChatId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsHidden")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("Sended")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("SenderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChatId");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("IndividualMessages");
                 });
 
             modelBuilder.Entity("App.Model.Entities.Match", b =>
@@ -342,123 +419,6 @@ namespace App.Infrastructure.Migrations
                     b.HasIndex("TeamId");
 
                     b.ToTable("MatchPoints");
-                });
-
-            modelBuilder.Entity("App.Model.Entities.Message", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("SendDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("SenderId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Topic")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("UpdatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SenderId");
-
-                    b.ToTable("Messages");
-                });
-
-            modelBuilder.Entity("App.Model.Entities.MessageRecipient", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("MessageId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("RecipientId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UpdatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MessageId");
-
-                    b.HasIndex("RecipientId");
-
-                    b.ToTable("MessageUsers");
-                });
-
-            modelBuilder.Entity("App.Model.Entities.MessageTransmission", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsRead")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid?>("MailboxOwnerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("MailboxType")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("MessageId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UpdatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MailboxOwnerId");
-
-                    b.HasIndex("MessageId");
-
-                    b.ToTable("MessageTransmissions");
                 });
 
             modelBuilder.Entity("App.Model.Entities.News", b =>
@@ -1400,6 +1360,21 @@ namespace App.Infrastructure.Migrations
                     b.ToTable("UserTokenRefreshes");
                 });
 
+            modelBuilder.Entity("IndividualChatUser", b =>
+                {
+                    b.Property<Guid>("IndividualChatsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UsersId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("IndividualChatsId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("IndividualChatsMembers");
+                });
+
             modelBuilder.Entity("App.Model.Entities.Coach", b =>
                 {
                     b.HasOne("App.Model.Entities.Country", "Country")
@@ -1450,6 +1425,22 @@ namespace App.Infrastructure.Migrations
                     b.Navigation("Coach");
 
                     b.Navigation("Match");
+                });
+
+            modelBuilder.Entity("App.Model.Entities.IndividualMessage", b =>
+                {
+                    b.HasOne("App.Model.Entities.IndividualChat", "Chat")
+                        .WithMany("Messages")
+                        .HasForeignKey("ChatId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("App.Model.Entities.User", "Sender")
+                        .WithMany("IndividualMessages")
+                        .HasForeignKey("SenderId");
+
+                    b.Navigation("Chat");
+
+                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("App.Model.Entities.Match", b =>
@@ -1527,45 +1518,6 @@ namespace App.Infrastructure.Migrations
                     b.Navigation("Match");
 
                     b.Navigation("Team");
-                });
-
-            modelBuilder.Entity("App.Model.Entities.Message", b =>
-                {
-                    b.HasOne("App.Model.Entities.User", "Sender")
-                        .WithMany()
-                        .HasForeignKey("SenderId");
-
-                    b.Navigation("Sender");
-                });
-
-            modelBuilder.Entity("App.Model.Entities.MessageRecipient", b =>
-                {
-                    b.HasOne("App.Model.Entities.Message", "Message")
-                        .WithMany("Recipients")
-                        .HasForeignKey("MessageId");
-
-                    b.HasOne("App.Model.Entities.User", "Recipient")
-                        .WithMany("MessagesReceived")
-                        .HasForeignKey("RecipientId");
-
-                    b.Navigation("Message");
-
-                    b.Navigation("Recipient");
-                });
-
-            modelBuilder.Entity("App.Model.Entities.MessageTransmission", b =>
-                {
-                    b.HasOne("App.Model.Entities.User", "MailboxOwner")
-                        .WithMany("Messages")
-                        .HasForeignKey("MailboxOwnerId");
-
-                    b.HasOne("App.Model.Entities.Message", "Message")
-                        .WithMany("Transmissions")
-                        .HasForeignKey("MessageId");
-
-                    b.Navigation("MailboxOwner");
-
-                    b.Navigation("Message");
                 });
 
             modelBuilder.Entity("App.Model.Entities.Player", b =>
@@ -1901,6 +1853,21 @@ namespace App.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("IndividualChatUser", b =>
+                {
+                    b.HasOne("App.Model.Entities.IndividualChat", null)
+                        .WithMany()
+                        .HasForeignKey("IndividualChatsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("App.Model.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("App.Model.Entities.Coach", b =>
                 {
                     b.Navigation("AssignedToTeamEvents");
@@ -1921,6 +1888,11 @@ namespace App.Infrastructure.Migrations
                     b.Navigation("Players");
                 });
 
+            modelBuilder.Entity("App.Model.Entities.IndividualChat", b =>
+                {
+                    b.Navigation("Messages");
+                });
+
             modelBuilder.Entity("App.Model.Entities.Match", b =>
                 {
                     b.Navigation("CoachesCards");
@@ -1934,13 +1906,6 @@ namespace App.Infrastructure.Migrations
                     b.Navigation("Points");
 
                     b.Navigation("TeamPlayersPlayedMatchEvents");
-                });
-
-            modelBuilder.Entity("App.Model.Entities.Message", b =>
-                {
-                    b.Navigation("Recipients");
-
-                    b.Navigation("Transmissions");
                 });
 
             modelBuilder.Entity("App.Model.Entities.Player", b =>
@@ -2044,9 +2009,7 @@ namespace App.Infrastructure.Migrations
 
                     b.Navigation("CreatedTrainingScores");
 
-                    b.Navigation("Messages");
-
-                    b.Navigation("MessagesReceived");
+                    b.Navigation("IndividualMessages");
 
                     b.Navigation("PlayerDetails");
 

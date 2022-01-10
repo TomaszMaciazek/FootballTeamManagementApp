@@ -19,12 +19,10 @@ namespace App.DataAccess.Interfaces
         DbSet<MatchPlayerScore> MatchPlayersScores { get; set; }
         #endregion
 
-        #region Chat Entities
-         DbSet<GroupChat> GroupChats { get; set; }
-         DbSet<GroupChatImage> GroupChatImages { get; set; }
-         DbSet<IndividualChat> IndividualChats { get; set; }
-         DbSet<GroupMessage> GroupMessages { get; set; }
-         DbSet<IndividualMessage> IndividualMessages { get; set; }
+        #region Message Entities
+        DbSet<Message> Messages { get; set; }
+        DbSet<MessageTransmission> MessageTransmissions { get; set; }
+        DbSet<MessageRecipient> MessageUsers { get; set; }
         #endregion
 
         #region Identity Entites
