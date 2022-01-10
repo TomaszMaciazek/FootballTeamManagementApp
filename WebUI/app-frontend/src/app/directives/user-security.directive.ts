@@ -30,12 +30,14 @@ export class UserSecurityDirective implements OnInit {
                     break;
                 }
             }
-
+            
             if ((this.el.parentNode != null) && (!hasAccess)) {
                 this.el.parentNode.removeChild(this.el);
                 this.el.className = "hidden";
             }
-
+            else if(!hasAccess){
+                this.el.remove();
+            }
 
         }
     }

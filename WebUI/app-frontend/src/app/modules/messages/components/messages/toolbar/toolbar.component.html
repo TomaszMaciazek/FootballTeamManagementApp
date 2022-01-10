@@ -1,0 +1,24 @@
+<p-card>
+    <p-toolbar>
+        <div class="p-toolbar-group-left">
+            <button pButton pRipple  type="button" icon="fas fa-trash" 
+                class="p-button-rounded p-button-danger mr-3" (click)="deleteMessages()"
+                pInputText pTooltip="{{'delete' | translate }}" tooltipPosition="top"></button>
+            <button *ngIf="mailboxType == boxType.Inbox" pButton pRipple  type="button" icon="fas fa-book-reader"
+                (click)="markMessagesAsRead()" class="p-button-rounded p-button-help mr-3"
+                pInputText pTooltip="{{'mark_as_read' | translate }}" tooltipPosition="top">
+            </button>
+            <button *ngIf="mailboxType == boxType.Trash" pButton pRipple  type="button" icon="fas fa-trash-restore"
+                (click)="takeBackMessages()" class="p-button-rounded p-button-help mr-3"
+                pInputText pTooltip="{{'restore' | translate }}" tooltipPosition="top">
+            </button>
+        </div>
+        <div class="p-toolbar-group-right">
+            <input pInputText type="text" [(ngModel)]="searchText" (keydown.enter)="search()"
+            [placeholder]="'search_messages' | translate">
+            <button class="ml-3" pButton pRipple type="button" icon="fa fa-search" 
+                pInputText pTooltip="{{'search' | translate }}" tooltipPosition="top"
+                class="p-button-rounded p-button-primary ml-3" (click)="search()"></button>
+        </div>
+    </p-toolbar>
+</p-card>

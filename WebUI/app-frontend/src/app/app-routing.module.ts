@@ -41,12 +41,20 @@ const routes: Routes = [
     loadChildren: () => import('./modules/club-members/club-members.module').then(m => m.ClubMembersModule)
   },
   {
+    path: 'messages', component: BasicLayoutComponent,
+    loadChildren: () => import('./modules/messages/messages.module').then(m => m.MessagesModule)
+  },
+  {
     path: 'reports', component: BasicLayoutComponent,
     loadChildren: () => import('./modules/reports/reports.module').then(m => m.ReportsModule)
   },
   {
     path: 'surveys', component: BasicLayoutComponent,
     loadChildren: () => import('./modules/surveys/surveys.module').then(m => m.SurveysModule)
+  },
+  {
+    path: 'tests', component: BasicLayoutComponent,
+    loadChildren: () => import('./modules/tests/tests.module').then(m => m.TestsModule)
   },
   { path: '**', redirectTo: 'login' }
 ];

@@ -12,16 +12,14 @@ namespace App.Repository
             service.AddScoped<IPlayerCardRepository, PlayerCardRepository>();
             service.AddScoped<ICoachCardRepository, CoachCardRepository>();
             service.AddScoped<ICoachRepository, CoachRepository>();
-            service.AddScoped<IGroupChatRepository, GroupChatRepository>();
-            service.AddScoped<IGroupChatImageRepository, GroupChatImageRepository>();
-            service.AddScoped<IGroupMessageRepository, GroupMessageRepository>();
-            service.AddScoped<IIndividualChatRepository, IndividualChatRepository>();
-            service.AddScoped<IIndividualMessageRepository, IndividualMessageRepository>();
             service.AddScoped<IMatchRepository, MatchRepository>();
             service.AddScoped<IMatchPlayerPerformanceRepository, MatchPlayerPerformanceRepository>();
             service.AddScoped<IMatchPlayerScoreRepository, MatchPlayerScoreRepository>();
             service.AddScoped<IMatchPointRepository, MatchPointRepository>();
             service.AddScoped<IPlayerRepository, PlayerRepository>();
+
+            service.AddScoped<IMessageRepository, MessageRepository>();
+            service.AddScoped<IMessageTransmissionRepository, MessageTransmissionRepository>();
             
             service.AddScoped<ISurveyTemplateRepository, SurveyTemplateRepository>();
 

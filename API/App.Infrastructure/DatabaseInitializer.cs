@@ -92,7 +92,7 @@ namespace App.Infrastructure
                         Permissions.ReportsPlayersMatchScores,
                         Permissions.Surveys,
                         Permissions.SurveysAll,
-                        Permissions.SurveysRespondents,
+                        Permissions.GetRespondents,
                         Permissions.SurveysEdit,
                         Permissions.SurveysAssignedToMe,
                         Permissions.SurveysCreatedByMe,

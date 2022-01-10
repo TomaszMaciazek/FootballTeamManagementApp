@@ -223,24 +223,12 @@ namespace App.UserMiddleware
         public static Permission TestsAdd { get => new("Dodanie testu", TestsAddPolicy, TestsGroup, ""); }
         public const string TestsDeletePolicy = "tests.delete";
         public static Permission TestsDelete { get => new("Usuwanie testu", TestsDeletePolicy, TestsGroup, ""); }
-        public const string TestsRespondentsPolicy = "tests.respondents";
-        public static Permission TestsRespondents { get => new("Testy respondenci", TestsRespondentsPolicy, TestsGroup, ""); }
         #endregion
 
         #region Chats
-        public const string ChatsGroup = "Konwersacje";
-        public const string ChatsPolicy = "chats";
-        public static Permission Chats { get => new("Konwersacje", ChatsPolicy, ChatsGroup, ""); }
-        public const string ChatsEditPolicy = "chats.edit";
-        public static Permission ChatsEdit { get => new("Edycja konwersacji", ChatsEditPolicy, ChatsGroup, ""); }
-        public const string ChatsActivatePolicy = "chats.activate";
-        public static Permission ChatsActivate { get => new("Aktywacja konwersacji", ChatsActivatePolicy, ChatsGroup, ""); }
-        public const string ChatsDeactivatePolicy = "chats.deactivate";
-        public static Permission ChatsDeactivate { get => new("Dezaktywacja konwersacji", ChatsDeactivatePolicy, ChatsGroup, ""); }
-        public const string ChatsAddPolicy = "chats.add";
-        public static Permission ChatsAdd { get => new("Dodanie testu", ChatsAddPolicy, ChatsGroup, ""); }
-        public const string ChatsDeletePolicy = "chats.delete";
-        public static Permission ChatsDelete { get => new("Usuwanie testu", ChatsDeletePolicy, ChatsGroup, ""); }
+        public const string MessagesGroup = "Wiadomości";
+        public const string MessagesPolicy = "messages";
+        public static Permission Messages { get => new("Wiadomości", MessagesPolicy, MessagesGroup, ""); }
         #endregion
 
         #region News
@@ -345,7 +333,7 @@ namespace App.UserMiddleware
                 //Surveys
                 Surveys,
                 SurveysAll,
-                SurveysRespondents,
+                GetRespondents,
                 SurveysEdit,
                 SurveysCreatedByMe,
                 SurveysAssignedToMe,
@@ -362,15 +350,9 @@ namespace App.UserMiddleware
                 TestsDeactivate,
                 TestsAdd,
                 TestsDelete,
-                TestsRespondents,
 
                 //Chats
-                Chats,
-                ChatsEdit,
-                ChatsActivate,
-                ChatsDeactivate,
-                ChatsAdd,
-                ChatsDelete,
+                Messages,
 
                 //News
                 News,

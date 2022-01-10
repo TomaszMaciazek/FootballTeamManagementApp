@@ -31,6 +31,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { LocaleCalendarProvider } from './providers/locale-calendar-provider.model';
 import { ConfirmationService } from 'primeng/api';
 import { UserSecurityModule } from './directives/user-security.directive';
+import { MenuComponent } from './components/layout/basic-layout/menu/menu.component';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -49,7 +50,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     RefreshComponent,
     BasicLayoutComponent,
     FooterComponent,
-    TopbarComponent
+    TopbarComponent,
+    MenuComponent
   ],
   imports: [
     UserSecurityModule,

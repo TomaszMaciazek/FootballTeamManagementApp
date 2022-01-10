@@ -32,16 +32,13 @@ namespace App.Model.Entities
         [Required]
         public bool IsActive { get; set; } = true;
 
-        public ICollection<IndividualChat> IndividualChats { get; set; }
-        public ICollection<GroupChat> GroupChats { get; set; }
-        public ICollection<GroupChat> OwnedGroupChats { get; set; }
-        public ICollection<IndividualMessage> IndividualMessages { get; set; }
-        public ICollection<GroupMessage> GroupMessages { get; set; }
         public ICollection<SurveyTemplate> UserSurveysTemplates { get; set; }
         public ICollection<TestTemplate> UserTestsTemplates { get; set; }
         public ICollection<UserSurveyResult> SurveysResults { get; set; }
         public ICollection<UserTestResult> TestsResults { get; set; }
         public ICollection<TrainingScore> CreatedTrainingScores { get; set; }
+        public ICollection<MessageTransmission> Messages { get; set; }
+        public ICollection<MessageRecipient> MessagesReceived { get; set; }
         public Role Role { get; set; }
         public Player PlayerDetails { get; set; }
         public Coach CoachDetails { get; set; }
