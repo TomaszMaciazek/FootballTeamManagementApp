@@ -60,9 +60,8 @@ export class CreateSurveyComponent implements OnInit {
   ngOnInit() {
     this.createForm();
     this.spinner.show();
-    this.userService.getAllUsers().then(res => {
+    this.userService.getRespondentsList().then(res => {
       this.users = res.sort(this.comparePlayer);
-      console.log(res);
       this.spinner.hide();
       this.groupedUsers = this.groupUsers(res);
     });

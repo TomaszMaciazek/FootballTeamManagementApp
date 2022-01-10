@@ -90,10 +90,10 @@ export class SurveysCreatedByMeComponent implements OnInit {
       orderByColumnName: this.sortColumn,
       orderByDirection: this.sortOrder,
       title: this.titleSearch,
-      authorId: null,
+      authorId: this.tokenStorageProvider.getUserId(),
       isAnonymous : this.isAnonymous
     });
-    this.surveyService.getSurveys(query).then(res => {
+    this.surveyService.getSurveysCreatedByMe(query).then(res => {
       this.surveys = res.items;
       this.totalCount = res.totalCount;
       this.spinner.hide();

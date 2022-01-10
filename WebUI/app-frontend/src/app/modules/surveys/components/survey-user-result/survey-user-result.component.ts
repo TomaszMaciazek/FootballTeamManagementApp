@@ -37,8 +37,6 @@ export class SurveyUserResultComponent implements OnInit {
       this.userSurveyResultService.getById(this.id).then(res => {
         this.result = res;
         this.surveyService.getSurveyQuestions(this.result.survey.id).then(res2 => {
-          console.log(res);
-          console.log(res2);
           this.questions = res2;
           this.spinner.hide();
         })

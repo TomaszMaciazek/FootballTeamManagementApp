@@ -140,7 +140,7 @@ namespace App.ServiceLayer.Services
 
             result = result.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
 
-            return await surveys.ProjectTo<MySurveyListItemDto>(_mapper.ConfigurationProvider)
+            return await result.ProjectTo<MySurveyListItemDto>(_mapper.ConfigurationProvider)
                 .PaginatedListAsync(query.PageNumber, query.PageSize);
         }
 

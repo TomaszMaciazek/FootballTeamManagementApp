@@ -69,6 +69,15 @@ namespace App.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.RespondentsPolicy)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectUserDto>))]
+        [Route("Respondents")]
+        public async Task<ActionResult<IEnumerable<SelectUserDto>>> GetAllRespondents()
+        {
+            return Ok(await _userService.GetAll());
+        }
+
+        [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserAccountDto>))]
         [Route("Account/{id}")]
         public async Task<ActionResult<UserAccountDto>> GetMyAccount(Guid id)
@@ -120,6 +129,15 @@ namespace App.API.Controllers
                 }
             }
             return Unauthorized();
+        }
+
+        [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.MessagesPolicy)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SimpleUserDto>))]
+        [Route("Recipients/{id}")]
+        public async Task<ActionResult<IEnumerable<SimpleUserDto>>> GetRecipients([FromRoute] Guid id)
+        {
+            return Ok(await _userService.GetRecipients(id));
         }
 
         [HttpPost]
@@ -196,6 +214,35 @@ namespace App.API.Controllers
                 return Forbid();
             }
 
+        }
+
+        [HttpPatch]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.UsersPolicy)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [Route("Activate/{id}")]
+        public async Task<IActionResult> ActivateTraining(Guid id)
+        {
+            await _userService.Activate(id);
+            return NoContent();
+        }
+
+        [HttpPatch]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.UsersPolicy)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [Route("Deactivate/{id}")]
+        public async Task<IActionResult> DeactivateTraining(Guid id)
+        {
+            await _userService.Deactivate(id);
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.UsersPolicy)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            await _userService.Remove(id);
+            return NoContent();
         }
     }
 }

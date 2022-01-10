@@ -47,7 +47,7 @@ namespace App.API.Controllers
         }
 
         [HttpGet]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.SurveysRespondentsPolicy)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.RespondentsPolicy)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SimpleUserDto>))]
         [Route("Respondents/{id}")]
         public async Task<ActionResult<IEnumerable<SimpleUserDto>>> GetSurveyRespondents([FromRoute] Guid id)

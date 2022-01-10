@@ -116,7 +116,6 @@ export class SurveyFillComponent implements OnInit {
         textQuestionAnswers.push(new TextQuestionAnswer({questionId: questionTemplate.id, value: question.answer}));
       }
       else if(questionTemplate.type == QuestionType.MutipleChoice){
-        console.log(question.answer);
         if(question.answer != null){
           if(question.answer instanceof Array){
             question.answer.forEach(x => {
@@ -138,8 +137,6 @@ export class SurveyFillComponent implements OnInit {
 
     fillCommand.selectQuestionAnswers = selectQuestionAnswers;
     fillCommand.textQuestionAnswers = textQuestionAnswers;
-
-    console.log(fillCommand);
 
     this.userSurveyResultService.fillSurvey(fillCommand)
     .then(res => {

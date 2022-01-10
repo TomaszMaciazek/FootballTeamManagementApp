@@ -36,11 +36,9 @@ export class SurveyResultsComponent implements OnInit {
       this.id = routeParams['id'];
       this.surveyService.getSurveyById(this.id).then(res => {
         this.survey = res;
-        console.log(this.survey);
         if(!this.survey.isAnonymous){
           this.userSurveyResultService.getRespondentsFromSurvey(this.id).then(res2 =>{
             this.respondents = res2;
-            console.log(res2);
             this.spinner.hide();
           })
         }
