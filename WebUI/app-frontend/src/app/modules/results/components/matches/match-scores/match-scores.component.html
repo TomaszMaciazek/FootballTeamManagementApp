@@ -1,0 +1,283 @@
+<div fxLayout="row" fxLayoutAlign="center start" class="mt-3">
+    <div fxFlex="100">
+        <div *ngIf="matchScores.length > 0">
+            <p-accordion>
+                <p-accordionTab header="{{'tactical_performance' | translate}}" *ngIf="tacticalPerformanceScores.length > 0">
+                    <match-scores-table 
+                    [matchScores]="tacticalPerformanceScores"
+                    [players]="players"
+                    (deleteScore)="confirmDelete($event)"
+                    (activateScore)="confirmActivate($event)"
+                    (deactivateScore)="confirmDeactivate($event)"
+                    (updateScore)="confirmUpdate($event)"></match-scores-table>
+                </p-accordionTab>
+                <p-accordionTab header="{{'ball_control' | translate}}" *ngIf="ballControlScores.length > 0">
+                    <match-scores-table 
+                    [matchScores]="ballControlScores"
+                    [players]="players"
+                    (deleteScore)="confirmDelete($event)"
+                    (activateScore)="confirmActivate($event)"
+                    (deactivateScore)="confirmDeactivate($event)"
+                    (updateScore)="confirmUpdate($event)"></match-scores-table>
+                </p-accordionTab>
+                <p-accordionTab header="{{'left_foot_pass_accuracy' | translate}}" *ngIf="leftFootPassAccuracyScores.length > 0">
+                    <match-scores-table 
+                    [matchScores]="leftFootPassAccuracyScores"
+                    [players]="players"
+                    (deleteScore)="confirmDelete($event)"
+                    (activateScore)="confirmActivate($event)"
+                    (deactivateScore)="confirmDeactivate($event)"
+                    (updateScore)="confirmUpdate($event)"></match-scores-table>
+                </p-accordionTab>
+                <p-accordionTab header="{{'right_foot_pass_accuracy' | translate}}" *ngIf="rightFootPassAccuracyScores.length > 0">
+                    <match-scores-table 
+                    [matchScores]="rightFootPassAccuracyScores"
+                    [players]="players"
+                    (deleteScore)="confirmDelete($event)"
+                    (activateScore)="confirmActivate($event)"
+                    (deactivateScore)="confirmDeactivate($event)"
+                    (updateScore)="confirmUpdate($event)"></match-scores-table>  
+                </p-accordionTab>
+                <p-accordionTab header="{{'left_foot_dribbling_accuracy' | translate}}" *ngIf="leftFootDribblingAccuracyScores.length > 0">
+                    <match-scores-table 
+                    [matchScores]="leftFootDribblingAccuracyScores"
+                    [players]="players"
+                    (deleteScore)="confirmDelete($event)"
+                    (activateScore)="confirmActivate($event)"
+                    (deactivateScore)="confirmDeactivate($event)"
+                    (updateScore)="confirmUpdate($event)"></match-scores-table>  
+                </p-accordionTab>
+                <p-accordionTab header="{{'right_foot_dribbling_accuracy' | translate}}" *ngIf="rightFootDribblingAccuracyScores.length > 0">
+                    <match-scores-table 
+                    [matchScores]="rightFootDribblingAccuracyScores"
+                    [players]="players"
+                    (deleteScore)="confirmDelete($event)"
+                    (activateScore)="confirmActivate($event)"
+                    (deactivateScore)="confirmDeactivate($event)"
+                    (updateScore)="confirmUpdate($event)"></match-scores-table>  
+                </p-accordionTab>
+                <p-accordionTab header="{{'left_foot_ball_receiving_accuracy' | translate}}" *ngIf="leftFootBallReceivingAccuracyScores.length > 0">
+                    <match-scores-table 
+                    [matchScores]="leftFootBallReceivingAccuracyScores"
+                    [players]="players"
+                    (deleteScore)="confirmDelete($event)"
+                    (activateScore)="confirmActivate($event)"
+                    (deactivateScore)="confirmDeactivate($event)"
+                    (updateScore)="confirmUpdate($event)"></match-scores-table>  
+                </p-accordionTab>
+                <p-accordionTab header="{{'right_foot_ball_receiving_accuracy' | translate}}" *ngIf="rightFootBallReceivingAccuracyScores.length > 0">
+                    <match-scores-table 
+                    [matchScores]="rightFootBallReceivingAccuracyScores"
+                    [players]="players"
+                    (deleteScore)="confirmDelete($event)"
+                    (activateScore)="confirmActivate($event)"
+                    (deactivateScore)="confirmDeactivate($event)"
+                    (updateScore)="confirmUpdate($event)"></match-scores-table>  
+                </p-accordionTab>
+                <p-accordionTab header="{{'left_foot_shots_accuracy' | translate}}" *ngIf="leftFootShotsAccuracyScores.length > 0">
+                    <match-scores-table 
+                    [matchScores]="leftFootShotsAccuracyScores"
+                    [players]="players"
+                    (deleteScore)="confirmDelete($event)"
+                    (activateScore)="confirmActivate($event)"
+                    (deactivateScore)="confirmDeactivate($event)"
+                    (updateScore)="confirmUpdate($event)"></match-scores-table>  
+                </p-accordionTab>
+                <p-accordionTab header="{{'right_foot_shots_accuracy' | translate}}" *ngIf="rightFootShotsAccuracyScores.length > 0">
+                    <match-scores-table 
+                    [matchScores]="rightFootShotsAccuracyScores"
+                    [players]="players"
+                    (deleteScore)="confirmDelete($event)"
+                    (activateScore)="confirmActivate($event)"
+                    (deactivateScore)="confirmDeactivate($event)"
+                    (updateScore)="confirmUpdate($event)"></match-scores-table>  
+                </p-accordionTab>
+                <p-accordionTab header="{{'heading_accuracy' | translate}}" *ngIf="headingAccuracyScores.length > 0">
+                    <match-scores-table 
+                    [matchScores]="headingAccuracyScores"
+                    [players]="players"
+                    (deleteScore)="confirmDelete($event)"
+                    (activateScore)="confirmActivate($event)"
+                    (deactivateScore)="confirmDeactivate($event)"
+                    (updateScore)="confirmUpdate($event)"></match-scores-table>  
+                </p-accordionTab>
+                <p-accordionTab header="{{'one_vs_one' | translate}}" *ngIf="oneVsOneScoreScores.length > 0">
+                    <match-scores-table 
+                    [matchScores]="oneVsOneScoreScores"
+                    [players]="players"
+                    (deleteScore)="confirmDelete($event)"
+                    (activateScore)="confirmActivate($event)"
+                    (deactivateScore)="confirmDeactivate($event)"
+                    (updateScore)="confirmUpdate($event)"></match-scores-table>  
+                </p-accordionTab>
+                <p-accordionTab header="{{'mobility' | translate}}" *ngIf="mobilityScores.length > 0">
+                    <match-scores-table 
+                    [matchScores]="mobilityScores"
+                    [players]="players"
+                    (deleteScore)="confirmDelete($event)"
+                    (activateScore)="confirmActivate($event)"
+                    (deactivateScore)="confirmDeactivate($event)"
+                    (updateScore)="confirmUpdate($event)"></match-scores-table>  
+                </p-accordionTab>
+                <p-accordionTab header="{{'strength' | translate}}" *ngIf="strengthScores.length > 0">
+                    <match-scores-table 
+                    [matchScores]="strengthScores"
+                    [players]="players"
+                    (deleteScore)="confirmDelete($event)"
+                    (activateScore)="confirmActivate($event)"
+                    (deactivateScore)="confirmDeactivate($event)"
+                    (updateScore)="confirmUpdate($event)"></match-scores-table>  
+                </p-accordionTab>
+                <p-accordionTab header="{{'endurance' | translate}}" *ngIf="enduranceScores.length > 0">
+                    <match-scores-table 
+                    [matchScores]="enduranceScores"
+                    [players]="players"
+                    (deleteScore)="confirmDelete($event)"
+                    (activateScore)="confirmActivate($event)"
+                    (deactivateScore)="confirmDeactivate($event)"
+                    (updateScore)="confirmUpdate($event)"></match-scores-table>  
+                </p-accordionTab>
+                <p-accordionTab header="{{'agility' | translate}}" *ngIf="agilityScores.length > 0">
+                    <match-scores-table 
+                    [matchScores]="agilityScores"
+                    [players]="players"
+                    (deleteScore)="confirmDelete($event)"
+                    (activateScore)="confirmActivate($event)"
+                    (deactivateScore)="confirmDeactivate($event)"
+                    (updateScore)="confirmUpdate($event)"></match-scores-table>  
+                </p-accordionTab>
+                <p-accordionTab header="{{'coordination' | translate}}" *ngIf="coordinationScores.length > 0">
+                    <match-scores-table 
+                    [matchScores]="coordinationScores"
+                    [players]="players"
+                    (deleteScore)="confirmDelete($event)"
+                    (activateScore)="confirmActivate($event)"
+                    (deactivateScore)="confirmDeactivate($event)"
+                    (updateScore)="confirmUpdate($event)"></match-scores-table>  
+                </p-accordionTab>
+                <p-accordionTab header="{{'concentration' | translate}}" *ngIf="concentrationScores.length > 0">
+                    <match-scores-table 
+                    [matchScores]="concentrationScores"
+                    [players]="players"
+                    (deleteScore)="confirmDelete($event)"
+                    (activateScore)="confirmActivate($event)"
+                    (deactivateScore)="confirmDeactivate($event)"
+                    (updateScore)="confirmUpdate($event)"></match-scores-table>  
+                </p-accordionTab>
+                <p-accordionTab header="{{'emotions_control' | translate}}" *ngIf="emotionsControlScores.length > 0">
+                    <match-scores-table 
+                    [matchScores]="emotionsControlScores"
+                    [players]="players"
+                    (deleteScore)="confirmDelete($event)"
+                    (activateScore)="confirmActivate($event)"
+                    (deactivateScore)="confirmDeactivate($event)"
+                    (updateScore)="confirmUpdate($event)"></match-scores-table>  
+                </p-accordionTab>
+                <p-accordionTab header="{{'selfconfidence' | translate}}" *ngIf="selfconfidenceScores.length > 0">
+                    <match-scores-table 
+                    [matchScores]="selfconfidenceScores"
+                    [players]="players"
+                    (deleteScore)="confirmDelete($event)"
+                    (activateScore)="confirmActivate($event)"
+                    (deactivateScore)="confirmDeactivate($event)"
+                    (updateScore)="confirmUpdate($event)"></match-scores-table>  
+                </p-accordionTab>
+                <p-accordionTab header="{{'stress_control' | translate}}" *ngIf="stressControlScores.length > 0">
+                    <match-scores-table 
+                    [matchScores]="stressControlScores"
+                    [players]="players"
+                    (deleteScore)="confirmDelete($event)"
+                    (activateScore)="confirmActivate($event)"
+                    (deactivateScore)="confirmDeactivate($event)"
+                    (updateScore)="confirmUpdate($event)"></match-scores-table>  
+                </p-accordionTab>
+                <p-accordionTab header="{{'attitude' | translate}}" *ngIf="attitudeScores.length > 0">
+                    <match-scores-table 
+                    [matchScores]="attitudeScores"
+                    [players]="players"
+                    (deleteScore)="confirmDelete($event)"
+                    (activateScore)="confirmActivate($event)"
+                    (deactivateScore)="confirmDeactivate($event)"
+                    (updateScore)="confirmUpdate($event)"></match-scores-table>  
+                </p-accordionTab>
+                <p-accordionTab header="{{'communication' | translate}}" *ngIf="communicationScores.length > 0">
+                    <match-scores-table 
+                    [matchScores]="communicationScores"
+                    [players]="players"
+                    (deleteScore)="confirmDelete($event)"
+                    (activateScore)="confirmActivate($event)"
+                    (deactivateScore)="confirmDeactivate($event)"
+                    (updateScore)="confirmUpdate($event)"></match-scores-table>  
+                </p-accordionTab>
+                <p-accordionTab header="{{'cooperation' | translate}}" *ngIf="cooperationScores.length > 0">
+                    <match-scores-table 
+                    [matchScores]="cooperationScores"
+                    [players]="players"
+                    (deleteScore)="confirmDelete($event)"
+                    (activateScore)="confirmActivate($event)"
+                    (deactivateScore)="confirmDeactivate($event)"
+                    (updateScore)="confirmUpdate($event)"></match-scores-table>  
+                </p-accordionTab>
+                <p-accordionTab header="{{'determination' | translate}}" *ngIf="determinationScores.length > 0">
+                    <match-scores-table 
+                    [matchScores]="determinationScores"
+                    [players]="players"
+                    (deleteScore)="confirmDelete($event)"
+                    (activateScore)="confirmActivate($event)"
+                    (deactivateScore)="confirmDeactivate($event)"
+                    (updateScore)="confirmUpdate($event)"></match-scores-table>  
+                </p-accordionTab>
+                <p-accordionTab header="{{'discipline' | translate}}" *ngIf="disciplineScores.length > 0">
+                    <match-scores-table 
+                    [matchScores]="disciplineScores"
+                    [players]="players"
+                    (deleteScore)="confirmDelete($event)"
+                    (activateScore)="confirmActivate($event)"
+                    (deactivateScore)="confirmDeactivate($event)"
+                    (updateScore)="confirmUpdate($event)"></match-scores-table>  
+                </p-accordionTab>
+                <p-accordionTab header="{{'engagement' | translate}}" *ngIf="engagementScores.length > 0">
+                    <match-scores-table 
+                    [matchScores]="engagementScores"
+                    [players]="players"
+                    (deleteScore)="confirmDelete($event)"
+                    (activateScore)="confirmActivate($event)"
+                    (deactivateScore)="confirmDeactivate($event)"
+                    (updateScore)="confirmUpdate($event)"></match-scores-table>  
+                </p-accordionTab>
+                <p-accordionTab header="{{'creativity' | translate}}" *ngIf="creativityScores.length > 0">
+                    <match-scores-table 
+                    [matchScores]="creativityScores"
+                    [players]="players"
+                    (deleteScore)="confirmDelete($event)"
+                    (activateScore)="confirmActivate($event)"
+                    (deactivateScore)="confirmDeactivate($event)"
+                    (updateScore)="confirmUpdate($event)"></match-scores-table>  
+                </p-accordionTab>
+                <p-accordionTab header="{{'decisiveness' | translate}}" *ngIf="decisivenessScores.length > 0">
+                    <match-scores-table 
+                    [matchScores]="decisivenessScores"
+                    [players]="players"
+                    (deleteScore)="confirmDelete($event)"
+                    (activateScore)="confirmActivate($event)"
+                    (deactivateScore)="confirmDeactivate($event)"
+                    (updateScore)="confirmUpdate($event)"></match-scores-table>  
+                </p-accordionTab>
+                <p-accordionTab header="{{'awareness' | translate}}" *ngIf="awarenessScores.length > 0">
+                    <match-scores-table 
+                    [matchScores]="awarenessScores"
+                    [players]="players"
+                    (deleteScore)="confirmDelete($event)"
+                    (activateScore)="confirmActivate($event)"
+                    (deactivateScore)="confirmDeactivate($event)"
+                    (updateScore)="confirmUpdate($event)"></match-scores-table>  
+                </p-accordionTab>
+            </p-accordion>
+        </div>
+        <div *ngIf="matchScores == null || matchScores === undefined || matchScores.length == 0">
+            <div class="text-center pb-3">
+                <h3>{{'no_scores' | translate}}</h3>
+            </div>
+        </div>
+    </div>
+</div>

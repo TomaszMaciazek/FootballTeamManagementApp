@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { UserContextProvider } from 'src/app/providers/user-context-provider.model';
 import { Language } from 'src/app/models/language.model';
 import { LanguageCode } from 'src/app/enums/language-code';
+import { TokenStorageProvider } from 'src/app/providers/token-storage-provider.model';
 @Component({
   selector: 'login',
   templateUrl: './login.component.html',
@@ -27,6 +28,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private router: Router,
     private toastr : ToastrService,
     private spinner: NgxSpinnerService,
+    private tokenStorageProvider: TokenStorageProvider,
     private translationProvider: TranslationProvider,
     private userContextProvider : UserContextProvider
   ) { 
@@ -38,8 +40,15 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(){
-    this.spinner.show();
-    this.prepareSignInForm();
+    if(this.tokenStorageProvider.isLogged()){
+      this.prepareSignInForm();
+      var url = this.userContextProvider.getDefaultPageUrl();
+      this.router.navigate([url]);
+    }
+    else{
+      this.spinner.show();
+      this.prepareSignInForm();
+    }
   }
 
   ngAfterViewInit(){

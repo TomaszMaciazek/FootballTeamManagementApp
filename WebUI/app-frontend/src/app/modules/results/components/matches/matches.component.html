@@ -10,7 +10,7 @@
             <div fxLayout="row" class="mb-3 mt-3">
                 <div fxFlex="100" fxHide fxShow.lt-lg>
                     <p-toolbar>
-                        <button class="btn btn-primary btn-block btn-lg btn-action" (click)="addNewMatch()">
+                        <button class="btn btn-primary btn-block btn-lg btn-action" (click)="addNewMatch()" [security]="'matches.add'">
                             <i class="far fa-plus-square"></i>    
                             {{'add' | translate}}
                         </button>
@@ -24,7 +24,7 @@
                 <div fxFlex.gt-md="100" fxHide fxShow.gt-md>
                     <p-toolbar>
                         <div class="p-toolbar-group-left">
-                            <button role="button" [ngClass.lt-md]="'btn-block'"
+                            <button role="button" [ngClass.lt-md]="'btn-block'" [security]="'matches.add'"
                             class="btn btn-primary btn-lg btn-action"
                             (click)="addNewMatch()">
                                 <i class="far fa-plus-square"></i>    
@@ -192,7 +192,7 @@
                                 <i class="pi" [ngClass]="{'true-icon pi-check-circle': match.isActive, 'false-icon pi-times-circle': !match.isActive}"></i>
                             </td>
                             <td class="text-center">
-                                <a [routerLink]="['/results/matches/'+match.id]">
+                                <a [routerLink]="['/results/match/'+match.id]">
                                     <button pButton pRipple type="button" icon="fas fa-info" 
                                     class="p-button-rounded p-button-info"></button>
                                 </a>

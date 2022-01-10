@@ -19,13 +19,13 @@
             </td>
             <td class="text-center">
                 <button pButton pRipple type="button" icon="fas fa-edit"
-                class="p-button-rounded p-button-info" (click)="confirmEditScore(score.id)"></button>
+                class="p-button-rounded p-button-info" (click)="confirmEditScore(score.id)" [security]="'trainings_scores.edit'"></button>
                 <button *ngIf="score.isActive" pButton pRipple type="button" icon="fas fa-ban" 
-                class="p-button-rounded p-button-secondary ml-2" (click)="confirmDeactivateScore(score.id)"></button>
+                class="p-button-rounded p-button-secondary ml-2" (click)="confirmDeactivateScore(score.id)" [security]="'trainings_scores.deactivate'"></button>
                 <button *ngIf="!score.isActive" pButton pRipple type="button" icon="far fa-check-circle" 
-                class="p-button-rounded p-button-success ml-2" (click)="confirmActivateScore(score.id)"></button>
+                class="p-button-rounded p-button-success ml-2" (click)="confirmActivateScore(score.id)" [security]="'trainings_scores.activate'"></button>
                 <button pButton pRipple type="button" icon="fas fa-trash" 
-                class="p-button-rounded p-button-danger ml-2" (click)="confirmDeleteScore(score.id)"></button>
+                class="p-button-rounded p-button-danger ml-2" (click)="confirmDeleteScore(score.id)" [security]="'trainings_scores.delete'"></button>
             </td>
         </tr>
     </ng-template>

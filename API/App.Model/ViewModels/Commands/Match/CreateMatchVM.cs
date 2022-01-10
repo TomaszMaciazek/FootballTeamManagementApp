@@ -15,8 +15,8 @@ namespace App.Model.ViewModels.Commands
         public MatchType MatchType { get; set; }
         public string Description { get; set; }
         public IEnumerable<CreateMatchPlayerPerformanceVM> PlayerPerformances { get; set; }
-        public IEnumerable<CreateMatchPointVM> MatchPoints { get; set; }
-        public IEnumerable<CreateMatchPlayerCardVM> PlayersCards { get; set; }
-        public IEnumerable<CreateMatchCoachCardVM> CoachesCards { get; set; }
+        public IEnumerable<CreateNewMatchMatchPointVM> MatchPoints { get; set; }
+        public IEnumerable<CreateNewMatchPlayerCardVM> PlayersCards { get; set; }
+        public IEnumerable<CreateNewMatchCoachCardVM> CoachesCards { get; set; }
     }
 }

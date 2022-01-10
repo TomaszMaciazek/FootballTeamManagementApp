@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using App.Model.Dtos.ListItemDtos;
 using AutoMapper.QueryableExtensions;
+using App.Model.Dtos;
 
 namespace App.ServiceLayer.Services
 {
@@ -22,15 +23,13 @@ namespace App.ServiceLayer.Services
         Task AddAsync(Match entity);
         Task<bool> DeactivateAsync(Guid id);
         Task<List<Match>> GetAllAsync();
-        Task<IEnumerable<Match>> GetAllFromPlayer(Guid playerId);
-        Task<Match> GetByIdAsync(Guid id);
-        Task<Match> GetByIdEager(Guid id);
+        Task<MatchDto> GetByIdAsync(Guid id);
         Task<PaginatedList<MatchListItemDto>> GetMatches(MatchQuery query);
         Task RemoveAsync(Guid id);
         Task UpdateAsync(Match entity);
     }
 
-    public class MatchService : IService<Match>, IMatchService
+    public class MatchService : IMatchService
     {
         private readonly IMatchRepository _matchRepository;
         private readonly IApplicationDbContext _context;
@@ -77,9 +76,11 @@ namespace App.ServiceLayer.Services
 
         public async Task<List<Match>> GetAllAsync() => await _matchRepository.GetAll().ToListAsync();
 
-        public async Task<Match> GetByIdAsync(Guid id) => await _matchRepository.GetById(id).FirstOrDefaultAsync();
-
-        public async Task<Match> GetByIdEager(Guid id) => await _matchRepository.GetAllEager().FirstOrDefaultAsync(x => x.Id == id);
+        public async Task<MatchDto> GetByIdAsync(Guid id) => await _matchRepository
+            .GetById(id)
+            .AsNoTracking()
+            .ProjectTo<MatchDto>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync();
 
         public async Task RemoveAsync(Guid id)
         {
@@ -92,11 +93,6 @@ namespace App.ServiceLayer.Services
             _matchRepository.Update(entity);
             await _context.SaveChangesAsync();
         }
-
-        public async Task<IEnumerable<Match>> GetAllFromPlayer(Guid playerId) => await _matchRepository
-            .GetAllEager()
-            .Where(x => x.Players.Any(x => x.Player.Id == playerId) && x.IsActive)
-            .ToListAsync();
 
         public async Task<PaginatedList<MatchListItemDto>> GetMatches(MatchQuery query)
         {

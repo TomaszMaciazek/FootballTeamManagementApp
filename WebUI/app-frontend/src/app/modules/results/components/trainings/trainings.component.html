@@ -8,7 +8,7 @@
     <div class="text-center pb-3">
         <h1>{{'trainings' | translate}}</h1>
     </div>
-    <div fxLayout="row">
+    <div fxLayout="row" [security]="'trainings.add'">
         <div 
             fxFlexOffset.lt-lg="10" fxFlex.lt-lg="80"
             fxFlex.xs="94"fxFlexOffset.xs="3"
@@ -74,11 +74,11 @@
                                 <button pButton pRipple type="button" icon="fas fa-info" 
                                 class="p-button-rounded p-button-info"></button>
                             </a>
-                            <button *ngIf="training.isActive" pButton pRipple type="button" icon="fas fa-ban" 
+                            <button *ngIf="training.isActive" pButton pRipple type="button" icon="fas fa-ban" [security]="'trainings.deactivate'"
                             class="p-button-rounded p-button-secondary ml-2" (click)="confirmDeactivate(training.id)"></button>
-                            <button *ngIf="!training.isActive" pButton pRipple type="button" icon="far fa-check-circle" 
+                            <button *ngIf="!training.isActive" pButton pRipple type="button" icon="far fa-check-circle" [security]="'trainings.activate'"
                             class="p-button-rounded p-button-success ml-2" (click)="confirmActivate(training.id)"></button>
-                            <button pButton pRipple type="button" icon="fas fa-trash" 
+                            <button pButton pRipple type="button" icon="fas fa-trash" [security]="'trainings.delete'"
                             class="p-button-rounded p-button-danger ml-2" (click)="confirmDelete(training.id)"></button>
                         </td>
                     </tr>

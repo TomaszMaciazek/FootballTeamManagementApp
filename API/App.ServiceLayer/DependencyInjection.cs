@@ -32,9 +32,10 @@ namespace App.ServiceLayer
 
             services.AddScoped<ITestTemplateService, TestTemplateService>();
             services.AddScoped<IUserTestResultService, UserTestResultService>();
-            services.AddScoped<IGroupChatImageService, GroupChatImageService>();
 
             services.AddScoped<ICountryService, CountryService>();
+
+            services.AddScoped<IMessageService, MessageService>();
 
             services.AddScoped<INewsService, NewsService>();
 

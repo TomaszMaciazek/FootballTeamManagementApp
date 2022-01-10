@@ -55,17 +55,17 @@ namespace App.UserMiddleware
         #region TrainingScores
         public const string TrainingScoresGroup = "Rezultaty treningow";
         public const string TrainingScoresPolicy = "trainings_scores";
-        public static Permission TrainingScores { get => new("Rezultaty treningów", TrainingsPolicy, TrainingScoresGroup, "Rezultaty treningów"); }
+        public static Permission TrainingScores { get => new("Rezultaty treningów", TrainingScoresPolicy, TrainingScoresGroup, "Rezultaty treningów"); }
         public const string TrainingScoresEditPolicy = "trainings_scores.edit";
-        public static Permission TrainingScoresEdit { get => new("Edycja rezultatów treningów", TrainingsEditPolicy, TrainingScoresGroup, ""); }
+        public static Permission TrainingScoresEdit { get => new("Edycja rezultatów treningów", TrainingScoresEditPolicy, TrainingScoresGroup, ""); }
         public const string TrainingScoresActivatePolicy = "trainings_scores.activate";
-        public static Permission TrainingScoresActivate { get => new("Aktywacja rezultatów treningów", TrainingsActivatePolicy, TrainingScoresGroup, ""); }
+        public static Permission TrainingScoresActivate { get => new("Aktywacja rezultatów treningów", TrainingScoresActivatePolicy, TrainingScoresGroup, ""); }
         public const string TrainingScoresDeactivatePolicy = "trainings_scores.deactivate";
-        public static Permission TrainingScoresDeactivate { get => new("Dezaktywacja rezultatów treningów", TrainingsDeactivatePolicy, TrainingScoresGroup, ""); }
+        public static Permission TrainingScoresDeactivate { get => new("Dezaktywacja rezultatów treningów", TrainingScoresDeactivatePolicy, TrainingScoresGroup, ""); }
         public const string TrainingScoresAddPolicy = "trainings_scores.add";
-        public static Permission TrainingScoresAdd { get => new("Dodanie rezultatów treningów", TrainingsAddPolicy, TrainingScoresGroup, ""); }
+        public static Permission TrainingScoresAdd { get => new("Dodanie rezultatów treningów", TrainingScoresAddPolicy, TrainingScoresGroup, ""); }
         public const string TrainingScoresDeletePolicy = "trainings_scores.delete";
-        public static Permission TrainingScoresDelete { get => new("Usuwanie rezultatów treningów", TrainingsDeletePolicy, TrainingScoresGroup, ""); }
+        public static Permission TrainingScoresDelete { get => new("Usuwanie rezultatów treningów", TrainingScoresDeletePolicy, TrainingScoresGroup, ""); }
         #endregion
 
         #region MatchScores
@@ -129,8 +129,6 @@ namespace App.UserMiddleware
         public static Permission SurveysCreatedByMe { get => new("Ankiety autorskie", SurveysCreatedByMePolicy, SurveysGroup, ""); }
         public const string SurveysAssignedToMePolicy = "surveys.assigned";
         public static Permission SurveysAssignedToMe { get => new("Ankiety przypisane", SurveysAssignedToMePolicy, SurveysGroup, ""); }
-        public const string SurveysRespondentsPolicy = "surveys.respondents";
-        public static Permission SurveysRespondents { get => new("Ankiety respondenci", SurveysRespondentsPolicy, SurveysGroup, ""); }
         public const string SurveysEditPolicy = "surveys.edit";
         public static Permission SurveysEdit { get => new("Edycja ankiety", SurveysEditPolicy, SurveysGroup, ""); }
         public const string SurveysAddPolicy = "surveys.add";
@@ -240,13 +238,16 @@ namespace App.UserMiddleware
         public const string NewsEditPolicy = "news.edit";
         public static Permission NewsEdit { get => new("Edycja aktualności", NewsEditPolicy, NewsGroup, ""); }
         public const string NewsDeletePolicy = "news.delete";
-        public static Permission NewsDelete { get => new("Usuwanie aktualności", NewsAddPolicy, NewsGroup, ""); }
+        public static Permission NewsDelete { get => new("Usuwanie aktualności", NewsDeletePolicy, NewsGroup, ""); }
         public const string NewsActivatePolicy = "news.activate";
         public static Permission NewsActivate { get => new("Aktywacja aktualności", NewsActivatePolicy, NewsGroup, ""); }
         public const string NewsDeactivatePolicy = "news.deactivate";
         public static Permission NewsDeactivate { get => new("Dezaktywacja aktualności", NewsDeactivatePolicy, NewsGroup, ""); }
 
         #endregion
+
+        public const string RespondentsPolicy = "users.respondents";
+        public static Permission GetRespondents { get => new("Respondenci", RespondentsPolicy, SurveysGroup, ""); }
 
         #region Teams
         public const string TeamsGroup = "Drużyny";

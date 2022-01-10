@@ -39,6 +39,24 @@ export class NewsService {
     .catch(this.handleError.bind(this));
   }
 
+  activate(id: string){
+    return this.http.patch(`${this.url}/activate/${id}`,null)
+    .toPromise()
+    .catch(this.handleError.bind(this));
+  }
+
+  deactivate(id: string){
+    return this.http.patch(`${this.url}/deactivate/${id}`,null)
+    .toPromise()
+    .catch(this.handleError.bind(this));
+  }
+
+  delete(id: string){
+    return this.http.delete(`${this.url}/${id}`)
+    .toPromise()
+    .catch(this.handleError.bind(this));
+  }
+
   private async handleError(error: any) {
     if (error.status === 404) {
       return Promise.reject('not_found');

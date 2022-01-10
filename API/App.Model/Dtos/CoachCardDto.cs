@@ -1,12 +1,15 @@
-﻿using App.Model.Dtos.Common;
-using App.Model.Enums;
+﻿using App.Model.Enums;
+using System;
 
 namespace App.Model.Dtos
 {
-    public class CoachCardDto : AuditableEntityDto
+    public class CoachCardDto
     {
-        public CoachDto Player { get; set; }
-        public MatchDto Match { get; set; }
+        public Guid Id { get; set; }
+        public bool IsActive { get; set; }
+        public SimpleCoachDto Coach { get; set; }
+        public Guid MatchId { get; set; }
         public CardColor Color { get; set; }
+        public int Count { get; set; }
     }
 }

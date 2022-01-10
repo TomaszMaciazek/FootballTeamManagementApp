@@ -19,6 +19,11 @@ import { MatchStepThreeComponent } from './components/matches/match-step-three/m
 import { MatchStepFourComponent } from './components/matches/match-step-four/match-step-four.component';
 import { MatchStepFiveComponent } from './components/matches/match-step-five/match-step-five.component';
 import { MatchStepSixComponent } from './components/matches/match-step-six/match-step-six.component';
+import { MatchComponent } from './components/matches/match/match.component';
+import { MatchScoresComponent } from './components/matches/match-scores/match-scores.component';
+import { AddMatchScoreComponent } from './components/matches/match-scores/add-match-score/add-match-score.component';
+import { EditMatchScoreComponent } from './components/matches/match-scores/edit-match-score/edit-match-score.component';
+import { MatchScoresTableComponent } from './components/matches/match-scores/match-scores-table/match-scores-table.component';
 
 
 @NgModule({
@@ -38,7 +43,12 @@ import { MatchStepSixComponent } from './components/matches/match-step-six/match
     MatchStepThreeComponent,
     MatchStepFourComponent,
     MatchStepFiveComponent,
-    MatchStepSixComponent
+    MatchStepSixComponent,
+    MatchComponent,
+    MatchScoresComponent,
+    AddMatchScoreComponent,
+    EditMatchScoreComponent,
+    MatchScoresTableComponent
   ],
   imports: [
     CommonModule,

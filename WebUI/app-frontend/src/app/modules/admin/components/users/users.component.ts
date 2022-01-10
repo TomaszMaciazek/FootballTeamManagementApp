@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { LazyLoadEvent } from 'primeng/api';
+import { ToastrService } from 'ngx-toastr';
+import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { UserQuery } from 'src/app/models/queries/user-query.model';
 import { Role } from 'src/app/models/role.model';
 import { User } from 'src/app/models/user.model';
+import { TokenStorageProvider } from 'src/app/providers/token-storage-provider.model';
+import { TranslationProvider } from 'src/app/providers/translation-provider.model';
 import { RoleService } from 'src/app/services/role.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -37,7 +40,11 @@ export class UsersComponent implements OnInit {
     private router: Router,
     private spinner: NgxSpinnerService,
     private roleService: RoleService,
-    private userService: UserService
+    private userService: UserService,
+    private translationProvider: TranslationProvider,
+    private confirmationService: ConfirmationService,
+    private tokenStorageProvider : TokenStorageProvider,
+    private toastr : ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -90,6 +97,55 @@ export class UsersComponent implements OnInit {
     this.pageNumber = Math.floor(event.first / this.rowNumbers) + 1;
     this.spinner.show();
     this.getUsers();
+  }
+
+  confirmDeactivate(id: string) {
+    this.confirmationService.confirm({
+        message: this.translationProvider.getTranslation('confirm_deactivate_user'),
+        header: this.translationProvider.getTranslation('deactivate'),
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+            this.spinner.show();
+            this.userService.deactivate(id).then(x => {
+              this.toastr.success(this.translationProvider.getTranslation('success'));
+              this.getUsers();
+            });
+        }
+    });
+  }
+
+  confirmActivate(id: string) {
+    this.confirmationService.confirm({
+        message: this.translationProvider.getTranslation('confirm_activate_user'),
+        header: this.translationProvider.getTranslation('activate'),
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+            this.spinner.show();
+            this.userService.activate(id).then(x => {
+              this.toastr.success(this.translationProvider.getTranslation('success'));
+              this.getUsers();
+            });
+        }
+    });
+  }
+
+  confirmDelete(id: string) {
+    this.confirmationService.confirm({
+        message: this.translationProvider.getTranslation('confirm_delete_user'),
+        header: this.translationProvider.getTranslation('delete'),
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.spinner.show();
+          this.userService.delete(id).then(x => {
+            this.toastr.success(this.translationProvider.getTranslation('success'));
+            this.getUsers();
+          });
+        }
+    });
+  }
+
+  isCurrentUser(id: string){
+    return id === this.tokenStorageProvider.getUserId();
   }
 
 }

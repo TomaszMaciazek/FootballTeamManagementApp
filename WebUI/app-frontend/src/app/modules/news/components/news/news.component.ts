@@ -8,6 +8,7 @@ import { NewsService } from 'src/app/services/news.service';
 import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Paginator } from 'primeng/paginator';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-news',
@@ -31,6 +32,9 @@ export class NewsComponent implements OnInit {
     private router: Router,
     private spinner: NgxSpinnerService,
     private newsService: NewsService,
+    private toastr : ToastrService,
+    private confirmationService: ConfirmationService,
+    private translationProvider: TranslationProvider,
     ) { }
 
   ngOnInit(): void {
@@ -48,13 +52,15 @@ export class NewsComponent implements OnInit {
       this.hasNextPage = res.hasNextPage;
       this.hasPreviousPage = res.hasPreviousPage;
       this.spinner.hide();
-    }
-    )
+    })
+    .catch(error => {
+      this.toastr.error(this.translationProvider.getTranslation(error));
+      this.spinner.hide();
+    });
   }
 
   onPageChange(event){
     if(+event.rows != this.rowNumbers){
-      debugger;
       this.rowNumbers = event.rows;
       this.pageNumber = 1;
       this.paginator.changePage(0);
@@ -71,5 +77,26 @@ export class NewsComponent implements OnInit {
 
   editNews(id: string, event: any) {
     this.router.navigate(['/news/edit', { id: id }]);
+  }
+
+  deleteNews(id: string){
+    this.confirmationService.confirm({
+      message: this.translationProvider.getTranslation('confirm_delete_news'),
+      header: this.translationProvider.getTranslation('delete'),
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.spinner.show();
+        this.newsService.delete(id)
+        .then(res => {
+          this.toastr.success(this.translationProvider.getTranslation('success'));
+          this.spinner.hide();
+          this.getNews();
+        })
+        .catch(error => {
+          this.toastr.error(this.translationProvider.getTranslation(error));
+          this.spinner.hide();
+        });
+      }
+    });
   }
 }

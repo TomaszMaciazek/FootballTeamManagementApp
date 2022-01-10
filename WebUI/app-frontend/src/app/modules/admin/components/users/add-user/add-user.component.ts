@@ -139,7 +139,6 @@ export class AddUserComponent implements OnInit {
 
   submit(){
     if(this.form.valid){
-      debugger;
       this.spinner.show();
       if(this.role == "player"){
         var addPlayerCommand = new AddPlayerCommand({

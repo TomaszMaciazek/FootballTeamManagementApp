@@ -1,12 +1,15 @@
 ﻿using App.Model.Dtos.Common;
 using App.Model.Enums;
+using System;
 
 namespace App.Model.Dtos
 {
-    public class MatchPointDto : AuditableEntityDto
+    public class MatchPointDto
     {
-        public MatchDto Match { get; set; }
-        public PlayerDto GoalScorer { get; set; }
+        public Guid Id { get; set; }
+        public bool IsActive { get; set; }
+        public Guid MatchId { get; set; }
+        public Guid PlayerId { get; set; }
         public MatchPointType Point { get; set; }
         public int MinuteOfMatch { get; set; }
     }

@@ -6,6 +6,8 @@
         </button>
     </div>
     <div class="topbarItem pull-right">
+        <p-button class="mr-2" label="{{'messages' | translate}}" icon="fas fa-comments" 
+        styleClass="p-button" [badge]="getBadgeText()" badgeClass="p-badge-danger" (click)="goToMessages()" ></p-button>
         <p-dropdown id="select-language" [options]="languages" 
     optionLabel="name" filterBy="name" placeholder="{{'select_language' | translate}}"
     [(ngModel)]="selectedLanguage" (onChange)="changeLanguage($event)">

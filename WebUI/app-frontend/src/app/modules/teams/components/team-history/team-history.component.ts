@@ -73,7 +73,6 @@ export class TeamHistoryComponent implements OnInit {
       var tmp = new TeamHistoryQuery({teamId: this.id, minDate: null, maxDate: null});
       this.teamHistoryService.getTeamHistory(tmp).then(res => {
         this.history = res;
-        console.log(this.history);
         this.prepareEvents(this.history);
         this.spinner.hide();
       });

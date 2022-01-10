@@ -32,6 +32,7 @@ namespace App.ServiceLayer.Services
         Task<PaginatedList<UserListItemDto>> GetUsers(UserQuery query);
         Task<UserAccountDto> GetUserAccount(Guid id);
         Task UpdatePassword(UpdatePasswordVM command);
+        Task<IEnumerable<SimpleUserDto>> GetRecipients(Guid id);
     }
 
     public class UserService : IUserService
@@ -125,19 +126,19 @@ namespace App.ServiceLayer.Services
 
         public async Task<PaginatedList<UserListItemDto>> GetUsers(UserQuery query)
         {
-            var users = _userRepository.GetAll();
-            users = query.IsActive.HasValue ? users.Where(x => x.IsActive == query.IsActive.Value) : users;
+            var users = _userRepository.GetAll().AsNoTracking().Include(x => x.Role);
+            var result = query.IsActive.HasValue ? users.Where(x => x.IsActive == query.IsActive.Value) : users;
 
             if (!string.IsNullOrEmpty(query.OrderByColumnName))
             {
-                users = users.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
+                result = users.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
             }
             else
             {
-                users = users.OrderByProperty("Surname", query.OrderByDirection);
+                result = users.OrderByProperty("Surname", query.OrderByDirection);
             }
 
-            return await users
+            return await result
                 .Select(x => new UserListItemDto
                 { 
                     Id =  x.Id,
@@ -183,6 +184,14 @@ namespace App.ServiceLayer.Services
             {
                 throw new NotFoundException();
             }
+        }
+
+        public async Task<IEnumerable<SimpleUserDto>> GetRecipients(Guid id)
+        {
+            return await _userRepository.GetAll().AsNoTracking()
+                .Where(x => x.Id != id)
+                .ProjectTo<SimpleUserDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
         }
     }
 }

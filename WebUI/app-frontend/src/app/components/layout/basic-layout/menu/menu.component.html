@@ -1,0 +1,19 @@
+<ng-scrollbar>
+    <p-accordion [multiple]="true">
+      <p-accordionTab *ngFor="let item of menuItems" [security]="item.RequiredPermissions">
+        <ng-template pTemplate="header">
+          <a>
+            <i [ngClass]="item.FontAwesomeIcon"></i> 
+            <span>{{item.Title | translate}}</span>
+          </a>
+        </ng-template>
+        <ng-template pTemplate="content">
+          <ul *ngIf="item.SubMenuItems">
+            <li *ngFor="let subitem of item.SubMenuItems" [security]="subitem.RequiredPermissions" (click)="goTo(subitem.Link)">
+                <a>{{subitem.Title | translate}}</a>
+            </li>
+          </ul>
+        </ng-template>
+      </p-accordionTab>
+  </p-accordion>
+</ng-scrollbar>

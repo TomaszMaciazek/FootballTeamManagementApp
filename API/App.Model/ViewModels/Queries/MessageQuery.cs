@@ -1,11 +1,12 @@
-﻿using System;
+﻿using App.Model.Enums;
+using System;
 
 namespace App.Model.ViewModels.Queries
 {
     public class MessageQuery : PaginationQuery
     {
-        public Guid? ChatId { get; set; }
-        public string Phrase { get; set; }
-        public Guid? SenderId { get; set; }
+        public Guid UserId { get; set; }
+        public MailboxType MailboxType { get; set; }
+        public string SearchText { get; set; }
     }
 }

@@ -62,7 +62,7 @@ export class EditTeamComponent implements OnInit {
         name: this.editTeamForm.controls['Name'].value
       });
       this.spinner.show();
-      this.teamService.editScoreValue(command).then(res => {
+      this.teamService.editTeam(command).then(res => {
         this.toastr.success(this.translationProvider.getTranslation('success'));
         this.spinner.hide();
         this.confirmUpdateTeam.emit(true);

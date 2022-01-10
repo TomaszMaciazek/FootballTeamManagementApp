@@ -25,7 +25,8 @@ namespace App.ServiceLayer.Services
         Task<UserTestResultDto> GetByIdAsync(Guid id);
         Task<PaginatedList<UserTestResultListItemDto>> GetUserResults(UserTestResultQuery query);
         Task RemoveAsync(Guid id);
-        Task UpdateAsync(FillTestVM command);
+        Task<Guid> UpdateAsync(FillTestVM command);
+        Task<PaginatedList<SimpleUserTestResultListItemDto>> GetUserResults(TestResultsQuery query);
     }
 
     public class UserTestResultService : IUserTestResultService
@@ -67,7 +68,7 @@ namespace App.ServiceLayer.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(FillTestVM command)
+        public async Task<Guid> UpdateAsync(FillTestVM command)
         {
             var result = await _userTestResultRepository.GetAll()
                 .Include(x => x.QuestionAnswers)
@@ -93,7 +94,7 @@ namespace App.ServiceLayer.Services
                 {
                     foreach(var answer in group.Select(x => x))
                     {
-                        var option = question.Options.FirstOrDefault(x => x.Value == x.Value);
+                        var option = question.Options.FirstOrDefault(x => x.Value == answer.Value);
                         if(option != null)
                         {
                             sum += option.Points;
@@ -112,6 +113,7 @@ namespace App.ServiceLayer.Services
             result.IsCompleated = true;
             _userTestResultRepository.Update(result);
             await _context.SaveChangesAsync();
+            return result.Id;
         }
 
         public async Task<PaginatedList<UserTestResultListItemDto>> GetUserResults(UserTestResultQuery query)
@@ -143,6 +145,32 @@ namespace App.ServiceLayer.Services
             return await results.ProjectTo<UserTestResultListItemDto>(_mapper.ConfigurationProvider)
                 .PaginatedListAsync(query.PageNumber, query.PageSize);
         }
+
+        public async Task<PaginatedList<SimpleUserTestResultListItemDto>> GetUserResults(TestResultsQuery query)
+        {
+            var results = _userTestResultRepository.GetAll()
+                .Include(x => x.User)
+                .Include(x => x.Test)
+                .Where(x => x.Test.Id == query.TestId);
+
+
+            if (query.OrderByColumnName.ToLower() == "name")
+            {
+
+                results = query.OrderByDirection == "asc"
+                    ? results.OrderBy(x => x.User.Surname).ThenBy(x => x.User.Name).ThenBy(x => x.User.MiddleName)
+                    : results.OrderByDescending(x => x.User.Surname).ThenByDescending(x => x.User.Name).ThenByDescending(x => x.User.MiddleName);
+            }
+            else
+            {
+                results = results.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
+            }
+
+
+            return await results.ProjectTo<SimpleUserTestResultListItemDto>(_mapper.ConfigurationProvider)
+                .PaginatedListAsync(query.PageNumber, query.PageSize);
+        }
+
 
         public async Task<IEnumerable<SimpleUserDto>> GetTestRespondents(Guid TestId) => await _userTestResultRepository.GetAll()
             .AsNoTracking()

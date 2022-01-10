@@ -25,6 +25,13 @@ namespace App.Mappings.Profiles
                 .ForMember(dest => dest.MiddleName, opt => opt.MapFrom(src => src.User.MiddleName))
                 .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.User.Surname));
 
+            CreateMap<MatchPlayerPerformance, SimpleMatchPlayerDto>()
+                .ForMember(dest => dest.PlayerId, opt => opt.MapFrom(src => src.Player.Id))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Player.User.Name))
+                .ForMember(dest => dest.MiddleName, opt => opt.MapFrom(src => src.Player.User.MiddleName))
+                .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.Player.User.Surname))
+                .ForMember(dest => dest.Team, opt => opt.MapFrom(src => src.Team));
+
             CreateMap<Player, SelectUserPlayerDetailsDto>()
                 .ForMember(dest => dest.YearOfBirth, opt => opt.MapFrom(src => src.BirthDate.Year))
                 .ForMember(dest => dest.Country, opt => opt.MapFrom(src => src.Country.Code));

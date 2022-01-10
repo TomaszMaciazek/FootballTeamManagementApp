@@ -27,20 +27,20 @@
             <div fxLayout="row" class="mb-3">
                 <div fxFlex.lt-lg="100" fxHide fxShow.lt-lg>
                     <p-toolbar>
-                        <button class="btn btn-primary btn-block btn-lg btn-action" (click)="showAddPlayersDialog()">
+                        <button class="btn btn-primary btn-block btn-lg btn-action" (click)="showAddPlayersDialog()" [security]="'players.teams.edit'">
                             <i class="far fa-plus-square"></i>    
                             {{'add_player_to_team' | translate}}
                         </button>
-                            <button class="btn btn-info btn-block btn-lg btn-action" [routerLink]="['/teams/history/'+id]">
+                        <button class="btn btn-info btn-block btn-lg btn-action" [routerLink]="['/teams/history/'+id]">
                             <i class="fas fa-scroll"></i>    
                             {{'team_history' | translate}}
-                            </button>
+                        </button>
                     </p-toolbar>
                 </div>
                 <div fxFlex.gt-md="100" fxHide fxShow.gt-md>
                     <p-toolbar>
                         <div class="p-toolbar-group-left">
-                            <button role="button" [ngClass.lt-md]="'btn-block'"
+                            <button role="button" [ngClass.lt-md]="'btn-block'" [security]="'players.teams.edit'"
                             class="btn btn-primary btn-lg btn-action" (click)="showAddPlayersDialog()">
                                 <i class="far fa-plus-square"></i>    
                                 {{'add_player_to_team' | translate}}
@@ -111,11 +111,11 @@
                                 <td class="text-center">{{player.yearOfBirth}}</td>
                                 <td class="text-center">{{genderLabel.get(player.gender) | translate}}</td>
                                 <td class="text-center">
-                                    <a [routerLink]="['/teams/'+team.id]">
+                                    <a [routerLink]="['/members/player/'+player.id]">
                                         <button pButton pRipple type="button" icon="fas fa-info" 
                                         class="p-button-rounded p-button-info"></button>
                                     </a>
-                                    <button pButton pRipple type="button" icon="pi pi-minus" 
+                                    <button pButton pRipple type="button" icon="pi pi-minus"  [security]="'players.teams.edit'"
                                     class="p-button-rounded p-button-danger ml-2" (click)="confirmRemove(player.id)"></button>
                                 </td>
                             </tr>

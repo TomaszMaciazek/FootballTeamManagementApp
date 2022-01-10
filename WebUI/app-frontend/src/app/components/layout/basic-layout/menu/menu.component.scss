@@ -1,0 +1,86 @@
+@import "~src/assets/styles/variables";
+
+.menuItemPanel { 
+    padding: 10px 0;
+    border-bottom: 1px solid #444;
+    transition: all .3s; 
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+ul li a {
+    display: block;
+    padding: 10px 20px;
+    border: 0;
+    color: #fff;
+
+    i {
+        margin-right: 10px;
+    }
+}
+
+:host ::ng-deep .p-accordion {
+    background-color: $sidebar-bg;
+
+    .p-accordion-header:not(.p-disabled) .p-accordion-header-link:focus {
+        outline: 0 none;
+        outline-offset: 0;
+        box-shadow: 0 0 0 0 #000000 !important;
+    }
+
+    .p-accordion-header-link{
+
+
+
+        border: 1px solid rgba(0, 0, 0, .04) !important;
+
+        background-color: $sidebar-bg !important;
+
+        .p-accordion-toggle-icon{
+            margin-top: -8px;
+            color: $sidebar-text-color !important;
+            position: absolute;
+            right: 0.5em;
+            top: 50%;
+        }
+        a {
+            color: $sidebar-text-color;
+            text-decoration: none;
+            padding: 0;
+          }
+    
+          .btn {
+              text-align: left;
+              text-decoration: none;
+          }
+    
+          i {
+              margin-right: 1rem;
+              min-width: 20px;
+              text-align: center;
+          }
+    }
+
+    .p-accordion-content{
+
+        cursor: pointer;
+        text-align: left;
+        padding: 10px 0px;
+
+        margin-bottom: 0 !important;
+        border: 0px !important;
+        color: $sidebar-text-color !important;
+        text-align: left;
+
+        background-color: $sidebar-bg;
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+    }
+  }

@@ -1,27 +1,9 @@
 <div id="wrapper" class="d-block">
   <nav class="sidebar" [ngClass]="{'active': isSidebarActive}">
-    <div class="dismiss" (click)="hideSidebar()">
+    <div class="dismiss mb-3" (click)="hideSidebar()">
         <i class="fa fa-arrow-left"></i>
     </div>
-    <ng-scrollbar>
-      <ngb-accordion #acc="ngbAccordion">
-        <ngb-panel *ngFor="let item of menuItems" class="menuItemPanel">
-          <ng-template ngbPanelTitle>
-            <a>
-              <i [ngClass]="item.FontAwesomeIcon"></i> 
-              <span>{{item.Title | translate}}</span><span class="fa arrow" *ngIf="item.SubMenuItems"></span>
-            </a>
-          </ng-template>
-          <ng-template ngbPanelContent>
-            <ul *ngIf="item.SubMenuItems">
-              <li *ngFor="let subitem of item.SubMenuItems" (click)="goTo(subitem.Link)">
-                  <a>{{subitem.Title | translate}}</a>
-              </li>
-            </ul>
-          </ng-template>
-        </ngb-panel>
-      </ngb-accordion>
-    </ng-scrollbar>
+    <app-menu [menuItems]="menuItems" (goToEvent)="goTo($event)"></app-menu>
   </nav>
   <div class="overlay" [ngClass]="{'active': isSidebarActive}" (click)="hideSidebar()"></div>
   <button class="btn btn-primary" id="open-menu" (click)="showSidebar()">
@@ -34,5 +16,4 @@
     </div>
   </div>
   <footer></footer>
-  
 </div>

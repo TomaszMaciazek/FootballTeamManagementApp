@@ -39,7 +39,7 @@ export class TeamService {
     .catch(this.handleError.bind(this));
   }
 
-  editScoreValue(command: UpdateTeamCommand){
+  editTeam(command: UpdateTeamCommand){
     return this.http.put(this.url, command)
     .toPromise()
     .catch(this.handleError.bind(this));

@@ -15,6 +15,7 @@ export class NavigationService {
     let accountItem = this.getAccount();
     let calendar = this.getTeams();
     let members = this.getClubMembers();
+    let messages = this.getMessages();
     let results = this.getResults();
     let reports = this.getReports();
     let surveys = this.getSurveys();
@@ -41,6 +42,11 @@ export class NavigationService {
     if(!results.isEmpty()){
       menuItems.push(results);
     }
+
+    if(!messages.isEmpty()){
+      menuItems.push(messages);
+    }
+
 
     if(!reports.isEmpty()){
       menuItems.push(reports);
@@ -89,7 +95,7 @@ export class NavigationService {
     account.SubMenuItems = new Array<MenuItem>();
 
     let myAccountMenuItem = new MenuItem();
-
+    myAccountMenuItem.RequiredPermissions = null;
     myAccountMenuItem.Title = "my_account";
     myAccountMenuItem.Link = "account/myAccount";
 
@@ -124,12 +130,12 @@ export class NavigationService {
     let matches = new MenuItem();
     matches.Title = "matches_results";
     matches.Link = "results/matches";
-    matches.RequiredPermissions = "matches.results";
+    matches.RequiredPermissions = "matches";
 
     let trainings = new MenuItem();
     trainings.Title = "trainings_results";
     trainings.Link = "results/trainings";
-    trainings.RequiredPermissions = "trainings.results";
+    trainings.RequiredPermissions = "trainings";
 
     results.SubMenuItems.push(matches, trainings);
     return results
@@ -149,7 +155,7 @@ export class NavigationService {
     let allSurveys = new MenuItem();
     allSurveys.Title = "all";
     allSurveys.Link = "surveys/all";
-    allSurveys.RequiredPermissions = "surveys";
+    allSurveys.RequiredPermissions = "surveys.all";
 
     let awaitingSurveys = new MenuItem();
     awaitingSurveys.Title = "created_by_myself";

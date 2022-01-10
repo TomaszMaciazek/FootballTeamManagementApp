@@ -71,7 +71,6 @@ export class PlayerHistoryComponent implements OnInit {
       this.id = routeParams['id'];
       this.playerHistoryService.getPlayerHistory(this.id).then(res => {
         this.history = res;
-        console.log(this.history);
         this.prepareEvents(this.history);
         this.spinner.hide();
       });

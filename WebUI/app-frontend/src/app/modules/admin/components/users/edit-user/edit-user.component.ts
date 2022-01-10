@@ -95,7 +95,6 @@ export class EditUserComponent implements OnInit {
   }
 
   setRole(event){
-    debugger;
     if(event.value.name != this.role){
       if(this.role === "player"){
         this.form.removeControl("PrefferedPosition");

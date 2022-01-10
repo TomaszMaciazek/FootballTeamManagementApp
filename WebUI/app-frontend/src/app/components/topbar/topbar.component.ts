@@ -4,6 +4,7 @@ import { LanguageCode } from 'src/app/enums/language-code';
 import { Language } from 'src/app/models/language.model';
 import { TranslationProvider } from 'src/app/providers/translation-provider.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'topbar',
@@ -14,10 +15,14 @@ export class TopbarComponent implements OnInit {
 
   languages: Language[];
   selectedLanguage: Language;
+
+  messagesNumber: number = 0;
+  
   constructor(
     private translationProvider: TranslationProvider,
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private messagesService: MessageService
   ) { 
     this.languages = [
       {name: 'Polski', code: LanguageCode.Pl, imagePath: "assets/flags-svg/pl.svg"},
@@ -27,6 +32,9 @@ export class TopbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.messagesService.numberOfUnreadMessages.subscribe((result) => {
+      this.messagesNumber = result;
+    });
   }
 
   changeLanguage(event : any){
@@ -38,6 +46,14 @@ export class TopbarComponent implements OnInit {
   logout(){
     this.authenticationService.logOut();
     this.router.navigateByUrl('/login');
+  }
+
+  getBadgeText() {
+    return this.messagesNumber < 1 ? '' : this.messagesNumber;
+  }
+
+  goToMessages(){
+    this.router.navigateByUrl('/messages/box');
   }
 
 }

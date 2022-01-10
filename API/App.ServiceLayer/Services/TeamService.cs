@@ -112,19 +112,19 @@ namespace App.ServiceLayer.Services
         {
 
             var teams = _teamRepository.GetAll()
+                .AsNoTracking()
                 .Include(x => x.Players)
-                .Include(x => x.MainCoach).ThenInclude(x => x.User)
-                .AsNoTracking();
+                .Include(x => x.MainCoach).ThenInclude(x => x.User);
 
-            teams = teams.WhereStringPropertyContains(x => x.Name, query.Name);
+            var result = teams.WhereStringPropertyContains(x => x.Name, query.Name);
 
-            teams = query.CoachId.HasValue
-                ? teams.Where(x => x.MainCoach != null && x.MainCoach.Id == query.CoachId.Value)
-                : teams;
+            result = query.CoachId.HasValue
+                ? result.Where(x => x.MainCoach != null && x.MainCoach.Id == query.CoachId.Value)
+                : result;
 
-            teams = teams.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
+            result = result.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
 
-            return await teams
+            return await result
                 .ProjectTo<TeamListItemDto>(_mapper.ConfigurationProvider)
                 .PaginatedListAsync(query.PageNumber, query.PageSize);
         }

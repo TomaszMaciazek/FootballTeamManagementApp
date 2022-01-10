@@ -28,6 +28,7 @@ import {TimelineModule} from 'primeng/timeline';
 import {ChartModule} from 'primeng/chart';
 import {TooltipModule} from 'primeng/tooltip';
 import {RatingModule} from 'primeng/rating';
+import { UserSecurityModule } from '../directives/user-security.directive';
 
 
 
@@ -62,7 +63,8 @@ import {RatingModule} from 'primeng/rating';
     TimelineModule,
     ChartModule,
     TooltipModule,
-    RatingModule
+    RatingModule,
+    UserSecurityModule
   ],
   exports: [
     ReactiveFormsModule,
@@ -92,7 +94,8 @@ import {RatingModule} from 'primeng/rating';
     TimelineModule,
     ChartModule,
     TooltipModule,
-    RatingModule
+    RatingModule,
+    UserSecurityModule
   ]
 })
 export class SharedModule { }

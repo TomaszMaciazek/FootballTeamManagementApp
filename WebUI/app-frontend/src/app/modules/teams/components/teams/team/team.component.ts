@@ -6,6 +6,7 @@ import { ConfirmationService } from 'primeng/api';
 import { Gender } from 'src/app/enums/gender';
 import { RemovePlayerFromTeam } from 'src/app/models/commands/remove-player-from-team.model';
 import { Team } from 'src/app/models/team/team.model';
+import { TokenStorageProvider } from 'src/app/providers/token-storage-provider.model';
 import { TranslationProvider } from 'src/app/providers/translation-provider.model';
 import { PlayerService } from 'src/app/services/player.service';
 import { TeamService } from 'src/app/services/team.service';
@@ -38,6 +39,7 @@ export class TeamComponent implements OnInit {
     private router: Router,
     private confirmationService: ConfirmationService,
     private translationProvider: TranslationProvider,
+    private tokenStorageProvider: TokenStorageProvider,
     private playerService: PlayerService
   ) { }
 

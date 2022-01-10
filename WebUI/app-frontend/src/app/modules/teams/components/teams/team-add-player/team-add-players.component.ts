@@ -3,6 +3,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { AddPlayersToTeam } from 'src/app/models/commands/add-player-to-team.model';
 import { SimpleSelectPlayer } from 'src/app/models/player/simple-select-player.model';
+import { TokenStorageProvider } from 'src/app/providers/token-storage-provider.model';
 import { TranslationProvider } from 'src/app/providers/translation-provider.model';
 import { PlayerService } from 'src/app/services/player.service';
 
@@ -19,15 +20,21 @@ export class TeamAddPlayersComponent implements OnInit {
 
   selectedPlayers : SimpleSelectPlayer[];
 
+  isAbleToAdd: boolean = false;
+
   constructor(
     private playerService: PlayerService,
     private toastr : ToastrService,
     private spinner: NgxSpinnerService,
-    private translationProvider: TranslationProvider
+    private translationProvider: TranslationProvider,
+    private tokenStorageProvider: TokenStorageProvider,
   ) { }
 
   ngOnInit(): void {
-    this.getPlayersWithoutTeam();
+    this.isAbleToAdd = this.tokenStorageProvider.hasPermission('players.teams.edit');
+    if(this.isAbleToAdd){
+      this.getPlayersWithoutTeam();
+    }
   }
 
   getPlayersWithoutTeam(){

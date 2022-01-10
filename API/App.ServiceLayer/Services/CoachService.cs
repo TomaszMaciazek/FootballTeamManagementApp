@@ -24,8 +24,7 @@ namespace App.ServiceLayer.Services
         Task AddAsync(Coach entity);
         Task<bool> DeactivateAsync(Guid id);
         Task<IEnumerable<SimpleCoachDto>> GetAllAsync();
-        Task<Coach> GetByIdAsync(Guid id);
-        Task<Coach> GetByIdEager(Guid id);
+        Task<CoachDto> GetByIdAsync(Guid id);
         Task<Coach> GetByUserId(Guid userId);
         Task RemoveAsync(Guid id);
         Task UpdateAsync(UpdateCoachVM entity);
@@ -87,9 +86,14 @@ namespace App.ServiceLayer.Services
             .ProjectTo<SimpleCoachDto>(_mapper.ConfigurationProvider)
             .ToListAsync();
 
-        public async Task<Coach> GetByIdAsync(Guid id) => await _coachRepository.GetById(id).FirstOrDefaultAsync();
-
-        public async Task<Coach> GetByIdEager(Guid id) => await _coachRepository.GetByIdEager(id).FirstOrDefaultAsync();
+        public async Task<CoachDto> GetByIdAsync(Guid id) => await _coachRepository.GetAll()
+            .AsNoTracking()
+            .Include(x => x.User)
+            .Include(x => x.Country)
+            .Include(x => x.Teams)
+            .Where(x => x.Id == id)
+            .ProjectTo<CoachDto>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync();
 
         public async Task RemoveAsync(Guid id)
         {

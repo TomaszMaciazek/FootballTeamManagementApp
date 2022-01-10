@@ -21,6 +21,8 @@ namespace App.Mappings.Profiles
                 .ForMember(dest => dest.TeamPlayersPlayedMatchEvents, opt => opt.MapFrom<CreateMatchTeamPlayersPlayedMatchEventsResolver>());
 
             CreateMap<Match, SimpleMatchDto>();
+
+            CreateMap<Match, MatchDto>();
         }
     }
 }

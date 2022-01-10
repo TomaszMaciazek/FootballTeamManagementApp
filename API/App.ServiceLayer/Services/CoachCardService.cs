@@ -1,12 +1,14 @@
 ﻿using App.DataAccess.Interfaces;
+using App.Model.Dtos;
 using App.Model.Entities;
 using App.Repository.Repositories;
 using App.ServiceLayer.Common;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace App.ServiceLayer.Services
@@ -18,8 +20,7 @@ namespace App.ServiceLayer.Services
         Task<bool> DeactivateAsync(Guid id);
         Task<List<CoachCard>> GetAllAsync();
         Task<CoachCard> GetByIdAsync(Guid id);
-        Task<List<CoachCard>> GetCardsFromCoachAsync(Guid coachId);
-        Task<List<CoachCard>> GetCoachesCardsFromMatchAsync(Guid matchId);
+        Task<List<CoachCardDto>> GetCardsFromMatchAsync(Guid matchId);
         Task RemoveAsync(Guid id);
         Task UpdateAsync(CoachCard entity);
     }
@@ -28,11 +29,13 @@ namespace App.ServiceLayer.Services
     {
         private readonly ICoachCardRepository _cardRepository;
         private readonly IApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public CoachCardService(ICoachCardRepository cardRepository, IApplicationDbContext context)
+        public CoachCardService(ICoachCardRepository cardRepository, IApplicationDbContext context, IMapper mapper)
         {
             _cardRepository = cardRepository;
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<bool> ActivateAsync(Guid id)
@@ -84,11 +87,12 @@ namespace App.ServiceLayer.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<CoachCard>> GetCardsFromCoachAsync(Guid coachId)
-            => await _cardRepository.GetAllEager().Where(x => x.Coach.Id == coachId && x.IsActive).ToListAsync();
 
-
-        public async Task<List<CoachCard>> GetCoachesCardsFromMatchAsync(Guid matchId)
-            => await _cardRepository.GetAllEager().Where(x => x.Match.Id == matchId && x.IsActive).ToListAsync();
+        public async Task<List<CoachCardDto>> GetCardsFromMatchAsync(Guid matchId)
+            => await _cardRepository.GetAll()
+            .AsNoTracking()
+            .Where(x => x.Match.Id == matchId)
+            .ProjectTo<CoachCardDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
     }
 }

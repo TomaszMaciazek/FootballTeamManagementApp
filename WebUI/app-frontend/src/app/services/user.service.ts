@@ -11,6 +11,7 @@ import { PaginatedList } from '../models/paginated-list.model';
 import { UserQuery } from '../models/queries/user-query.model';
 import { User } from '../models/user.model';
 import { SelectUser } from '../models/user/select-user.model';
+import { SimpleUser } from '../models/user/simple-user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,14 @@ export class UserService {
   }
   getAllUsers(): Promise<Array<SelectUser>> {
     return this.http.get<Array<SelectUser>>(`${this.url}/all`).toPromise();
+  }
+
+  getRecipients(id: string): Promise<Array<SimpleUser>>{
+    return this.http.get<Array<SimpleUser>>(`${this.url}/recipients/${id}`).toPromise();
+  }
+
+  getRespondentsList(): Promise<Array<SelectUser>>{
+    return this.http.get<Array<SelectUser>>(`${this.url}/respondents`).toPromise();
   }
 
   createPlayer(command: AddPlayerCommand){
@@ -58,6 +67,23 @@ export class UserService {
     .catch(this.handleError.bind(this));
   }
 
+  activate(id: string){
+    return this.http.patch(`${this.url}/activate/${id}`,null)
+    .toPromise()
+    .catch(this.handleError.bind(this));
+  }
+
+  deactivate(id: string){
+    return this.http.patch(`${this.url}/deactivate/${id}`,null)
+    .toPromise()
+    .catch(this.handleError.bind(this));
+  }
+
+  delete(id: string){
+    return this.http.delete(`${this.url}/${id}`)
+    .toPromise()
+    .catch(this.handleError.bind(this));
+  }
 
   private async handleError(error: any) {
     if (error.status === 404) {
