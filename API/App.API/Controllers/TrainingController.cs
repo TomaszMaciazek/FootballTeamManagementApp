@@ -69,7 +69,7 @@ namespace App.API.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.TrainingsActivatePolicy)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [Route("Activate/{id}")]
-        public async Task<IActionResult> ActivateNews(Guid id)
+        public async Task<IActionResult> ActivateTraining(Guid id)
         {
             await _trainingService.ActivateAsync(id);
             return NoContent();
@@ -79,7 +79,7 @@ namespace App.API.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.TrainingsDeactivatePolicy)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [Route("Deactivate/{id}")]
-        public async Task<IActionResult> DeactivateNews(Guid id)
+        public async Task<IActionResult> DeactivateTraining(Guid id)
         {
             await _trainingService.DeactivateAsync(id);
             return NoContent();

@@ -71,7 +71,7 @@ namespace App.API.Controllers
         [HttpPut]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.TeamsEditPolicy)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> UpdateTeamScore([FromBody] UpdateTeamVM model)
+        public async Task<IActionResult> UpdateTeam([FromBody] UpdateTeamVM model)
         {
             await _teamService.UpdateAsync(model);
             return NoContent();

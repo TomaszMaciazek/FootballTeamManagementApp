@@ -42,7 +42,7 @@ namespace App.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(NewsDto))]
         public async Task<ActionResult<MatchDto>> GetMatchById(Guid id)
         {
-            var match = _mapper.Map<TranslationDto>(await _matchService.GetByIdAsync(id));
+            var match = await _matchService.GetByIdAsync(id);
             return Ok(match);
         }
 

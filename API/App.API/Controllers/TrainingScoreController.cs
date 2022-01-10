@@ -33,7 +33,7 @@ namespace App.API.Controllers
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.TrainingScoresPolicy)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginatedList<TrainingScoreListItemDto>))]
-        public async Task<ActionResult<PaginatedList<TrainingScoreListItemDto>>> GetNews([FromQuery] TrainingScoreQuery query)
+        public async Task<ActionResult<PaginatedList<TrainingScoreListItemDto>>> GetScores([FromQuery] TrainingScoreQuery query)
         {
             var result = await _trainingScoreService.GetScores(query);
             return Ok(result);
