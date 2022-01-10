@@ -132,7 +132,6 @@ export class ClubCardsComponent implements OnInit {
       this.clubPlayersMonthlyYellowCardsData = this.monthlyClubCards.playersYellowCards.map(x => x.count);
       this.clubCoachesMonthlyRedCardsData = this.monthlyClubCards.coachesRedCards.map(x => x.count);
       this.clubCoachesMonthlyYellowCardsData = this.monthlyClubCards.coachesYellowCards.map(x => x.count);
-      console.log(this.monthlyClubCards);
       this.spinner.hide();
     });
   }

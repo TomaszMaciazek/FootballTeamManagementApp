@@ -142,7 +142,6 @@ export class PlayersPointsComponent implements OnInit {
   }
 
   checkView($event: any){
-    debugger;
     if(this.monthlyView && this.selectedPlayer != null && (this.monthlyPlayerPoints == null || this.monthlyPlayerPoints.playerId != this.selectedPlayer.id)){
       let now = new Date();
       let thisMonthStart = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())).toISOString();
@@ -177,7 +176,6 @@ export class PlayersPointsComponent implements OnInit {
       this.playerLeagueMatchesPointsData = res.leagueMatchesPoints.map(x => x.count);
       this.playerFriendlyMatchesPointsData = res.friendlyMatchPoints.map(x => x.count);
         if(this.monthlyView){
-          debugger;
           this.resetFilter();
         }
         else{

@@ -128,7 +128,6 @@ export class CoachesCardsComponent implements OnInit {
       this.spinner.show();
       this.reportService.getCoachCards(this.selectedCoach.id)
       .then(res => {
-        debugger;
         this.coachCards = res;
         this.cardCounts = [res.yellowCardsCount, res.redCardsCount];
         if(this.monthlyView){

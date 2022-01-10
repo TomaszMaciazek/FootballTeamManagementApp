@@ -10,6 +10,14 @@ import { PlayersCardsComponent } from './components/players-cards/players-cards.
 import { CoachesCardsComponent } from './components/coaches-cards/coaches-cards.component';
 import { ClubPointsComponent } from './components/club-points/club-points.component';
 import { PlayersPointsComponent } from './components/players-points/players-points.component';
+import { TeamsCardsComponent } from './components/teams-cards/teams-cards.component';
+import { TeamsPointsComponent } from './components/teams-points/teams-points.component';
+import { ClubTrainingScoresComponent } from './components/club-training-scores/club-training-scores.component';
+import { PlayerTrainingScoresComponent } from './components/player-training-scores/player-training-scores.component';
+import { PlayerMatchScoresComponent } from './components/player-match-scores/player-match-scores.component';
+import { ClubMatchScoresComponent } from './components/club-match-scores/club-match-scores.component';
+import { TrainingScoresRankingComponent } from './components/training-scores-ranking/training-scores-ranking.component';
+import { MatchScoresRankingComponent } from './components/match-scores-ranking/match-scores-ranking.component';
 
 
 @NgModule({
@@ -20,7 +28,15 @@ import { PlayersPointsComponent } from './components/players-points/players-poin
     PlayersCardsComponent,
     CoachesCardsComponent,
     ClubPointsComponent,
-    PlayersPointsComponent
+    PlayersPointsComponent,
+    TeamsCardsComponent,
+    TeamsPointsComponent,
+    ClubTrainingScoresComponent,
+    PlayerTrainingScoresComponent,
+    PlayerMatchScoresComponent,
+    ClubMatchScoresComponent,
+    TrainingScoresRankingComponent,
+    MatchScoresRankingComponent
   ],
   imports: [
     CommonModule,

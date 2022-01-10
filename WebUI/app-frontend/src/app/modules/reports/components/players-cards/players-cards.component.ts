@@ -131,7 +131,6 @@ export class PlayersCardsComponent implements OnInit {
         this.playerCards = res;
         this.cardCounts = [res.yellowCardsCount, res.redCardsCount];
         if(this.monthlyView){
-          debugger;
           this.resetFilter();
         }
         else{

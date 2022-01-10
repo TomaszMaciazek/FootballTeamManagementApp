@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 import { SelectItem } from 'primeng/api';
 import { MatchPointType } from 'src/app/enums/match-point-type';
 import { MatchType } from 'src/app/enums/match-type';
 import { ClubPoints } from 'src/app/models/report/club-points.model';
 import { MonthlyClubPoints } from 'src/app/models/report/monthly-club-points.model';
+import { TranslationProvider } from 'src/app/providers/translation-provider.model';
 import { ReportService } from 'src/app/services/report.service';
 
 @Component({
@@ -96,7 +98,9 @@ export class ClubPointsComponent implements OnInit {
   constructor(
     private spinner: NgxSpinnerService,
     private reportService: ReportService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private toastr : ToastrService,
+    private translationProvider: TranslationProvider,
   ) { }
 
   ngOnInit(): void {
@@ -117,6 +121,10 @@ export class ClubPointsComponent implements OnInit {
       this.clubCupMatchesPointsData = res.cupMatchesPoints.map(x => x.count);
       this.clubLeagueMatchesPointsData = res.leagueMatchesPoints.map(x => x.count);
       this.clubFriendlyMatchesPointsData = res.friendlyMatchPoints.map(x => x.count);
+      this.spinner.hide();
+    })
+    .catch(error => {
+      this.toastr.error(this.translationProvider.getTranslation(error));
       this.spinner.hide();
     });
   }
@@ -207,6 +215,10 @@ export class ClubPointsComponent implements OnInit {
       if(this.monthlyView && this.selectedMatchType != null){
         this.fillMonthlyPointsTables();
       }
+      this.spinner.hide();
+    })
+    .catch(error => {
+      this.toastr.error(this.translationProvider.getTranslation(error));
       this.spinner.hide();
     });
   }

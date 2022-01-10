@@ -171,6 +171,38 @@ namespace App.UserMiddleware
         public static Permission MatchPointsDeactivate { get => new("Dezaktywacja bramek", MatchPointsDeactivatePolicy, MatchPointsGroup, ""); }
         #endregion
 
+        #region Reports
+        public const string ReportsGroup = "Raporty";
+        public const string ReportsPolicy = "reports";
+        public static Permission Reports { get => new("Raporty", ReportsPolicy, ReportsGroup, ""); }
+        public const string ReportsPlayersCountPolicy = "reports.players.count";
+        public static Permission ReportsPlayersCount { get => new("Liczba nowych zawodników", ReportsPlayersCountPolicy, ReportsGroup, ""); }
+        public const string ReportsCoachesCountPolicy = "reports.coaches.count";
+        public static Permission ReportsCoachesCount { get => new("Liczba nowych trenerów", ReportsCoachesCountPolicy, ReportsGroup, ""); }
+        public const string ReportsClubCardsPolicy = "reports.club.cards";
+        public static Permission ReportsClubCards { get => new("Kartki klubu", ReportsClubCardsPolicy, ReportsGroup, ""); }
+        public const string ReportsPlayersCardsPolicy = "reports.players.cards";
+        public static Permission ReportsPlayersCards { get => new("Kartki zawodników", ReportsPlayersCardsPolicy, ReportsGroup, ""); }
+        public const string ReportsCoachesCardsPolicy = "reports.coaches.cards";
+        public static Permission ReportsCoachesCards { get => new("Kartki trenerów", ReportsCoachesCardsPolicy, ReportsGroup, ""); }
+        public const string ReportsTeamsCardsPolicy = "reports.teams.cards";
+        public static Permission ReportsTeamsCards { get => new("Kartki drużyn", ReportsTeamsCardsPolicy, ReportsGroup, ""); }
+        public const string ReportsClubPointsPolicy = "reports.club.points";
+        public static Permission ReportsClubPoints { get => new("Bramki klubu", ReportsClubPointsPolicy, ReportsGroup, ""); }
+        public const string ReportsPlayersPointsPolicy = "reports.players.points";
+        public static Permission ReportsPlayersPoints { get => new("Bramki zawodników", ReportsPlayersPointsPolicy, ReportsGroup, ""); }
+        public const string ReportsTeamsPointsPolicy = "reports.teams.points";
+        public static Permission ReportsTeamsPoints { get => new("Bramki drużyn", ReportsTeamsPointsPolicy, ReportsGroup, ""); }
+        public const string ReportsClubTrainingScoresPolicy = "reports.club.training-scores";
+        public static Permission ReportsClubTrainingScores { get => new("Klubowe wyniki treningów", ReportsClubTrainingScoresPolicy, ReportsGroup, ""); }
+        public const string ReportsPlayersTrainingScoresPolicy = "reports.players.training-scores";
+        public static Permission ReportsPlayersTrainingScores { get => new("Wyniki treningów poszczególnych zawodników", ReportsPlayersTrainingScoresPolicy, ReportsGroup, ""); }
+        public const string ReportsClubMatchScoresPolicy = "reports.club.match-scores";
+        public static Permission ReportsClubMatchScores { get => new("Klubowe wyniki treningów", ReportsClubMatchScoresPolicy, ReportsGroup, ""); }
+        public const string ReportsPlayersMatchScoresPolicy = "reports.players.match-scores";
+        public static Permission ReportsPlayersMatchScores { get => new("Wyniki treningów poszczególnych zawodników", ReportsPlayersMatchScoresPolicy, ReportsGroup, ""); }
+        #endregion
+
         #region Tests
         public const string TestsGroup = "Testy";
         public const string TestsPolicy = "tests";
@@ -295,6 +327,20 @@ namespace App.UserMiddleware
                 MatchesAdd,
                 MatchesDelete,
                 MatchesResults,
+
+                //Reports
+                Reports,
+                ReportsPlayersCount,
+                ReportsCoachesCount,
+                ReportsClubCards,
+                ReportsPlayersCards,
+                ReportsCoachesCards,
+                ReportsClubPoints,
+                ReportsPlayersPoints,
+                ReportsClubTrainingScores,
+                ReportsPlayersTrainingScores,
+                ReportsClubMatchScores,
+                ReportsPlayersMatchScores,
 
                 //Surveys
                 Surveys,

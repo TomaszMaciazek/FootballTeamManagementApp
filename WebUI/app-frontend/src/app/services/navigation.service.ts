@@ -169,38 +169,44 @@ export class NavigationService {
     let tests = new MenuItem;
     tests.Title = "tests";
     tests.FontAwesomeIcon = "fas fa-marker"
+    tests.RequiredPermissions = "tests.assigned";
     tests.SubMenuItems = new Array<MenuItem>();
+
+    let newTest = new MenuItem();
+    newTest.Title = "create_test";
+    newTest.Link = "tests/create";
+    newTest.RequiredPermissions = "tests.add";
 
     let allTests = new MenuItem();
     allTests.Title = "all";
     allTests.Link = "tests/all";
-    allTests.RequiredPermissions = "tests";
+    allTests.RequiredPermissions = "tests.all";
 
-    let awaitingTests = new MenuItem();
-    awaitingTests.Title = "awaiting";
-    awaitingTests.Link = "tests/awaiting";
-    awaitingTests.RequiredPermissions = "tests";
+    let createdByMeTests = new MenuItem();
+    createdByMeTests.Title = "created_by_myself_tests";
+    createdByMeTests.Link = "tests/created";
+    createdByMeTests.RequiredPermissions = "tests.created";
 
     let finishedTests = new MenuItem();
-    finishedTests.Title = "finished";
-    finishedTests.Link = "tests/finished";
-    finishedTests.RequiredPermissions = "tests";
+    finishedTests.Title = "tests_assigned_to_me";
+    finishedTests.Link = "tests/assigned";
+    finishedTests.RequiredPermissions = "tests.assigned";
 
-    tests.SubMenuItems.push(allTests, awaitingTests, finishedTests);
+    tests.SubMenuItems.push(newTest, allTests, createdByMeTests, finishedTests);
     return tests
   }
 
   private getAdmin(): MenuItem{
     let admin = new MenuItem();
     admin.Title = "admin";
-    admin.RequiredPermissions = "admin";
+    admin.RequiredPermissions = "administration.adminSettings";
     admin.FontAwesomeIcon = "fas fa-cogs";
     admin.SubMenuItems = new Array<MenuItem>();
 
     let users = new MenuItem();
     users.Title = "users";
     users.Link = "admin/users";
-    users.RequiredPermissions = "admin.users";
+    users.RequiredPermissions = "administration.users";
 
     admin.SubMenuItems.push(users);
     return admin;
@@ -230,54 +236,101 @@ export class NavigationService {
     let reports = new MenuItem();
     reports.Title = "reports";
     reports.FontAwesomeIcon = "fas fa-poll";
+    reports.RequiredPermissions = "reports";
     reports.SubMenuItems = new Array<MenuItem>();
 
     let playersCount = new MenuItem();
     playersCount.Title = "new_players";
     playersCount.Link = "reports/players/count";
-    playersCount.RequiredPermissions = "reports.players";
+    playersCount.RequiredPermissions = "reports.players.count";
 
     let coachesCount = new MenuItem();
     coachesCount.Title = "new_coaches";
     coachesCount.Link = "reports/coaches/count";
-    coachesCount.RequiredPermissions = "reports.coaches";
+    coachesCount.RequiredPermissions = "reports.coaches.count";
 
     let receivedCards = new MenuItem();
     receivedCards.Title = "club_cards";
     receivedCards.Link = "reports/cards/all";
-    receivedCards.RequiredPermissions = "reports.cards";
+    receivedCards.RequiredPermissions = "reports.club.cards";
 
     let playersCards = new MenuItem();
     playersCards.Title = "players_cards";
     playersCards.Link = "reports/cards/players";
-    playersCards.RequiredPermissions = "reports.cards";
+    playersCards.RequiredPermissions = "reports.players.cards";
 
     let coachesCards = new MenuItem();
     coachesCards.Title = "coaches_cards";
     coachesCards.Link = "reports/cards/coaches";
-    coachesCards.RequiredPermissions = "reports.cards";
+    coachesCards.RequiredPermissions = "reports.coaches.cards";
+
+    let teamsCards = new MenuItem();
+    teamsCards.Title = "teams_cards";
+    teamsCards.Link = "reports/cards/teams";
+    teamsCards.RequiredPermissions = "reports.teams.cards";
 
     let gainedPoints = new MenuItem();
     gainedPoints.Title = "match_points";
     gainedPoints.Link = "reports/points/all";
-    gainedPoints.RequiredPermissions = "reports.match.points";
+    gainedPoints.RequiredPermissions = "reports.club.points";
 
     let playersPoints = new MenuItem();
     playersPoints.Title = "players_points";
     playersPoints.Link = "reports/points/players";
-    playersPoints.RequiredPermissions = "reports.match.points";
+    playersPoints.RequiredPermissions = "reports.players.points";
+
+    let teamsPoints = new MenuItem();
+    teamsPoints.Title = "teams_points";
+    teamsPoints.Link = "reports/points/teams";
+    teamsPoints.RequiredPermissions = "reports.teams.points";
+
+    let clubTrainingsStatistisc = new MenuItem();
+    clubTrainingsStatistisc.Title = "club_training_scores";
+    clubTrainingsStatistisc.Link = "reports/trainingScores/all";
+    clubTrainingsStatistisc.RequiredPermissions = "reports.club.training-scores";
+
+    let clubMatchesStatistisc = new MenuItem();
+    clubMatchesStatistisc.Title = "club_match_scores";
+    clubMatchesStatistisc.Link = "reports/matchScores/all";
+    clubMatchesStatistisc.RequiredPermissions = "reports.club.match-scores";
 
     let playersMatchesStatistisc = new MenuItem();
     playersMatchesStatistisc.Title = "player_matches_statistics";
-    playersMatchesStatistisc.Link = "reports/playersMatches";
-    playersMatchesStatistisc.RequiredPermissions = "reports.players_matches";
+    playersMatchesStatistisc.Link = "reports/matchScores/players";
+    playersMatchesStatistisc.RequiredPermissions = "reports.players.match-scores";
 
     let playersTrainingsStatistisc = new MenuItem();
     playersTrainingsStatistisc.Title = "player_trainings_statistics";
-    playersTrainingsStatistisc.Link = "reports/playersMatches";
-    playersTrainingsStatistisc.RequiredPermissions = "reports.players_matches";
+    playersTrainingsStatistisc.Link = "reports/trainingScores/players";
+    playersTrainingsStatistisc.RequiredPermissions = "reports.players.training-scores";
 
-    reports.SubMenuItems.push(playersCount, coachesCount, receivedCards, playersCards, coachesCards, gainedPoints, playersPoints, playersMatchesStatistisc, playersTrainingsStatistisc);
+    let playersTrainingsRanking = new MenuItem();
+    playersTrainingsRanking.Title = "training_scores_ranking";
+    playersTrainingsRanking.Link = "reports/trainingScores/ranking";
+    playersTrainingsRanking.RequiredPermissions = null;
+
+    let playersMatchesRanking = new MenuItem();
+    playersMatchesRanking.Title = "match_scores_ranking";
+    playersMatchesRanking.Link = "reports/matchScores/ranking";
+    playersMatchesRanking.RequiredPermissions = null;
+
+    reports.SubMenuItems.push(playersCount, coachesCount, receivedCards, playersCards, coachesCards, teamsCards, gainedPoints, playersPoints, teamsPoints, clubTrainingsStatistisc, clubMatchesStatistisc, playersMatchesStatistisc, playersTrainingsStatistisc, playersTrainingsRanking, playersMatchesRanking);
     return reports;
+  }
+
+  getMessages() : MenuItem{
+    let messages = new MenuItem();
+    messages.Title = "messages";
+    messages.FontAwesomeIcon = "fas fa-comments";
+    messages.RequiredPermissions = "messages";
+    messages.SubMenuItems = new Array<MenuItem>();
+
+    let box = new MenuItem();
+    box.Title = "my_box";
+    box.Link = "messages/box";
+    box.RequiredPermissions = "messages";
+
+    messages.SubMenuItems.push(box);
+    return messages;
   }
 }

@@ -15,8 +15,26 @@ export class PlayerCardService {
   ) { }
 
 
-  getAllFromMatch(id: string): Promise<PlayerCard>{
-    return this.http.get<PlayerCard>(`${this.url}/${id}`)
+  getAllFromMatch(id: string): Promise<Array<PlayerCard>>{
+    return this.http.get<Array<PlayerCard>>(`${this.url}/match/${id}`)
+    .toPromise()
+    .catch(this.handleError.bind(this));
+  }
+
+  activate(id: string){
+    return this.http.patch(`${this.url}/activate/${id}`,null)
+    .toPromise()
+    .catch(this.handleError.bind(this));
+  }
+
+  deactivate(id: string){
+    return this.http.patch(`${this.url}/deactivate/${id}`,null)
+    .toPromise()
+    .catch(this.handleError.bind(this));
+  }
+
+  delete(id: string){
+    return this.http.delete(`${this.url}/${id}`)
     .toPromise()
     .catch(this.handleError.bind(this));
   }
