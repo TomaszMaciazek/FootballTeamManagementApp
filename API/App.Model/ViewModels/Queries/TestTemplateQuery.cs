@@ -8,6 +8,7 @@ namespace App.Model.ViewModels.Queries
 {
     public class TestTemplateQuery : PaginationQuery
     {
+        public Guid? AuthorId { get; set; }
         public string Title { get; set; }
     }
 }

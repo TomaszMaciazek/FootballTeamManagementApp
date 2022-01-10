@@ -1,0 +1,42 @@
+<div class="row">
+    <h4>{{question.description}}</h4>
+</div>
+<div class="row">
+    <div *ngIf="value != null">
+        <div [ngSwitch]="question.type">
+            <div *ngSwitchCase="questionType.SingleChoice">
+                <div *ngFor="let option of question.options" class="pb-3">
+                    <div fxLayout="column">
+                        <div *ngIf="option.value == value; else justOption">
+                            <span [ngClass]="{'correct-answer': option.points > 0, 'wrong-answer': option.points <= 0}">{{option.label}}</span>
+                        </div>
+                        <ng-template #justOption>
+                            <span>{{option.label}}</span>
+                        </ng-template>
+                        <div>
+                            {{option.points}} {{'pt' | translate}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngSwitchCase="questionType.MutipleChoice">
+                <div *ngFor="let option of question.options" class="pb-3">
+                    <div fxLayout="column">
+                        <div *ngIf="checkEquality(option.value); else justOption">
+                            <span [ngClass]="{'correct-answer': option.points > 0, 'wrong-answer': option.points <= 0}">{{option.label}}</span>
+                        </div>
+                        <ng-template #justOption>
+                            <span>{{option.label}}</span>
+                        </ng-template>
+                        <div>
+                            {{option.points}} {{'pt' | translate}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="value == null">
+        {{'no_answer' | translate}}
+    </div>
+</div>

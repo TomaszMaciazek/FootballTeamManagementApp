@@ -1,0 +1,72 @@
+<div class="content-wrapper" *ngIf="result">
+    <div class="text-center pb-3 mb-3">
+        <h1>{{result.title}}</h1>
+    </div>
+    <p-confirmDialog #cd [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}">
+        <ng-template pTemplate="footer">
+            <button type="button" pButton icon="pi pi-times" label="{{'no' | translate}}" (click)="cd.reject()"></button>
+            <button type="button" pButton icon="pi pi-check" label="{{'yes' | translate}}" (click)="cd.accept()"></button>
+        </ng-template>
+    </p-confirmDialog>
+    <div fxLayout="row" fxLayoutAlign="center start" class="mt-3">
+        <p-card fxFlex="80">
+            <span class="desc">{{result.description}}</span>
+        </p-card>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center start" >
+        <form [formGroup]="form" (ngSubmit)="confirmSubmit()" autocomplete="off" fxFlex="80">
+            <div fxLayout="column">
+                <div class="form-group p-2" fxFlex="100">
+                    <div formArrayName="QuestionsAnswers" class="poll-options">
+                        <ol class="list-style mt-3">
+                            <li *ngFor="let questionCtrl of form.get('QuestionsAnswers')['controls']; let i = index">
+                                <div [formGroupName]="i" fxLayout="column">
+                                    <div class="form-group p-2" fxFlex="100">
+                                        <span class="full-width">
+                                            {{result.questions[i].description}}
+                                        </span>
+                                    </div>
+                                    <div fxLayout.gt-sm="row" fxLayout.lt-md="column">
+                                        <div class="form-group p-2" fxFlex.gt-sm="60">
+                                            <div [ngSwitch]="result.questions[i].type">
+                                                <div *ngSwitchCase="questionType.SingleChoice">
+                                                    <mat-form-field class="full-width">
+                                                        <mat-select formControlName="answer" placeholder="{{'answer' | translate}}"
+                                                            [required]="result.questions[i].isRequired">
+                                                            <mat-option *ngFor="let option of result.questions[i].options" [value]="option.value">
+                                                            {{option.label | translate}}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div *ngSwitchCase="questionType.MutipleChoice">
+                                                    <mat-form-field class="full-width">
+                                                        <mat-select formControlName="answer" placeholder="{{'answer' | translate}}"
+                                                            [required]="result.questions[i].isRequired" multiple>
+                                                            <mat-option *ngFor="let option of result.questions[i].options" [value]="option.value">
+                                                            {{option.label | translate}}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div fxFlex.gt-sm="40"></div>
+                                    </div>
+                                    <span class="points-to-score">
+                                        {{result.questions[i].pointsToScore}} {{'pt' | translate}}
+                                    </span>
+                                </div>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="form-group p-2" fxFlex="100">
+                    <button ngClass.lt-md="full-width" color="primary" type="submit" mat-raised-button [disabled]="!form.valid">
+                        {{'compleate_filling' | translate}}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
