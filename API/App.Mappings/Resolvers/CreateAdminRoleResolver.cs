@@ -17,7 +17,7 @@ namespace App.Mappings.Resolvers
 
         public Role Resolve(CreateAdminVM source, User destination, Role destMember, ResolutionContext context)
         {
-            return _dbContext.Roles.FirstOrDefault(x => x.Name == "player");
+            return _dbContext.Roles.FirstOrDefault(x => x.Name == "admin");
         }
     }
 }

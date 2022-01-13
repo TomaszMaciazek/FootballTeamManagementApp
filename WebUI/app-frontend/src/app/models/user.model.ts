@@ -7,5 +7,7 @@ export class User {
     public names: string
     public username: string;
     public role :Role;
+    public playerId : string;
+    public coachId : string;
     public isActive: boolean;
 }

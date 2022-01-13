@@ -61,6 +61,15 @@ namespace App.API.Controllers
 
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.UsersPolicy)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginatedList<UserListItemDto>))]
+        [Route("Administrators")]
+        public async Task<ActionResult<PaginatedList<UserListItemDto>>> GetAdministrators([FromQuery] UserQuery query)
+        {
+            return Ok(await _userService.GetAdministrators(query));
+        }
+
+        [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.UsersPolicy)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectUserDto>))]
         [Route("All")]
         public async Task<ActionResult<IEnumerable<SelectUserDto>>> GetAllUsers()
@@ -90,6 +99,7 @@ namespace App.API.Controllers
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AuthenticationResult))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(double))]
         [Route("Account/SignIn")]
         public async Task<IActionResult> SignIn(SignInVM model)
@@ -99,6 +109,10 @@ namespace App.API.Controllers
             {
                 if (PasswordHashHelper.Verify(model.Password, user.PasswordHash))
                 {
+                    if (!user.IsActive)
+                    {
+                        return Forbid();
+                    }
                     if(user.AccountLockoutTime.HasValue && user.AccountLockoutTime.Value > DateTime.Now)
                     {
                         return Conflict(TimeSpan.FromTicks(user.AccountLockoutTime.Value.Ticks - DateTime.Now.Ticks).TotalMinutes);
@@ -198,7 +212,7 @@ namespace App.API.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [Route("Account/ChangePassword")]
-        public async Task<IActionResult> UpdateAccountPassword([FromBody] UpdatePasswordVM model)
+        public async Task<IActionResult> UpdateAccountPassword([FromBody] UpdateAccountPasswordVM model)
         {
             try
             {
@@ -244,5 +258,25 @@ namespace App.API.Controllers
             await _userService.Remove(id);
             return NoContent();
         }
+
+        [HttpPatch]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.UsersPolicy)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Route("User/ChangePassword")]
+        public async Task<IActionResult> UpdateUserPassword([FromBody] UpdateUserPasswordVM model)
+        {
+            try
+            {
+                await _userService.ChangeUserPassword(model.UserId, model.NewPassword);
+                return Ok();
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+        }
+
     }
 }

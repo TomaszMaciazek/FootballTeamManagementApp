@@ -106,7 +106,14 @@ namespace App.ServiceLayer.Services
 
             trainings = trainings.WhereDatetimePropertyLessOrEqual(x => x.Date, query.MaxDate);
 
-            trainings = trainings.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
+            if (!string.IsNullOrEmpty(query.OrderByColumnName) && query.OrderByColumnName.ToLower() == "date")
+            {
+                trainings = query.OrderByDirection == "asc" ? trainings.OrderBy(x => x.Date) : trainings.OrderByDescending(x => x.Date);
+            }
+            else
+            {
+                trainings = trainings.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
+            }
 
             return await trainings.ProjectTo<TrainingListItem>(_mapper.ConfigurationProvider).PaginatedListAsync(query.PageNumber, query.PageSize);
         }

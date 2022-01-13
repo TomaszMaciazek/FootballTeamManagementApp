@@ -33,13 +33,13 @@
             <td>
                 <p-tableCheckbox [value]="message"></p-tableCheckbox>
             </td>
-            <td class="text-center">
+            <td (click)="displayMessage(message)" class="text-center">
                 {{message.sendDate | date: 'dd-MM-yyyy HH:mm'}}
             </td>
-            <td class="text-center">
+            <td (click)="displayMessage(message)" class="text-center">
                 {{message.sender.name}} {{message.sender.middleName}} {{message.sender.surname}}
             </td>
-            <td class="text-center">
+            <td (click)="displayMessage(message)" class="text-center">
                 {{message.topic}}
             </td>
         </tr>

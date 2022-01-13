@@ -41,7 +41,10 @@ export class AuthenticationService {
   private async handleError(error: any) {
     if (error.status === 401) {
       return Promise.reject('account_not_found');
-    } else if (error.status === 409) {
+    } else if (error.status === 403) {
+      return Promise.reject('account_was_deactivated');
+    }
+    else if (error.status === 409) {
       return Promise.reject('wrong_password');
     } else {
       return Promise.reject('something_went_wrong');

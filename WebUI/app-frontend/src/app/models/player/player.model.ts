@@ -4,6 +4,7 @@ import { SimpleTeam } from "../team/simple-team.model";
 
 export class Player {
     public id : string;
+    public userId : string;
     public startedPlaying : Date;
     public finishedPlaying : Date;
     public email : string;

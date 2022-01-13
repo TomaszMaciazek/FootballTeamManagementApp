@@ -11,10 +11,10 @@
     <hr>
     <div>
         <div class="mt-1 mb-3">
-            <h4>{{'sender' | translate}}: {{message.sender.name}} {{message.sender.middleName}} {{message.sender.surname}}</h4>
+            <h5>{{'sender' | translate}}: {{message.sender.name}} {{message.sender.middleName}} {{message.sender.surname}}</h5>
         </div>
         <div class="mt-1 mb-3">
-            <h4>{{'recipients' | translate}}:</h4>
+            <h5>{{'recipients' | translate}}:</h5>
         </div>
         <div class="mt-2 mb-3">
             <p-chips [(ngModel)]="message.recipients" disabled="true">
@@ -24,10 +24,10 @@
             </p-chips>
         </div>
         <div class="mt-1 mb-3">
-            <h4>{{'send_date' | translate}}: {{message.sendDate | date: 'dd-MM-yyyy HH:mm'}}</h4>
+            <h5>{{'send_date' | translate}}: {{message.sendDate | date: 'dd-MM-yyyy HH:mm'}}</h5>
         </div>
         <div class="mt-1 mb-3">
-            <h2>{{'topic' | translate}}: {{message.topic}}</h2>
+            <h4>{{'topic' | translate}}: {{message.topic}}</h4>
         </div>
     </div>
     <hr>

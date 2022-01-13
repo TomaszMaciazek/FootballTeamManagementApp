@@ -11,6 +11,9 @@ import { PlayerJoinedTeamEventComponent } from './components/players/player-hist
 import { PlayerLeftTeamEventComponent } from './components/players/player-history/player-left-team-event/player-left-team-event.component';
 import { PlayerComponent } from './components/players/player/player.component';
 import { CoachComponent } from './components/coaches/coach/coach.component';
+import { ChangeUserPasswordComponent } from './components/change-user-password/change-user-password.component';
+import { AdministratorsComponent } from './components/administrators/administrators.component';
+import { AdministratorComponent } from './components/administrators/administrator/administrator.component';
 
 
 @NgModule({
@@ -22,7 +25,10 @@ import { CoachComponent } from './components/coaches/coach/coach.component';
     PlayerJoinedTeamEventComponent,
     PlayerLeftTeamEventComponent,
     PlayerComponent,
-    CoachComponent
+    CoachComponent,
+    ChangeUserPasswordComponent,
+    AdministratorsComponent,
+    AdministratorComponent
   ],
   imports: [
     CommonModule,

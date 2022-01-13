@@ -8,6 +8,7 @@ namespace App.Model.Dtos
     public class CoachDto
     {
         public Guid Id { get; set; }
+        public Guid UserId { get; set; }
         public bool IsActive { get; set; }
         public string Name { get; set; }
         public string MiddleName { get; set; }

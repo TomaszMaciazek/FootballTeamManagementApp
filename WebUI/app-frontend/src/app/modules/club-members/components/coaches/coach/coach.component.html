@@ -2,6 +2,20 @@
     <div class="text-center pb-3 mt-3 mb-3">
         <h1>{{'coach' | translate}}</h1>
     </div>
+    <p-confirmDialog #cd [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}">
+        <ng-template pTemplate="footer">
+            <button type="button" pButton icon="pi pi-times" label="{{'no' | translate}}" (click)="cd.reject()"></button>
+            <button type="button" pButton icon="pi pi-check" label="{{'yes' | translate}}" (click)="cd.accept()"></button>
+        </ng-template>
+    </p-confirmDialog>
+    <p-dialog header="{{'change_password' | translate}}"
+    [(visible)]="displayChangePasswordDialog"
+    [style]="{width: '50vw'}">
+        <change-user-password
+            [userId]="coach.userId"
+            (confirmUpdatePassword)="closeDialog($event)"
+        ></change-user-password>
+    </p-dialog>
     <div fxLayout="row" class="pb-3">
         <div fxFlex.sm="80" fxFlexOffset.sm="10" 
         fxFlex.md="54" fxFlexOffset.md="23"
@@ -74,6 +88,17 @@
                 </div>
                 <hr>
             </p-card>
+            <div class="row mt-3" [security]="'administration.users'">
+                <div class="col-sm-12">
+                    <p-button styleClass="p-button-info" label="{{'change_password' | translate}}" 
+                    (click)="displayChangePasswordDialog = true" icon="pi pi-key"></p-button>
+
+                    <p-button *ngIf="coach.finishedWorking" styleClass="ml-3 p-button-success" label="{{'return_to_work' | translate}}" 
+                    (click)="displayChangePasswordDialog = confirmToggle()" icon="pi pi-directions-alt"></p-button>
+                    <p-button *ngIf="!coach.finishedWorking" styleClass="ml-3 p-button-warning" label="{{'finish_working' | translate}}" 
+                    (click)="displayChangePasswordDialog = confirmToggle()" icon="pi pi-directions"></p-button>
+                </div>
+            </div>
         </div>
         <div fxFlex.sm="10" fxFlex.md="23" fxFlex.gt-md="25" fxFlex.xs="3"></div>
     </div>

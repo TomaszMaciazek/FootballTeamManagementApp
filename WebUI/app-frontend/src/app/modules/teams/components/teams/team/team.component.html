@@ -24,14 +24,14 @@
             fxFlex.gt-xs="80" fxFlexOffset.gt-xs="10" 
             fxFlex.xs="94" fxFlexOffset.xs="3"
         >
-            <div fxLayout="row" class="mb-3">
+            <div fxLayout="row" class="mb-3" [security]="'players.teams.edit;teams.history'">
                 <div fxFlex.lt-lg="100" fxHide fxShow.lt-lg>
                     <p-toolbar>
                         <button class="btn btn-primary btn-block btn-lg btn-action" (click)="showAddPlayersDialog()" [security]="'players.teams.edit'">
                             <i class="far fa-plus-square"></i>    
                             {{'add_player_to_team' | translate}}
                         </button>
-                        <button class="btn btn-info btn-block btn-lg btn-action" [routerLink]="['/teams/history/'+id]">
+                        <button class="btn btn-info btn-block btn-lg btn-action" [routerLink]="['/teams/history/'+id]" [security]="'teams.history'">
                             <i class="fas fa-scroll"></i>    
                             {{'team_history' | translate}}
                         </button>
@@ -59,27 +59,23 @@
                 </div>
             </div>
             <div class="mb-3 mt-3">
-                <h3>{{'team_main_coach' | translate}}</h3>
+                <h2>{{'team_main_coach' | translate}}</h2>
             </div>
             <div class="mb-3">
                 <div *ngIf="team.mainCoach; else noMainCoach" class="mt-2">
-                    <h5 *ngIf="team.mainCoach.middleName && team.mainCoach.middleName.length > 0; else noMiddleName">
-                        {{team.mainCoach.surname}} {{team.mainCoach.name}} {{team.mainCoach.middleName}}
-                    </h5>
-                    <ng-template #noMiddleName>
-                        <div class="mt-2">
-                            <h5>{{team.mainCoach.surname}} {{team.mainCoach.name}}</h5>
-                        </div>
-                    </ng-template>
+                    <h3 *ngIf="team.mainCoach.middleName && team.mainCoach.middleName.length > 0; else noMiddleName">
+                        {{team.mainCoach.name}} {{team.mainCoach.middleName}} {{team.mainCoach.surname}}
+                        <a [routerLink]="['/members/coach/'+team.mainCoach.id]">
+                            <button pButton pRipple type="button" icon="fas fa-info" 
+                            class="ml-2 p-button-rounded p-button-info"></button>
+                        </a>
+                    </h3>
                 </div>
                 <ng-template #noMainCoach>
                     <div class="mt-2">
                         <h4>{{'team_has_no_main_coach' | translate}}</h4>
                     </div>
                 </ng-template>
-            </div>
-            <div class="mb-3 mt-3">
-                <h3>{{'players' | translate}}</h3>
             </div>
             <div *ngIf="team.players && team.players.length > 0" class="mt-3 mb-2" 
                 fxFlex.gt-xs="80" fxFlexOffset.gt-xs="10" 
@@ -88,7 +84,12 @@
                 <div class="mb-3">
                     <p-table [value]="team.players" [paginator]="true" [rows]="10" [showCurrentPageReport]="false" 
                     responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
-                        <ng-template pTemplate="header">
+                    <ng-template pTemplate="caption">
+                        <div class="text-center">
+                            <h2>{{'players' | translate}}</h2>
+                        </div>
+                    </ng-template>    
+                    <ng-template pTemplate="header">
                             <tr>
                                 <th class="text-center">{{'player' | translate}}</th>
                                 <th class="text-center">{{'country' | translate}}</th>

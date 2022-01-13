@@ -21,7 +21,7 @@ export class TrainingsComponent implements OnInit {
   hasPreviousPage: boolean;
   hasNextPage: boolean;
   sortOrder: string = "desc";
-  sortColumn: string = "";
+  sortColumn: string = "Date";
   trainings : TrainingItem[];
 
   constructor(

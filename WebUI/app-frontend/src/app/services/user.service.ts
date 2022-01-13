@@ -7,6 +7,7 @@ import { AddAdminCommand } from '../models/commands/add-admin.model';
 import { AddCoachCommand } from '../models/commands/add-coach.model';
 import { AddPlayerCommand } from '../models/commands/add-player.model';
 import { ChangePassword } from '../models/commands/change-password.model';
+import { UpdateUserPassword } from '../models/commands/update-user-password.model';
 import { PaginatedList } from '../models/paginated-list.model';
 import { UserQuery } from '../models/queries/user-query.model';
 import { User } from '../models/user.model';
@@ -31,6 +32,11 @@ export class UserService {
   getUsers(query: UserQuery): Promise<PaginatedList<User>> {
     return this.http.get<PaginatedList<User>>(this.url, {params: toParams(query)}).toPromise();
   }
+
+  getAdministrators(query: UserQuery): Promise<PaginatedList<User>> {
+    return this.http.get<PaginatedList<User>>(`${this.url}/administrators`, {params: toParams(query)}).toPromise();
+  }
+
   getAllUsers(): Promise<Array<SelectUser>> {
     return this.http.get<Array<SelectUser>>(`${this.url}/all`).toPromise();
   }
@@ -63,6 +69,12 @@ export class UserService {
 
   updatePassword(command : ChangePassword){
     return this.http.patch(`${this.url}/account/changePassword`, command)
+    .toPromise()
+    .catch(this.handleError.bind(this));
+  }
+
+  updateUserPassword(command : UpdateUserPassword){
+    return this.http.patch(`${this.url}/user/changePassword`, command)
     .toPromise()
     .catch(this.handleError.bind(this));
   }

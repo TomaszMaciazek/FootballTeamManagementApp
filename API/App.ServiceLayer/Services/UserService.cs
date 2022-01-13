@@ -31,8 +31,10 @@ namespace App.ServiceLayer.Services
         Task Update(UpdateUserCommandVM command);
         Task<PaginatedList<UserListItemDto>> GetUsers(UserQuery query);
         Task<UserAccountDto> GetUserAccount(Guid id);
-        Task UpdatePassword(UpdatePasswordVM command);
+        Task UpdatePassword(UpdateAccountPasswordVM command);
         Task<IEnumerable<SimpleUserDto>> GetRecipients(Guid id);
+        Task ChangeUserPassword(Guid userId, string newPassword);
+        Task<PaginatedList<UserListItemDto>> GetAdministrators(UserQuery query);
     }
 
     public class UserService : IUserService
@@ -126,30 +128,25 @@ namespace App.ServiceLayer.Services
 
         public async Task<PaginatedList<UserListItemDto>> GetUsers(UserQuery query)
         {
-            var users = _userRepository.GetAll().AsNoTracking().Include(x => x.Role);
+            var users = _userRepository.GetAll().AsNoTracking().Include(x => x.Role).Include(x => x.PlayerDetails).Include(x => x.CoachDetails);
             var result = query.IsActive.HasValue ? users.Where(x => x.IsActive == query.IsActive.Value) : users;
+
+            if (!string.IsNullOrEmpty(query.QueryString))
+            {
+                result = result.Where(x => query.QueryString.ToLower().Contains(x.Name.ToLower()) || query.QueryString.ToLower().Contains(x.Surname.ToLower()) || query.QueryString.ToLower().Contains(x.Email.ToLower()));
+            }
 
             if (!string.IsNullOrEmpty(query.OrderByColumnName))
             {
-                result = users.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
+                result = result.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
             }
             else
             {
-                result = users.OrderByProperty("Surname", query.OrderByDirection);
+                result = result.OrderByProperty("Surname", query.OrderByDirection);
             }
 
             return await result
-                .Select(x => new UserListItemDto
-                { 
-                    Id =  x.Id,
-                    IsActive = x.IsActive,
-                    Email = x.Email,
-                    Surname = x.Surname,
-                    Names = $"{x.Name} {x.MiddleName}",
-                    UserName = x.Username,
-                    Role = new RoleDto { Id = x.Role.Id, Name = x.Role.Name }
-                    }
-                )
+                .ProjectTo<UserListItemDto>(_mapper.ConfigurationProvider)
                 .PaginatedListAsync(query.PageNumber, query.PageSize);
         }
 
@@ -164,7 +161,7 @@ namespace App.ServiceLayer.Services
                 .SingleOrDefaultAsync();
         }
 
-        public async Task UpdatePassword(UpdatePasswordVM command)
+        public async Task UpdatePassword(UpdateAccountPasswordVM command)
         {
             var user = await _userRepository.GetById(command.UserId).SingleOrDefaultAsync();
             if(user != null)
@@ -172,6 +169,7 @@ namespace App.ServiceLayer.Services
                 if(PasswordHashHelper.Verify(command.OldPassword, user.PasswordHash))
                 {
                     user.PasswordHash = PasswordHashHelper.HashPassword(command.NewPassword);
+                    user.LastPasswordSet = DateTime.Now;
                     _userRepository.Update(user);
                     await _context.SaveChangesAsync();
                 }
@@ -192,6 +190,46 @@ namespace App.ServiceLayer.Services
                 .Where(x => x.Id != id)
                 .ProjectTo<SimpleUserDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
+        }
+
+        public async Task ChangeUserPassword(Guid userId, string newPassword)
+        {
+            var user = await _userRepository.GetById(userId).SingleOrDefaultAsync();
+            if (user != null)
+            {
+                    user.PasswordHash = PasswordHashHelper.HashPassword(newPassword);
+                    user.LastPasswordSet = DateTime.Now;
+                    _userRepository.Update(user);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new NotFoundException();
+            }
+        }
+
+        public async Task<PaginatedList<UserListItemDto>> GetAdministrators(UserQuery query)
+        {
+            var users = _userRepository.GetAll().AsNoTracking().Include(x => x.Role).Where(x => x.Role.Name == "admin");
+            var result = query.IsActive.HasValue ? users.Where(x => x.IsActive == query.IsActive.Value) : users;
+
+            if (!string.IsNullOrEmpty(query.QueryString))
+            {
+                result = result.Where(x => query.QueryString.ToLower().Contains(x.Name.ToLower()) || query.QueryString.ToLower().Contains(x.Surname.ToLower()) || query.QueryString.ToLower().Contains(x.Email.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(query.OrderByColumnName))
+            {
+                result = result.OrderByProperty(query.OrderByColumnName, query.OrderByDirection);
+            }
+            else
+            {
+                result = result.OrderByProperty("Surname", query.OrderByDirection);
+            }
+
+            return await result
+                .ProjectTo<UserListItemDto>(_mapper.ConfigurationProvider)
+                .PaginatedListAsync(query.PageNumber, query.PageSize);
         }
     }
 }

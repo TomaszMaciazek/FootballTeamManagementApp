@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using App.Model.Enums;
+using App.DataAccess.Exceptions;
 
 namespace App.ServiceLayer.Services
 {
@@ -34,6 +35,7 @@ namespace App.ServiceLayer.Services
         Task AddPlayerToTeam(AddPlayersToTeamVM command);
         Task RemovePlayerFromTeam(Guid playerId, Guid teamId);
         Task<IEnumerable<SimpleSelectPlayerDto>> GetActivePlayersWithoutTeam();
+        Task TogglePlaying(Guid id);
     }
 
     public class PlayerService : IPlayerService
@@ -273,5 +275,20 @@ namespace App.ServiceLayer.Services
                 .Where(x => x.IsActive && x.Team == null)
                 .ProjectTo<SimpleSelectPlayerDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
+
+        public async Task TogglePlaying(Guid id)
+        {
+            var player = await _playerRepository.GetById(id).SingleOrDefaultAsync();
+
+            if(player != null)
+            {
+                player.FinishedPlaying = player.FinishedPlaying.HasValue ? null : DateTime.Now;
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new NotFoundException();
+            }
+        }
     }
 }

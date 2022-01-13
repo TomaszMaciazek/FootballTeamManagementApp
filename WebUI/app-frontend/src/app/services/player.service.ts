@@ -54,6 +54,10 @@ export class PlayerService {
     .catch(this.handleError.bind(this));
   }
 
+  togglPlayerStatus(id: string){
+    return this.http.patch(`${this.url}/toggleStatus/${id}`, null).toPromise();
+  }
+
   private async handleError(error: any) {
     if (error.status === 404) {
       return Promise.reject('not_found');

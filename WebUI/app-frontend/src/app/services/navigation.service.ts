@@ -160,7 +160,7 @@ export class NavigationService {
     let awaitingSurveys = new MenuItem();
     awaitingSurveys.Title = "created_by_myself";
     awaitingSurveys.Link = "surveys/created";
-    awaitingSurveys.RequiredPermissions = "surveys";
+    awaitingSurveys.RequiredPermissions = "surveys.created";
 
     let filledSurveys = new MenuItem();
     filledSurveys.Title = "surveys_assigned_to_me";
@@ -234,7 +234,12 @@ export class NavigationService {
     coaches.Link = "members/coaches";
     coaches.RequiredPermissions = "coaches";
 
-    members.SubMenuItems.push(players, coaches);
+    let admins = new MenuItem();
+    admins.Title = "administrators";
+    admins.Link = "members/administrators";
+    coaches.RequiredPermissions = "administration.adminSettings";
+
+    members.SubMenuItems.push(players, coaches, admins);
     return members;
   }
 

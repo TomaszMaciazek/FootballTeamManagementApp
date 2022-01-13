@@ -10,6 +10,8 @@ namespace App.Model.Dtos.ListItemDtos
         public string Names { get; set; }
         public string UserName { get; set; }
         public RoleDto Role { get; set; }
+        public Guid PlayerId { get; set; }
+        public Guid CoachId { get; set; }
         public bool IsActive { get; set; }
     }
 }

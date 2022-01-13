@@ -6,6 +6,7 @@ namespace App.Model.Dtos
     public class PlayerDto
     {
         public Guid Id { get; set; }
+        public Guid UserId { get; set; }
         public DateTime? StartedPlaying { get; set; }
         public DateTime? FinishedPlaying { get; set; }
         public string Email { get; set; }

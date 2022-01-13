@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using App.DataAccess.Exceptions;
 
 namespace App.ServiceLayer.Services
 {
@@ -30,6 +31,7 @@ namespace App.ServiceLayer.Services
         Task UpdateAsync(UpdateCoachVM entity);
         Task<PaginatedList<CoachListItemDto>> GetCoaches(CoachQuery query);
         Task<IEnumerable<SimpleCoachDto>> GetWorkingCoaches(DateTime? date);
+        Task ToggleWorking(Guid id);
     }
 
     public class CoachService : ICoachService
@@ -193,8 +195,32 @@ namespace App.ServiceLayer.Services
                     : coaches.Where(x => !x.FinishedWorking.HasValue);
 
             return await coaches.ProjectTo<SimpleCoachDto>(_mapper.ConfigurationProvider).ToListAsync();
+        }
 
+        public async Task ToggleWorking(Guid id)
+        {
+            var coach = await _coachRepository.GetById(id).Include(x => x.Teams).SingleOrDefaultAsync();
 
+            if (coach != null)
+            {
+                if (coach.FinishedWorking.HasValue)
+                {
+                    coach.FinishedWorking = null;
+                }
+                else
+                {
+                    coach.FinishedWorking =  DateTime.Now;
+                    foreach(var team in coach.Teams)
+                    {
+                        team.MainCoach = null;
+                    }
+                }
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new NotFoundException();
+            }
         }
     }
 }

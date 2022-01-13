@@ -13,7 +13,8 @@ namespace App.Mappings.Profiles
             CreateMap<Training, TrainingDto>()
                 .ForMember(x => x.TrainingScores, opt => opt.MapFrom(src => src.Scores));
             CreateMap<CreateTrainingVM, Training>();
-            CreateMap<Training, TrainingListItem>();
+            CreateMap<Training, TrainingListItem>()
+                .ForMember(dest => dest.Date, opt => opt.MapFrom(x => x.Date));
         }
     }
 }

@@ -2,10 +2,9 @@
 
 namespace App.Model.ViewModels.Commands
 {
-    public class UpdatePasswordVM
+    public class UpdateUserPasswordVM
     {
         public Guid UserId { get; set; }
-        public string OldPassword { get; set; }
         public string NewPassword { get; set; }
     }
 }

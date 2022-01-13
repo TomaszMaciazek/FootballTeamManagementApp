@@ -6,7 +6,7 @@
         </ng-template>
     </p-confirmDialog>
     <div class="text-center pb-3">
-        <h1>{{'users' | translate}}</h1>
+        <h1>{{'administrators' | translate}}</h1>
     </div>
     <div fxLayout="row">
         <div fxFlex.gt-xs="80" fxFlexOffset.gt-xs="10" 
@@ -112,13 +112,6 @@
                                 {{'name' | translate}}
                                 <p-sortIcon [field]="names"></p-sortIcon>
                             </th>
-                            <th class="text-center" pSortableColumn="Email">
-                                {{'email' | translate}}
-                                <p-sortIcon [field]="email"></p-sortIcon>
-                            </th>
-                            <th class="text-center">
-                                {{'role' | translate}}
-                            </th>
                             <th class="text-center">
                                 {{'active' | translate}}
                             </th>
@@ -131,21 +124,11 @@
                         <tr>
                             <td class="text-center">{{user.surname}}</td>
                             <td class="text-center">{{user.names}}</td>
-                            <td class="text-center">{{user.email}}</td>
-                            <td class="text-center">{{user.role.name | translate}}</td>
                             <td class="text-center">
                                 <i class="pi" [ngClass]="{'true-icon pi-check-circle': user.isActive, 'false-icon pi-times-circle': !user.isActive}"></i>
                             </td>
                             <td class="text-center">
-                                <a *ngIf="user.role.name == 'player'" [routerLink]="['/members/player/'+user.playerId]">
-                                    <button pButton pRipple type="button" icon="fas fa-info" 
-                                    class="p-button-rounded p-button-info"></button>
-                                </a>
-                                <a *ngIf="user.role.name == 'coach'" [routerLink]="['/members/coach/'+user.coachId]">
-                                    <button pButton pRipple type="button" icon="fas fa-info" 
-                                    class="p-button-rounded p-button-info"></button>
-                                </a>
-                                <a *ngIf="user.role.name == 'admin'" [routerLink]="['/members/administrator/'+user.id]">
+                                <a [routerLink]="['/members/administrator/'+user.id]">
                                     <button pButton pRipple type="button" icon="fas fa-info" 
                                     class="p-button-rounded p-button-info"></button>
                                 </a>

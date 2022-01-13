@@ -3,6 +3,7 @@ import { SimpleTeam } from "../team/simple-team.model";
 
 export class Coach {
     public id : string;
+    public userId: string;
     public isActive : boolean;
     public email: string;
     public name : string;

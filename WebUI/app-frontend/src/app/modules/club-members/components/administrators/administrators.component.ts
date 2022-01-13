@@ -5,19 +5,17 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { UserQuery } from 'src/app/models/queries/user-query.model';
-import { Role } from 'src/app/models/role.model';
 import { User } from 'src/app/models/user.model';
 import { TokenStorageProvider } from 'src/app/providers/token-storage-provider.model';
 import { TranslationProvider } from 'src/app/providers/translation-provider.model';
-import { RoleService } from 'src/app/services/role.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  selector: 'app-administrators',
+  templateUrl: './administrators.component.html',
+  styleUrls: ['./administrators.component.scss']
 })
-export class UsersComponent implements OnInit {
+export class AdministratorsComponent implements OnInit {
 
   pageNumber : number = 1;
   rowNumbers : number = 20;
@@ -40,7 +38,6 @@ export class UsersComponent implements OnInit {
   ];
 
   users: User[];
-  roles: Role[];
   
   searchQuery: string = null;
   isActive: boolean = null;
@@ -52,7 +49,6 @@ export class UsersComponent implements OnInit {
   constructor(
     private router: Router,
     private spinner: NgxSpinnerService,
-    private roleService: RoleService,
     private userService: UserService,
     private translationProvider: TranslationProvider,
     private confirmationService: ConfirmationService,
@@ -64,11 +60,6 @@ export class UsersComponent implements OnInit {
   ngOnInit(): void {
     this.spinner.show();
     this.createForm();
-    this.roleService.getRoles()
-    .then(res => {
-      this.roles = res;
-      this.getUsers();
-    });
   }
 
   getUsers(){
@@ -80,7 +71,7 @@ export class UsersComponent implements OnInit {
       isActive: this.isActive,
       queryString: this.searchQuery
     });
-    this.userService.getUsers(query)
+    this.userService.getAdministrators(query)
     .then(res => {
       this.users = res.items;
       this.totalCount = res.totalCount;

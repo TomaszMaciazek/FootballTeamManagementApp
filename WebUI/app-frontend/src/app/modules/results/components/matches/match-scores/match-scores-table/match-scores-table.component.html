@@ -4,7 +4,7 @@
             <th class="text-center">{{'player' | translate}}</th>
             <th class="text-center">{{'value' | translate}}</th>
             <th class="text-center">{{'active' | translate}}</th>
-            <th class="text-center">{{'actions' | translate}}</th>
+            <th class="text-center" [security]="'matches_scores.edit;matches_scores.deactivate;matches_scores.activate;matches_scores.delete'">{{'actions' | translate}}</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-score>
@@ -17,7 +17,7 @@
                     'false-icon pi-times-circle': !score.isActive
                 }"></i>
             </td>
-            <td class="text-center">
+            <td class="text-center" [security]="'matches_scores.edit;matches_scores.deactivate;matches_scores.activate;matches_scores.delete'">
                 <button pButton pRipple type="button" icon="fas fa-edit"
                 class="p-button-rounded p-button-info" (click)="confirmEditScore(score.id)" [security]="'matches_scores.edit'"></button>
                 <button *ngIf="score.isActive" pButton pRipple type="button" icon="fas fa-ban" 

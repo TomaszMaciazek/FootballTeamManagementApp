@@ -35,6 +35,10 @@ export class CoachService {
     return this.http.get<Array<SimpleCoach>>(`${this.url}/working`, {params: toParams({date: date})}).toPromise();
   }
 
+  toggleCoachStatus(id: string){
+    return this.http.patch(`${this.url}/toggleStatus/${id}`, null).toPromise();
+  }
+
   private async handleError(error: any) {
     if (error.status === 404) {
       return Promise.reject('not_found');

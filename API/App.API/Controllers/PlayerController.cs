@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using App.DataAccess.Exceptions;
 
 namespace App.API.Controllers
 {
@@ -89,6 +90,24 @@ namespace App.API.Controllers
         {
             await _playerService.RemovePlayerFromTeam(command.PlayerId, command.TeamId);
             return NoContent();
+        }
+
+        [HttpPatch]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.UsersPolicy)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Route("ToggleStatus/{id}")]
+        public async Task<IActionResult> ToggleWorking([FromRoute] Guid id)
+        {
+            try
+            {
+                await _playerService.TogglePlaying(id);
+                return NoContent();
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using App.Mappings.Resolvers;
 using App.Model.Dtos;
+using App.Model.Dtos.ListItemDtos;
 using App.Model.Entities;
 using App.Model.ViewModels.Commands;
 using App.UserMiddleware.Helpers;
@@ -31,6 +32,11 @@ namespace App.Mappings.Profiles
             CreateMap<User, SelectUserDto>()
                 .ForMember(dest => dest.Coach, opt => opt.MapFrom(src => src.CoachDetails))
                 .ForMember(dest => dest.Player, opt => opt.MapFrom(src => src.PlayerDetails));
+
+            CreateMap<User, UserListItemDto>()
+                .ForMember(dest => dest.Names, opt => opt.MapFrom(src => $"{src.Name} {src.MiddleName}"))
+                .ForMember(dest => dest.PlayerId, opt => opt.MapFrom(src => src.PlayerDetails != null ? src.PlayerDetails.Id : Guid.Empty))
+                .ForMember(dest => dest.CoachId, opt => opt.MapFrom(src => src.CoachDetails != null ? src.CoachDetails.Id : Guid.Empty));
         }
     }
 }

@@ -46,10 +46,10 @@
             <div class="mb-3 mt-3">
                 <h2><b class="mr-3">{{'result' | translate}}</b> {{match.clubScore}} : {{match.opponentsScore}}</h2>
             </div>
-            <div class="mb-3 mt-3">
+            <div class="mb-3 mt-3" *ngIf="match.description && match.description.length > 0">
                 <h2><b class="mr-3">{{'description' | translate}}</b></h2>
             </div>
-            <div class="card p-3 mb-2" [innerHtml]="match.description"></div>
+            <div class="card p-3 mb-2" *ngIf="match.description && match.description.length > 0" [innerHtml]="match.description"></div>
             <div class="mb-3 mt-3">
                 <p-panel header="{{'players' | translate}}" [collapsed]="true" [toggleable]="true">
                     <p-table [value]="players" responsiveLayout="scroll">

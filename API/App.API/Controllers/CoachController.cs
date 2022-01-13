@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using App.DataAccess.Exceptions;
 
 namespace App.API.Controllers
 {
@@ -61,6 +62,24 @@ namespace App.API.Controllers
         public async Task<ActionResult<IEnumerable<SimpleCoachDto>>> GetPlayingPlayers([FromQuery] DateTime? date = null)
         {
             return Ok(await _coachService.GetWorkingCoaches(date));
+        }
+
+        [HttpPatch]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Permissions.UsersPolicy)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Route("ToggleStatus/{id}")]
+        public async Task<IActionResult> ToggleWorking([FromRoute] Guid id)
+        {
+            try
+            {
+                await _coachService.ToggleWorking(id);
+                return NoContent();
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
         }
     }
 }

@@ -12,8 +12,10 @@ namespace App.Infrastructure
 {
     public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
+        #region Private Members
         private readonly IDateTimeService _dateTimeService;
         private readonly ICurrentUserService _currentUserService;
+        #endregion
 
         #region Match Entities
         public DbSet<PlayerCard> PlayersCards { get; set; }
