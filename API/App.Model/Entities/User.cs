@@ -42,6 +42,5 @@ namespace App.Model.Entities
         public Role Role { get; set; }
         public Player PlayerDetails { get; set; }
         public Coach CoachDetails { get; set; }
-        public UserTokenRefresh TokenRefresh { get; set; }
     }
 }

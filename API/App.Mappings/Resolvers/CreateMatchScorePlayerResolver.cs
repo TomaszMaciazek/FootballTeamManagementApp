@@ -13,7 +13,6 @@ namespace App.Mappings.Resolvers
         {
             _dbContext = dbContext;
         }
-
         public Player Resolve(CreateMatchScoreVM source, MatchPlayerScore destination, Player destMember, ResolutionContext context)
         {
             return _dbContext.Players.Find(source.PlayerId);

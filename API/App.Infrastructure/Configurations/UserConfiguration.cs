@@ -25,11 +25,6 @@ namespace App.Infrastructure.Configurations
             builder.HasMany(u => u.UserTestsTemplates)
                 .WithOne(t => t.Author)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            builder.HasOne(u => u.TokenRefresh)
-                .WithOne(x => x.User)
-                .HasForeignKey<UserTokenRefresh>(x => x.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
             #endregion
 
             builder.HasIndex(u => u.Email).IsUnique();

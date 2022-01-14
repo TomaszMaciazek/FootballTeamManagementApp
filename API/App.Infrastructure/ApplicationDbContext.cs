@@ -38,7 +38,6 @@ namespace App.Infrastructure
         public DbSet<Player> Players { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<RoleClaim> RoleClaims { get; set; }
-        public DbSet<UserTokenRefresh> UserTokenRefreshes { get; set; }
         public DbSet<PlayerHistory> PlayerHistories { get; set; }
         #endregion
 

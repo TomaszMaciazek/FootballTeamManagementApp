@@ -31,7 +31,6 @@ namespace App.DataAccess.Interfaces
         DbSet<Player> Players { get; set; }
         DbSet<Role> Roles { get; set; }
         DbSet<RoleClaim> RoleClaims { get; set; }
-        DbSet<UserTokenRefresh> UserTokenRefreshes { get; set; }
         DbSet<PlayerHistory> PlayerHistories { get; set; }
         #endregion
 
