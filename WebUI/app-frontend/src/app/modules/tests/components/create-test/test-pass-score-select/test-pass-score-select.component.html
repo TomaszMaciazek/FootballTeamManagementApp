@@ -1,0 +1,20 @@
+<div fxLayout="row">
+    <p-card fxFlex="100">
+        <h2>{{'maximal_available_score' | translate}}: {{maxScore}}</h2>
+        <div class="form-group p-2">
+            <h5>{{'choose_pass_score' | translate}}</h5>
+            <p-inputNumber [(ngModel)]="value" mode="decimal"
+                [showButtons]="true" inputId="minmax-buttons"
+                [min]="0" [max]="maxScore" [step]="0.25"
+                [style]="{'width':'100%'}" styleClass="mt-2">
+            </p-inputNumber>
+        </div>
+        <ng-template pTemplate="footer">
+            <button [ngClass.lt-md]="'btn-block'"
+            [ngClass.gt-sm]="'btn-lg ml-3'"
+            class="btn btn-success" (click)="submit()">
+                {{'save' | translate}}
+            </button>
+        </ng-template>
+    </p-card>
+</div>

@@ -1,0 +1,163 @@
+<div class="content-wrapper" *ngIf="players">
+    <div class="text-center pb-3">
+        <h1>{{'players_cards' | translate}}</h1>
+    </div>
+    <div fxLayout="row">
+        <div class="mt-3 text-center" 
+            fxFlex.gt-xs="80" fxFlexOffset.gt-xs="10" 
+            fxFlex.xs="94" fxFlexOffset.xs="3"
+            fxLayout="column">
+            <div fxLayout="row" class="mb-3 mt-3">
+                <div fxFlex="100" fxHide fxShow.lt-md>
+                    <p-toolbar>
+                        <p-selectButton [options]="chartViewOptions" [(ngModel)]="monthlyView" class="four-options-selectbutton"
+                            optionLabel="label" optionValue="value" class="mb-3" [style]="{'width':'100%'}" 
+                            (onChange)="checkView($event)">
+                            <ng-template let-item>
+                                {{item.label | translate}}
+                            </ng-template>
+                        </p-selectButton>
+                        <button class="btn btn-warning btn-block btn-lg btn-action" *ngIf="monthlyView" (click)="showFilters = !showFilters">
+                            <i class="fas mr-2" [ngClass]="{'fa-eye': !showFilters, 'fa-eye-slash': showFilters}"></i> 
+                            <span *ngIf="!showFilters">{{'show_filters' | translate}}</span>
+                            <span *ngIf="showFilters">{{'hide_filters' | translate}}</span>
+                        </button>
+                    </p-toolbar>
+                </div>
+                <div fxFlex.gt-sm="100" fxHide fxShow.gt-sm>
+                    <p-toolbar>
+                        <div class="p-toolbar-group-left">
+                            <p-selectButton [options]="chartViewOptions" [(ngModel)]="monthlyView"
+                            optionLabel="label" optionValue="value" (onChange)="checkView($event)">
+                                <ng-template let-item>
+                                    {{item.label | translate}}
+                                </ng-template>
+                            </p-selectButton>
+                        </div>
+                        <div class="p-toolbar-group-right">
+                            <button role="button" *ngIf="monthlyView" [ngClass.lt-md]="'btn-block'"
+                            class="btn btn-warning btn-lg btn-action"
+                            (click)="showFilters = !showFilters">
+                                <i class="fas mr-2" [ngClass]="{'fa-eye': !showFilters, 'fa-eye-slash': showFilters}"></i> 
+                                <span *ngIf="!showFilters">{{'show_filters' | translate}}</span>
+                                <span *ngIf="showFilters">{{'hide_filters' | translate}}</span>
+                            </button>
+                        </div>
+                    </p-toolbar>
+                </div>
+            </div>
+            <form fxFlex="100" [formGroup]="form" fxLayout="row" class="mb-3">
+                <p-card fxFlex="100" *ngIf="showFilters">
+                    <div fxLayout="column" fxFlex="100">
+                        <div fxLayout.gt-sm="row" fxLayout.lt-md="column">
+                            <div class="form-group p-2" fxFlex.gt-sm="50">
+                                <h5>{{'from' | translate}}</h5>
+                                <p-calendar [showIcon]="true" dateFormat="dd-mm-yy"
+                                [yearNavigator]="true" yearRange="1900:2100" appendTo="body"
+                                formControlName="Start" baseZIndex="5000" [maxDate]="maxDate"></p-calendar>
+                            </div>
+                            <div class="form-group p-2" fxFlex.gt-sm="50">
+                                <h5>{{'to' | translate}}</h5>
+                                <p-calendar [showIcon]="true" dateFormat="dd-mm-yy"
+                                [yearNavigator]="true" yearRange="1900:2100" appendTo="body"
+                                formControlName="End" baseZIndex="5000" [maxDate]="maxDate"></p-calendar>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ng-template pTemplate="footer">
+                        <div fxLayout="row" fxFlex="100">
+                            <div fxFlex="100" fxHide fxShow.lt-lg>
+                                <button class="btn btn-primary btn-block btn-action" (click)="filter()">
+                                    <i class="fas fa-search"></i>  
+                                    {{'filter' | translate}}
+                                </button>
+                                <button class="btn btn-danger btn-block btn-action" (click)="resetFilter()">
+                                    <i class="fas fa-sync-alt"></i>
+                                    {{'clear' | translate}}
+                                </button>
+                            </div>
+                            <div fxFlex="100" fxHide fxShow.gt-md fxLayoutAlign="end start">
+                                <button role="button" [ngClass.lt-md]="'btn-block'"
+                                class="btn btn-danger btn-action mr-3"
+                                (click)="resetFilter()">
+                                    <i class="fas fa-sync-alt"></i>
+                                    {{'clear' | translate}}
+                                </button>
+                                <button role="button" [ngClass.lt-md]="'btn-block'"
+                                class="btn btn-primary btn-action mr-3"
+                                (click)="filter()">
+                                    <i class="fas fa-search"></i>  
+                                    {{'filter' | translate}}
+                                </button>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-card>
+            </form>
+            <div class="row">
+                <div class="form-group p-2 col-xs-12 col-sm-12 col-md-6 text-left ml-2">
+                    <h5>{{'player' | translate}}</h5>
+                    <p-dropdown [options]="players" [showClear]="true"
+                    [(ngModel)]="selectedPlayer" placeholder="{{'select_player' | translate}}"
+                    filter="true" filterBy="name" (onChange)="onPlayerSelect($event)"
+                        autoWidth="false" [style]="{'width':'100%'}" styleClass="mt-2">
+                        <ng-template let-item pTemplate="selectedItem">
+                            <div *ngIf="item">
+                                <div class="d-inline">
+                                    {{item.name}} ({{item.yearOfBirth}} - 
+                                <span *ngIf="item.team != null && item.team != undefined">
+                                    {{item.team.name | translate}})
+                                </span>
+                                <span *ngIf="!item.team">
+                                    {{'player_without_team' | translate}})
+                                </span>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template let-player pTemplate="item">
+                            <div class="d-inline">
+                                {{player.name}} ({{player.yearOfBirth}} - 
+                                <span *ngIf="player.team != null && player.team != undefined">
+                                    {{player.team.name | translate}})
+                                </span>
+                                <span *ngIf="!player.team">
+                                    {{'player_without_team' | translate}})
+                                </span>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                <div class="col-xs-0 col-sm-0 col-md-6"></div>
+            </div>
+            <div *ngIf="playerCards" class="mt-3 pb-3 ml-3 text-left">
+                <h5>{{'player_avg_cards' | translate}}: {{playerCards.cardsAvg | number}}</h5>
+            </div>
+            <p-chart *ngIf="!monthlyView && selectedPlayer" height="50vh" type="bar" [data]="{
+                labels: ['cards_yellow' | translate, 'cards_red' | translate],
+                datasets: [
+                            {
+                                label: 'cards' | translate,
+                                backgroundColor: '#42A5F5',
+                                data: cardCounts
+                            },
+                        ]
+            }" [options]="basicOptions"></p-chart>
+            <p-chart *ngIf="monthlyView && selectedPlayer" height="50vh" type="bar" [data]="{
+                labels: months,
+                datasets: [
+                            {
+                                label: 'cards_yellow' | translate,
+                                backgroundColor: '#42A5F5',
+                                data: playerMonthlyYellowCardsData
+                            },
+                            {
+                                label: 'cards_red' | translate,
+                                backgroundColor: '#fc0331',
+                                data: playerMonthlyRedCardsData
+                            },
+                        ]
+            }" [options]="basicOptions"></p-chart>
+        </div>
+    </div>
+</div>

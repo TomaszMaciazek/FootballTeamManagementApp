@@ -1,0 +1,28 @@
+<div class="row">
+    <h4>{{question.description}}</h4>
+</div>
+<div class="row">
+    <div *ngIf="value">
+        <div [ngSwitch]="question.type">
+            <div *ngSwitchCase="questionType.Text">{{value}}</div>
+            <div *ngSwitchCase="questionType.Rating">
+                <ng-container *ngFor="let i of [].constructor(value)">
+                    <i class="fas fa-star" ngFo></i>
+                </ng-container>
+            </div>
+            <div *ngSwitchCase="questionType.SingleChoice">
+                <div *ngFor="let option of question.options">
+                    <span [ngClass]="{'selected-option': option.value == value}">{{option.label}}</span>
+                </div>
+            </div>
+            <div *ngSwitchCase="questionType.MutipleChoice">
+                <div *ngFor="let option of question.options">
+                    <span [ngClass]="{'selected-option': checkEquality(option.value)}">{{option.label}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!value">
+        {{'no_answer' | translate}}
+    </div>
+</div>

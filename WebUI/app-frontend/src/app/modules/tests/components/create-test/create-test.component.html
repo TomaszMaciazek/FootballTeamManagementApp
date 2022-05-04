@@ -1,0 +1,162 @@
+<div class="content-wrapper" *ngIf="users">
+    <div class="text-center pb-3">
+        <h1>{{'test_new' | translate}}</h1>
+    </div>
+    <p-dialog header="{{'create_test' | translate}}"
+    [(visible)]="displayMinimalScoreDialog"
+    [style]="{width: '50vw'}">
+        <test-pass-score-select [value]="passedMinimalValue" [maxScore]="maxScore" (scoreSet)="confirmSubmit($event)"></test-pass-score-select>
+    </p-dialog>
+    <p-confirmDialog #cd [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}">
+        <ng-template pTemplate="footer">
+            <button type="button" pButton icon="pi pi-times" label="{{'no' | translate}}" (click)="cd.reject()"></button>
+            <button type="button" pButton icon="pi pi-check" label="{{'yes' | translate}}" (click)="cd.accept()"></button>
+        </ng-template>
+    </p-confirmDialog>
+    <div fxLayout="row" fxLayoutAlign="center start" >
+        <form [formGroup]="form" (ngSubmit)="showDialog()" autocomplete="off" fxFlex="80">
+            <div fxLayout="column">
+                <div fxLayout.gt-sm="row" fxLayout.lt-md="column">
+                    <div class="form-group p-2" fxFlex.gt-sm="60">
+                        <mat-form-field class="full-width">
+                            <input formControlName="Title" matInput placeholder="{{'title' | translate}}" maxlength="60" [required]="true">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex.gt-sm="40"></div>
+                </div>
+                <div fxLayout.gt-sm="row" fxLayout.lt-md="column">
+                    <div class="form-group p-2" fxFlex.gt-sm="50">
+                        <h5>{{'respondents' | translate}}</h5>
+                        <p-multiSelect  [options]="users" filterBy="name,surname,middleName,player.team.name,player.country,coach.country"
+                            placeholder="{{'select_respondents' | translate}}" [virtualScroll]="true" itemSize="30"
+                            autoWidth="false" [style]="{'width':'100%'}" styleClass="mt-2" formControlName="Respondents"
+                            appendTo="body">
+                            <ng-template let-value pTemplate="selectedItems">
+                                <mat-chip-list>
+                                    <mat-chip *ngIf="value == null || value.length == 0">{{'selected' | translate}} 0 {{'respondents_chip' | translate}}</mat-chip>
+                                    <mat-chip *ngIf="value != null && value.length > 0">{{'selected' | translate}} {{value.length}} {{'respondents_chip' | translate}}</mat-chip>
+                                </mat-chip-list>
+                            </ng-template>
+                            <ng-template let-user pTemplate="item">
+                                <div [ngSwitch]="user.role.name">
+                                    <div *ngSwitchCase="'player'">
+                                        <div *ngIf="user.player.team;else playerHasNoTeam">
+                                            {{user.name}} {{user.middleName}} {{user.surname}} - {{user.role.name | translate}} [{{user.player.country}}] {{user.player.yearOfBirth}} {{'team' | translate}}: {{user.player.team.name}}
+                                        </div>
+                                        <ng-template #playerHasNoTeam>
+                                            {{user.name}} {{user.middleName}} {{user.surname}} - {{user.role.name | translate}} [{{user.player.country}}] {{user.player.yearOfBirth}} {{'no_team_assigned_player' | translate}}
+                                        </ng-template>
+                                    </div>
+                                    <div *ngSwitchDefault>{{user.name}} {{user.middleName}} {{user.surname}} - {{user.role.name | translate}}</div>
+                                </div>
+                            </ng-template>
+                        </p-multiSelect >
+                    </div>
+                    <div class="form-group p-2" fxFlex.gt-sm="50"></div>
+                </div>
+                <div class="form-group p-2" fxFlex="100">
+                    <mat-form-field class="full-width">
+                        <textarea matInput formControlName="Description" placeholder="{{'description' | translate}}" maxlength="300" [required]="true"></textarea>
+                      </mat-form-field>
+                </div>
+                <div class="form-group p-2" fxFlex="100">
+                    <div formArrayName="TestQuestions" class="poll-options">
+                        <h3 class="list-title">{{'questions_add' | translate}} </h3>
+                        <ol class="list-style mt-3">
+                            <li *ngFor="let questionCtrl of form.get('TestQuestions')['controls']; let i = index">
+                                <div [formGroupName]="i" fxLayout="column">
+                                    <div class="form-group p-2" fxFlex="100">
+                                        <mat-form-field class="full-width">
+                                            <input formControlName="questionTitle" maxlength="200" matInput placeholder="{{'question_title' | translate}}"
+                                                [required]="true">
+                                        </mat-form-field>
+                                    </div>
+                                    <div fxLayout.gt-sm="row" fxLayout.lt-md="column">
+                                        <div class="form-group p-2" fxFlex.gt-sm="50">
+                                            <mat-form-field class="full-width">
+                                                <mat-select formControlName="questionType" placeholder="{{'question_type' | translate}}" [(value)]="selectedOption[i]"
+                                                    (selectionChange)="onSeletQuestionType(i,selectedOption[i])" [required]="true">
+                                                    <mat-option *ngFor="let type of questionTypes" [value]="type.value">
+                                                    {{type.label | translate}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div fxFlex.gt-sm="50"></div>
+                                    </div>
+                                <div>
+                                <div formGroupName="questionGroup" [ngSwitch]="selectedOption[i]">
+                                    <div *ngSwitchCase="questionType.SingleChoice">
+                                        <div *ngIf="questionCtrl.controls.questionGroup.controls.options">
+                                            <ul class="question-type" formArrayName="options">
+                                                <li *ngFor="let optionCtrl of questionCtrl.controls.questionGroup.controls.options.controls let j = index">
+                                                    <div [formGroupName]="j" class="full-width">
+                                                        <mat-form-field >
+                                                            <input formControlName="optionText" matInput placeholder="{{'option_text' | translate}}" maxlength="150"
+                                                            [required]="true">
+                                                        </mat-form-field>
+                                                        <p-inputNumber formControlName="optionPoints" mode="decimal"
+                                                            [showButtons]="true" inputId="minmax-buttons" pTooltip="{{'option_points' | translate }}" tooltipPosition="top"
+                                                            [min]="-1" [max]="1" [step]="0.25" placeholder="{{'option_points' | translate}}" 
+                                                            styleClass="ml-3" required="true">
+                                                        </p-inputNumber>
+                                                        <button class="ml-3" mat-mini-fab *ngIf="j>=2" (click)="removeOption(i,j)" color="warn">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </div>
+                                                </li>                      
+                                            </ul>
+                                            <button mat-raised-button type="button" (click)="addOption(i)" class="mat-sm-button add-option-btn" color="primary">{{'add_option' | translate}}</button>
+                                        </div>
+                                    </div>
+                                    <div *ngSwitchCase="questionType.MutipleChoice">
+                                        <div *ngIf="questionCtrl.controls.questionGroup.controls.options">
+                                            <ul class="question-type" formArrayName="options">
+                                                <li *ngFor="let optionCtrl of questionCtrl.controls.questionGroup.controls.options.controls let j = index">
+                                                    <div [formGroupName]="j" >
+                                    
+                                                    <mat-form-field >
+                                                        <input formControlName="optionText" matInput placeholder="{{'option_text' | translate}}" maxlength="100"
+                                                        [required]="true">
+                                                    </mat-form-field>
+                                                    <p-inputNumber formControlName="optionPoints" mode="decimal"
+                                                            [showButtons]="true" inputId="minmax-buttons" pTooltip="{{'option_points' | translate }}" tooltipPosition="top"
+                                                            [min]="-1" [max]="1" [step]="0.25" placeholder="{{'option_points' | translate}}" 
+                                                            styleClass="ml-3" required="true">
+                                                    </p-inputNumber>
+                                                    <button class="ml-3" mat-mini-fab *ngIf="j>=2" (click)="removeOption(i,j)" color="warn">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                
+                                                    </div>
+                                                </li>                      
+                                            </ul>
+                                            <button mat-raised-button type="button" (click)="addOption(i)" class="mat-sm-button add-option-btn" color="primary">{{'add_option' | translate}}</button>
+                                        </div>
+                                    </div>
+                            
+                                </div>
+                    
+                                </div>
+                                <button *ngIf="i>0" mat-mini-fab color="warn" type="button" (click)="onRemoveQuestion(i)" class="poll-remove-btn">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                                </div>
+                            </li>
+                        </ol>
+                        <div fxLayout="row" fxLayoutAlign="end">
+                            <button type="button" mat-raised-button (click)="onAddQuestion()">
+                                {{'add_question' | translate}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group p-2" fxFlex="100">
+                    <button ngClass.lt-md="full-width" color="primary" type="submit" mat-raised-button [disabled]="!form.valid">
+                        {{'create_test' | translate}}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

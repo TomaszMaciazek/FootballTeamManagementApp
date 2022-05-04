@@ -1,0 +1,19 @@
+<div fxLayout="row">
+    <p-card fxFlex="100">
+        <div class="form-group p-2">
+            <h5>{{'value' | translate}}</h5>
+            <p-inputNumber [(ngModel)]="value" mode="decimal"
+                [showButtons]="true" inputId="minmax-buttons"
+                [min]="1" [max]="10" [step]="0.5"
+                [style]="{'width':'100%'}" styleClass="mt-2">
+            </p-inputNumber>
+        </div>
+        <ng-template pTemplate="footer">
+            <button [ngClass.lt-md]="'btn-block'"
+            [ngClass.gt-sm]="'btn-lg ml-3'"
+            class="btn btn-success" (click)="submit()">
+                {{'save' | translate}}
+            </button>
+        </ng-template>
+    </p-card>
+</div>

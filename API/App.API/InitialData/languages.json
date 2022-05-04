@@ -1,0 +1,720 @@
+[
+  {
+    "Name": "Polski",
+    "Code": "PL",
+    "IsActive": true,
+    "Translations": [
+      {
+        "Key": "account_is_locked",
+        "Value": "Konto zostało tymczasowo zablokowane"
+      },
+      {
+        "Key": "account_not_found",
+        "Value": "Konto o danym loginie nie zostało znalezione"
+      },
+      {
+        "Key": "account_remain_password_attempts",
+        "Value": "Ilość pozostałych prób przed blokadą: "
+      },
+      {
+        "Key": "account_last_logon",
+        "Value": "Ostatnie logowanie"
+      },
+      {
+        "Key": "activate",
+        "Value": "Aktywuj"
+      },
+      {
+        "Key": "admin",
+        "Value": "Administrator"
+      },
+      {
+        "Key": "administrators",
+        "Value": "Administratorzy"
+      },
+      {
+        "Key": "admin_add",
+        "Value": "Dodawanie administratora"
+      },
+      {
+        "Key": "admin_new",
+        "Value": "Nowy administrator"
+      },
+      {
+        "Key": "answer",
+        "Value": "Odpowiedź"
+      },
+      {
+        "Key": "answers",
+        "Value": "Odpowiedzi"
+      },
+      {
+        "Key": "author",
+        "Value": "Autor"
+      },
+      {
+        "Key": "birthday",
+        "Value": "Data urodzenia"
+      },
+      {
+        "Key": "browse",
+        "Value": "Przeglądaj"
+      },
+      {
+        "Key": "card",
+        "Value": "Kartka"
+      },
+      {
+        "Key": "cards",
+        "Value": "Kartki"
+      },
+      {
+        "Key": "cards_addition",
+        "Value": "Dodawanie kartek"
+      },
+      {
+        "Key": "cards_red",
+        "Value": "Czerwone kartki"
+      },
+      {
+        "Key": "cards_yellow",
+        "Value": "Żółte kartki"
+      },
+      {
+        "Key": "coach",
+        "Value": "Trener"
+      },
+      {
+        "Key": "coaches",
+        "Value": "Trenerzy"
+      },
+      {
+        "Key": "coach_add",
+        "Value": "Dodaj nowego trenera"
+      },
+      {
+        "Key": "coach_new",
+        "Value": "Nowy trener"
+      },
+      {
+        "Key": "country",
+        "Value": "Kraj"
+      },
+      {
+        "Key": "deactivate",
+        "Value": "Dezaktuwuj"
+      },
+      {
+        "Key": "delete",
+        "Value": "Usuń"
+      },
+      {
+        "Key": "details",
+        "Value": "Szczegóły"
+      },
+      {
+        "Key": "edit",
+        "Value": "Edytuj"
+      },
+      {
+        "Key": "email",
+        "Value": "Email"
+      },
+      {
+        "Key": "finished_playing",
+        "Value": "Zakończył grę"
+      },
+      {
+        "Key": "finished_working",
+        "Value": "Zakończył pracę"
+      },
+      {
+        "Key": "gender",
+        "Value": "Płeć"
+      },
+      {
+        "Key": "image_change",
+        "Value": "Zmień obraz"
+      },
+      {
+        "Key": "login",
+        "Value": "Login"
+      },
+      {
+        "Key": "match",
+        "Value": "Mecz"
+      },
+      {
+        "Key": "matches",
+        "Value": "Mecze"
+      },
+      {
+        "Key": "match_add",
+        "Value": "Dodaj nowy mecz"
+      },
+      {
+        "Key": "match_details",
+        "Value": "Szczegóły meczu"
+      },
+      {
+        "Key": "match_new",
+        "Value": "Nowy mecz"
+      },
+      {
+        "Key": "message",
+        "Value": "Wiadomość"
+      },
+      {
+        "Key": "messages",
+        "Value": "Wiadomości"
+      },
+      {
+        "Key": "message_add",
+        "Value": "Dodaj wiadomość"
+      },
+      {
+        "Key": "message_new",
+        "Value": "Nowa wiadomość"
+      },
+      {
+        "Key": "middlename",
+        "Value": "Drugie imię"
+      },
+      {
+        "Key": "name",
+        "Value": "Imię"
+      },
+      {
+        "Key": "opponents_team",
+        "Value": "Drużyna przeciwników"
+      },
+      {
+        "Key": "owners",
+        "Value": "Właściciele"
+      },
+      {
+        "Key": "password",
+        "Value": "Hasło"
+      },
+      {
+        "Key": "player",
+        "Value": "Zawodnik"
+      },
+      {
+        "Key": "players",
+        "Value": "Zawodnicy"
+      },
+      {
+        "Key": "player_add",
+        "Value": "Dodaj nowego zawodnika"
+      },
+      {
+        "Key": "players_addition",
+        "Value": "Dodawanie zawodników"
+      },
+      {
+        "Key": "player_new",
+        "Value": "Nowy zawodnik"
+      },
+      {
+        "Key": "player_details",
+        "Value": "Szczegóły zawodnika"
+      },
+      {
+        "Key": "points",
+        "Value": "Zdobyte punkty"
+      },
+      {
+        "Key": "points_addition",
+        "Value": "Dodawanie zdobytych punktów"
+      },
+      {
+        "Key": "preferred_position",
+        "Value": "Preferowana pozycja"
+      },
+      {
+        "Key": "question",
+        "Value": "Pytanie"
+      },
+      {
+        "Key": "questions",
+        "Value": "Pytania"
+      },
+      {
+        "Key": "report",
+        "Value": "Raport"
+      },
+      {
+        "Key": "reports",
+        "Value": "Raporty"
+      },
+      {
+        "Key": "result",
+        "Value": "Wynik"
+      },
+      {
+        "Key": "results",
+        "Value": "Wyniki"
+      },
+      {
+        "Key": "started_playing",
+        "Value": "Gra od"
+      },
+      {
+        "Key": "started_working",
+        "Value": "Pracuje od"
+      },
+      {
+        "Key": "select_language",
+        "Value": "Wybierz język"
+      },
+      {
+        "Key": "surname",
+        "Value": "Nazwisko"
+      },
+      {
+        "Key": "survey",
+        "Value": "Ankieta"
+      },
+      {
+        "Key": "surveys",
+        "Value": "Ankiety"
+      },
+      {
+        "Key": "survey_add",
+        "Value": "Dodawanie ankiety"
+      },
+      {
+        "Key": "survey_new",
+        "Value": "Nowa ankieta"
+      },
+      {
+        "Key": "team",
+        "Value": "Zespół"
+      },
+      {
+        "Key": "teams",
+        "Value": "Zespoły"
+      },
+      {
+        "Key": "team_main_coach",
+        "Value": "Główny trener zespołu"
+      },
+      {
+        "Key": "team_players",
+        "Value": "Zawodnicy z zespołu"
+      },
+      {
+        "Key": "test",
+        "Value": "Test"
+      },
+      {
+        "Key": "tests",
+        "Value": "Testy"
+      },
+      {
+        "Key": "test_add",
+        "Value": "Dodawanie testu"
+      },
+      {
+        "Key": "test_new",
+        "Value": "Nowy test"
+      },
+      {
+        "Key": "time_to_unlock",
+        "Value": "Pozostały czas blokady wynosi: "
+      },
+      {
+        "Key": "training",
+        "Value": "Trening"
+      },
+      {
+        "Key": "trainings",
+        "Value": "Treningi"
+      },
+      {
+        "Key": "training_add",
+        "Value": "Dodaj nowy trening"
+      },
+      {
+        "Key": "training_new",
+        "Value": "Nowy trening"
+      },
+      {
+        "Key": "training_details",
+        "Value": "Szczegóły treningu"
+      },
+      {
+        "Key": "users",
+        "Value": "Użytkownicy"
+      },
+      {
+        "Key": "user_details",
+        "Value": "Szczegóły konta użytkownika"
+      },
+      {
+        "Key": "wrong_password",
+        "Value": "Hasło nieprawidłowe"
+      }
+    ]
+  },
+  {
+    "Name": "English",
+    "Code": "EN",
+    "IsActive": true,
+    "Translations": [
+      {
+        "Key": "account_is_locked",
+        "Value": "This account is currently locked"
+      },
+      {
+        "Key": "account_not_found",
+        "Value": "Account with given login was not found"
+      },
+      {
+        "Key": "account_remain_password_attempts",
+        "Value": "Number of remain attempts: "
+      },
+      {
+        "Key": "account_last_logon",
+        "Value": "Last logon"
+      },
+      {
+        "Key": "activate",
+        "Value": "Activate"
+      },
+      {
+        "Key": "admin",
+        "Value": "Administrator"
+      },
+      {
+        "Key": "administrators",
+        "Value": "Administrators"
+      },
+      {
+        "Key": "admin_add",
+        "Value": "Create administrator"
+      },
+      {
+        "Key": "admin_new",
+        "Value": "New administrator"
+      },
+      {
+        "Key": "answer",
+        "Value": "Answer"
+      },
+      {
+        "Key": "answers",
+        "Value": "Answers"
+      },
+      {
+        "Key": "author",
+        "Value": "Author"
+      },
+      {
+        "Key": "birthday",
+        "Value": "Birthday"
+      },
+      {
+        "Key": "browse",
+        "Value": "Browse"
+      },
+      {
+        "Key": "card",
+        "Value": "Card"
+      },
+      {
+        "Key": "cards",
+        "Value": "Cards"
+      },
+      {
+        "Key": "cards_addition",
+        "Value": "Cards addition"
+      },
+      {
+        "Key": "cards_red",
+        "Value": "Red cards"
+      },
+      {
+        "Key": "cards_yellow",
+        "Value": "Yellow cards"
+      },
+      {
+        "Key": "coach",
+        "Value": "Coach"
+      },
+      {
+        "Key": "coaches",
+        "Value": "Coaches"
+      },
+      {
+        "Key": "coach_add",
+        "Value": "Add new coach"
+      },
+      {
+        "Key": "coach_new",
+        "Value": "New coach"
+      },
+      {
+        "Key": "country",
+        "Value": "Country"
+      },
+      {
+        "Key": "deactivate",
+        "Value": "Deactivate"
+      },
+      {
+        "Key": "delete",
+        "Value": "Delete"
+      },
+      {
+        "Key": "details",
+        "Value": "Details"
+      },
+      {
+        "Key": "edit",
+        "Value": "Edit"
+      },
+      {
+        "Key": "email",
+        "Value": "Email"
+      },
+      {
+        "Key": "finished_playing",
+        "Value": "Finished playing"
+      },
+      {
+        "Key": "finished_working",
+        "Value": "Finished working"
+      },
+      {
+        "Key": "gender",
+        "Value": "Gender"
+      },
+      {
+        "Key": "image_change",
+        "Value": "Change image"
+      },
+      {
+        "Key": "login",
+        "Value": "Login"
+      },
+      {
+        "Key": "match",
+        "Value": "Match"
+      },
+      {
+        "Key": "matches",
+        "Value": "Matches"
+      },
+      {
+        "Key": "match_add",
+        "Value": "Add new match"
+      },
+      {
+        "Key": "match_details",
+        "Value": "Match details"
+      },
+      {
+        "Key": "match_new",
+        "Value": "New match"
+      },
+      {
+        "Key": "message",
+        "Value": "Message"
+      },
+      {
+        "Key": "messages",
+        "Value": "Messages"
+      },
+      {
+        "Key": "message_add",
+        "Value": "Add new message"
+      },
+      {
+        "Key": "message_new",
+        "Value": "New message"
+      },
+      {
+        "Key": "middlename",
+        "Value": "Middlename"
+      },
+      {
+        "Key": "name",
+        "Value": "Name"
+      },
+      {
+        "Key": "opponents_team",
+        "Value": "Opponents team"
+      },
+      {
+        "Key": "owners",
+        "Value": "Owners"
+      },
+      {
+        "Key": "password",
+        "Value": "Password"
+      },
+      {
+        "Key": "player",
+        "Value": "Player"
+      },
+      {
+        "Key": "players",
+        "Value": "Players"
+      },
+      {
+        "Key": "player_add",
+        "Value": "Add new player"
+      },
+      {
+        "Key": "players_addition",
+        "Value": "Add players"
+      },
+      {
+        "Key": "player_new",
+        "Value": "New player"
+      },
+      {
+        "Key": "player_details",
+        "Value": "Player Details"
+      },
+      {
+        "Key": "points",
+        "Value": "Gained points"
+      },
+      {
+        "Key": "points_addition",
+        "Value": "Match points addition"
+      },
+      {
+        "Key": "preferred_position",
+        "Value": "Preferred position"
+      },
+      {
+        "Key": "question",
+        "Value": "Question"
+      },
+      {
+        "Key": "questions",
+        "Value": "Questions"
+      },
+      {
+        "Key": "report",
+        "Value": "Report"
+      },
+      {
+        "Key": "reports",
+        "Value": "Reports"
+      },
+      {
+        "Key": "result",
+        "Value": "Result"
+      },
+      {
+        "Key": "results",
+        "Value": "Results"
+      },
+      {
+        "Key": "started_playing",
+        "Value": "Plays since"
+      },
+      {
+        "Key": "started_working",
+        "Value": "Works since"
+      },
+      {
+        "Key": "select_language",
+        "Value": "Select language"
+      },
+      {
+        "Key": "surname",
+        "Value": "Surname"
+      },
+      {
+        "Key": "survey",
+        "Value": "Survey"
+      },
+      {
+        "Key": "surveys",
+        "Value": "Surveys"
+      },
+      {
+        "Key": "survey_add",
+        "Value": "Add new survey"
+      },
+      {
+        "Key": "survey_new",
+        "Value": "New survey"
+      },
+      {
+        "Key": "time_to_unlock",
+        "Value": "Remain lock time: "
+      },
+      {
+        "Key": "team",
+        "Value": "Team"
+      },
+      {
+        "Key": "teams",
+        "Value": "Teams"
+      },
+      {
+        "Key": "team_main_coach",
+        "Value": "Team\\'s main coach"
+      },
+      {
+        "Key": "team_players",
+        "Value": "Team players"
+      },
+      {
+        "Key": "test",
+        "Value": "Test"
+      },
+      {
+        "Key": "tests",
+        "Value": "Tests"
+      },
+      {
+        "Key": "test_add",
+        "Value": "Add new test"
+      },
+      {
+        "Key": "test_new",
+        "Value": "New test"
+      },
+      {
+        "Key": "training",
+        "Value": "Training"
+      },
+      {
+        "Key": "trainings",
+        "Value": "Trainings"
+      },
+      {
+        "Key": "training_add",
+        "Value": "Add new training"
+      },
+      {
+        "Key": "training_new",
+        "Value": "New training"
+      },
+      {
+        "Key": "training_details",
+        "Value": "Training Details"
+      },
+      {
+        "Key": "users",
+        "Value": "Users"
+      },
+      {
+        "Key": "user_details",
+        "Value": "User Details"
+      },
+      {
+        "Key": "wrong_password",
+        "Value": "Incorrect password"
+      }
+    ]
+  }
+]

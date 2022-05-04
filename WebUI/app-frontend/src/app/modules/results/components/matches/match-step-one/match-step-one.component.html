@@ -1,0 +1,43 @@
+<div fxLayout="column" class="p-3">
+    <div fxLayout.gt-sm="row" fxLayout.lt-md="column">
+        <div class="form-group p-2" fxFlex.gt-sm="25">
+            <h5 class="mb-3">{{'date' | translate}}</h5>
+                    <p-calendar [showIcon]="true" dateFormat="dd-mm-yy" placeholder="{{'date' | translate}}"
+                    [yearNavigator]="true" yearRange="1990:2030" [(ngModel)]="model.date">
+                    </p-calendar>
+        </div>
+        <div fxFlex.gt-sm="10"></div>
+        <div class="form-group p-2" fxFlex.gt-sm="35">
+            <h5 class="mb-3">{{'match_type' | translate}}</h5>
+            <p-selectButton [options]="matchTypes" [(ngModel)]="model.matchType" optionLabel="label" optionValue="value">
+                <ng-template let-item>
+                    {{item.label | translate}}
+                </ng-template>
+            </p-selectButton>
+        </div>
+        <div class="form-group p-2" fxFlex.gt-sm="30">
+            <h5 class="mb-3">{{'players_gender' | translate}}</h5>
+            <p-selectButton [options]="playersGendersOptions"
+            [(ngModel)]="model.playersGender"
+            optionLabel="label" optionValue="value">
+                <ng-template let-item>
+                    {{item.label | translate}}
+                </ng-template>
+            </p-selectButton>
+        </div>
+    </div>
+    <div fxLayout.gt-sm="row" fxLayout.lt-md="column" ngClass.gt-sm="mt-3">
+        <div class="form-group p-2" fxFlex.gt-sm="40">
+            <h5 class="mb-3">{{'opponents_team' | translate}}</h5>
+            <input type="text" class="form-control" [(ngModel)]="model.opponentsClubName" 
+            placeholder="{{'opponents_team' | translate}}"/>
+        </div>
+        <div fxFlex.gt-sm="5"></div>
+        <div class="form-group p-2" fxFlex.gt-sm="40">
+            <h5 class="mb-3">{{'location' | translate}}</h5>
+            <input type="text" class="form-control" [(ngModel)]="model.location"
+            placeholder="{{'location' | translate}}"/>
+        </div>
+        <div fxFlex.gt-sm="15"></div>
+    </div>
+</div>

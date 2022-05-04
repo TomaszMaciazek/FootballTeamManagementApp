@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Enums\CardColor.cs~RF3641bc76.TMP" />
+    <None Remove="ViewModels\Commands\UpdateCoachVM.cs~RF14a076a5.TMP" />
+  </ItemGroup>
+
+</Project>

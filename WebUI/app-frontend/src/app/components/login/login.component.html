@@ -1,0 +1,56 @@
+<div class="login-region login-image-background">
+    <p-dropdown id="select-language" [options]="languages" 
+    optionLabel="name" filterBy="name" placeholder="Wybierz język"
+    [(ngModel)]="selectedLanguage" (onChange)="changeLanguage($event)">
+        <ng-template pTemplate="selectedItem">
+            <div *ngIf="selectedLanguage">
+                <img class="d-inline img-flag" src="{{selectedLanguage.imagePath}}"/>
+                <div class="d-inline">{{selectedLanguage.name}}</div>
+            </div>
+        </ng-template>
+        <ng-template let-language pTemplate="item">
+            <div>
+                <img class="d-inline img-flag" src="{{language.imagePath}}"/>
+                <div class="d-inline">{{language.name}}</div>
+            </div>
+        </ng-template>
+    </p-dropdown>
+    <div class="container">
+        <div class="d-flex h-100">
+            <div class="col-0 col-lg-3 col-md-2 col-sm-0"></div>
+            <div class="card signInForm fadeInDown col-12 col-lg-6 col-md-8 col-sm-12">
+                <article class="card-body">
+                    <h1 class="card-title text-center mb-4 mt-1">{{'sign_in' | translate }}</h1>
+                    <form [formGroup]="signInForm" (submit)="signIn()">
+                        <div class="form-group">
+                            <label for="login">{{'login' | translate}}</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-user"></i></span>
+                                </div>
+                                <input type="text" formControlName="login" id="login" class="form-control" placeholder="{{'login' | translate}}"/>
+                            </div> 
+                            <app-form-error [control]="signInForm.controls.login" [submitted]="signInFormSubmitted" error="required">{{'Login jest wymagany'}}</app-form-error>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">{{'password' | translate}}</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                                </div>
+                                <input type="password" formControlName="password" id="password" class="form-control" placeholder="{{'password' | translate}}" />
+                            </div> 
+                            <app-form-error [control]="signInForm.controls.password" [submitted]="signInFormSubmitted" error="required">{{'Hasło jest wymagane'}}</app-form-error>
+                        </div>
+                        <div class="form-group pt-2">
+                            <button type="submit" class="btn float-right">
+                            {{'sign_in' | translate}}
+                            </button>
+                        </div>
+                    </form>
+                </article>
+            </div>
+            <div class="col-0 col-lg-3 col-md-2 col-sm-0"></div>
+        </div>
+    </div>
+</div>

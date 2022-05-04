@@ -1,0 +1,188 @@
+<div class="content-wrapper" *ngIf="player">
+    <div class="text-center pb-3 mt-3 mb-3">
+        <h1>{{'player' | translate}}</h1>
+    </div>
+    <p-confirmDialog #cd [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}">
+        <ng-template pTemplate="footer">
+            <button type="button" pButton icon="pi pi-times" label="{{'no' | translate}}" (click)="cd.reject()"></button>
+            <button type="button" pButton icon="pi pi-check" label="{{'yes' | translate}}" (click)="cd.accept()"></button>
+        </ng-template>
+    </p-confirmDialog>
+    <p-dialog header="{{'change_password' | translate}}"
+    [(visible)]="displayChangePasswordDialog"
+    [style]="{width: '50vw'}">
+        <change-user-password
+            [userId]="player.userId"
+            (confirmUpdatePassword)="closeDialog($event)"
+        ></change-user-password>
+    </p-dialog>
+    <div fxLayout="row" class="pb-3">
+        <div fxFlex.sm="80" fxFlexOffset.sm="10" 
+        fxFlex.md="54" fxFlexOffset.md="23"
+        fxFlex.gt-md="50" fxFlexOffset.gt-md="25" 
+        fxFlex.xs="94" fxFlexOffset.xs="3"
+        fxLayout="column">
+            <div fxLayout="row" class="mb-3" [security]="'players.history'">
+                <div fxFlex.lt-lg="100" fxHide fxShow.lt-lg>
+                    <p-toolbar>
+                        <button class="btn btn-info btn-block btn-lg btn-action" [routerLink]="['/members/player/history/'+id]">
+                        <i class="fas fa-scroll"></i>    
+                        {{'player_history' | translate}}
+                        </button>
+                    </p-toolbar>
+                </div>
+                <div fxFlex.gt-md="100" fxHide fxShow.gt-md>
+                    <p-toolbar>
+                        <div class="p-toolbar-group-left">
+                        </div>
+                        <div class="p-toolbar-group-right">
+                            <a [routerLink]="['/members/player/history/'+id]">
+                                <button role="button" [ngClass.lt-md]="'btn-block'"
+                                class="btn btn-info btn-lg btn-action">
+                                <i class="fas fa-scroll"></i>    
+                                {{'player_history' | translate}}
+                                </button>
+                            </a>
+                        </div>
+                    </p-toolbar>
+                </div>
+            </div>
+            <p-card>
+                <div class="row">
+                    <div class="col-4">
+                        <h6 class="ml-3 mb-0">{{'name' | translate }}</h6>
+                    </div>
+                    <div class="col-8 text-secondary">
+                        <span *ngIf="player.middleName && player.middleName.length > 0; else noMiddleName">
+                            {{player.name}} {{player.middleName}} {{player.surname}}
+                        </span>
+                        <ng-template #noMiddleName>
+                            <span>{{player.name}} {{player.surname}}</span>
+                        </ng-template>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-4">
+                        <h6 class="ml-3 mb-0">{{'email' | translate }}</h6>
+                    </div>
+                    <div class="col-8 text-secondary">
+                        <span *ngIf="player.email; else noEmail">
+                            {{player.email}}
+                        </span>
+                        <ng-template #noEmail>
+                            <span>{{'not_exist' | translate }}</span>
+                        </ng-template>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-4">
+                        <h6 class="ml-3 mb-0">{{'date_of_birth' | translate }}</h6>
+                    </div>
+                    <div class="col-8 text-secondary">
+                        {{player.birthDate | date: 'dd-MM-yyyy'}}
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-4">
+                        <h6 class="ml-3 mb-0">{{'country' | translate }}</h6>
+                    </div>
+                    <div class="col-8 text-secondary">
+                        {{player.country}}
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-4">
+                        <h6 class="ml-3 mb-0">{{'gender' | translate }}</h6>
+                    </div>
+                    <div class="col-8 text-secondary">
+                        {{genderLabel.get(player.gender) | translate }}
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-4">
+                        <h6 class="ml-3 mb-0">{{'team' | translate }}</h6>
+                    </div>
+                    <div class="col-8 text-secondary">
+                        <div *ngIf="player.team ;else playerWithoutTeam">
+                            {{player.team.name}}
+                        </div>
+                        <ng-template #playerWithoutTeam>
+                            <span>{{'no_team_assigned_player' | translate }}</span>
+                        </ng-template>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-4">
+                        <h6 class="ml-3 mb-0">{{'preferred_position' | translate }}</h6>
+                    </div>
+                    <div class="col-8 text-secondary">
+                        {{playerPositionsLabel.get(player.prefferedPosition) | translate }}
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-4">
+                        <h6 class="ml-3 mb-0">{{'started_playing' | translate }}</h6>
+                    </div>
+                    <div class="col-8 text-secondary" *ngIf="player.startedPlaying != null">
+                        {{player.startedPlaying | date: 'dd-MM-yyyy'}}
+                    </div>
+                    <div class="col-8 text-secondary" *ngIf="player.startedPlaying == null">
+                        {{'not_playing' | translate}}
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-4" *ngIf="player.gender == gender.Male">
+                        <h6 class="ml-3 mb-0">{{'finished_playing' | translate }}</h6>
+                    </div>
+                    <div class="col-4" *ngIf="player.gender == gender.Female">
+                        <h6 class="ml-3 mb-0">{{'finished_playing_f' | translate }}</h6>
+                    </div>
+                    <div class="col-8 text-secondary" *ngIf="player.finishedPlaying">
+                        {{player.finishedPlaying | date: 'dd-MM-yyyy'}}
+                    </div>
+                    <div class="col-8 text-secondary" *ngIf="!player.finishedPlaying">
+                        {{'is_still_playing' | translate}}
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-4">
+                        <h6 class="ml-3 mb-0">{{'player_matches_count' | translate }}</h6>
+                    </div>
+                    <div class="col-8 text-secondary">
+                        {{player.matchCount}}
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-4">
+                        <h6 class="ml-3 mb-0">{{'active' | translate }}</h6>
+                    </div>
+                    <div class="col-8 text-secondary">
+                        <i class="pi" [ngClass]="{'true-icon pi-check-circle': player.isActive, 'false-icon pi-times-circle': !player.isActive}"></i>
+                    </div>
+                </div>
+                <hr>
+            </p-card>
+            <div class="row mt-3" [security]="'administration.users'">
+                <div class="col-sm-12">
+                    <p-button styleClass="p-button-info" label="{{'change_password' | translate}}" 
+                    (click)="displayChangePasswordDialog = true" icon="pi pi-key"></p-button>
+                    <p-button *ngIf="player.finishedPlaying" styleClass="ml-3 p-button-success" label="{{'return_to_playing' | translate}}" 
+                    (click)="displayChangePasswordDialog = confirmToggle()" icon="pi pi-directions-alt"></p-button>
+                    <p-button *ngIf="!player.finishedPlaying" styleClass="ml-3 p-button-warning" label="{{'finish_playing' | translate}}" 
+                    (click)="displayChangePasswordDialog = confirmToggle()" icon="pi pi-directions"></p-button>
+                </div>
+            </div>
+        </div>
+        <div fxFlex.sm="10" fxFlex.md="23" fxFlex.gt-md="25" fxFlex.xs="3"></div>
+    </div>
+</div>

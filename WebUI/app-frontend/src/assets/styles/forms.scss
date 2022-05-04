@@ -1,0 +1,12 @@
+.form {
+    &__error {
+      display: block;
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      transition: all 0.5s ease 0s;
+      padding-right: 15px;
+      color: $red;
+      font-weight: 700;
+    }
+}

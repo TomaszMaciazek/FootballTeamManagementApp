@@ -1,0 +1,41 @@
+<div class="content-wrapper" *ngIf="history">
+    <div class="text-center pb-3">
+        <h1>{{'player_history' | translate}}</h1>
+    </div>
+    <div fxLayout="row" class="pt-3">
+        <div fxLayout="column" class="mt-2"
+            fxFlex.gt-xs="80" fxFlexOffset.gt-xs="10" 
+            fxFlex.xs="94" fxFlexOffset.xs="3">
+            <p-timeline [value]="events" align="alternate">
+                <ng-template pTemplate="marker" let-event>
+                    <span class="custom-marker p-shadow-2">
+                        <i *ngIf="event.eventType == playerHistoryEventType.Created" class="fas fa-users"></i>
+                        <i *ngIf="event.eventType == playerHistoryEventType.PlayerJoinedTeam" class="fas fa-user-plus"></i>
+                        <i *ngIf="event.eventType == playerHistoryEventType.MatchPlayed" class="fas fa-futbol"></i>
+                        <i *ngIf="event.eventType == playerHistoryEventType.PlayerLeftTeam" class="fas fa-shoe-prints"></i>
+                    </span>
+                </ng-template>
+                <ng-template pTemplate="content" let-event>
+                    <p-card [header]="getEventHeader(event.eventType) | translate" [subheader]="event.date | date: 'dd-MM-yyyy'">
+                        <div *ngIf="event.eventType == playerHistoryEventType.MatchPlayed">
+                            <player-match-event
+                            [event]="getMatchEvent(event.id)"
+                            ></player-match-event>
+                        </div>
+                        <div *ngIf="event.eventType == playerHistoryEventType.PlayerJoinedTeam">
+                            <history-player-joined-team-event
+                            [event]="getPlayerJoinedTeamEvent(event.id)"
+                            ></history-player-joined-team-event>
+                        </div>
+                        <div *ngIf="event.eventType == playerHistoryEventType.PlayerLeftTeam">
+                            <history-player-left-team-event
+                            [event]="getPlayerLeftTeamEvent(event.id)"
+                            ></history-player-left-team-event>
+                        </div>
+                    </p-card>
+                </ng-template>
+            </p-timeline>
+        </div>
+        <div fxFlex.gt-xs="10" fxFlex.xs="3"></div>
+    </div>
+</div>

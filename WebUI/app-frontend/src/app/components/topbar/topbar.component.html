@@ -1,0 +1,28 @@
+<div id="topbar-wrapper">
+    <div class="topbarItem pull-right">
+        <button class="btn btn-white align-middle btn-fa" (click)="logout()">
+            <i class="fas fa-power-off fa-static-left"></i>
+            {{'logout' | translate}}
+        </button>
+    </div>
+    <div class="topbarItem pull-right">
+        <p-button class="mr-2" label="{{'messages' | translate}}" icon="fas fa-comments" 
+        styleClass="p-button" [badge]="getBadgeText()" badgeClass="p-badge-danger" (click)="goToMessages()" ></p-button>
+        <p-dropdown id="select-language" [options]="languages" 
+    optionLabel="name" filterBy="name" placeholder="{{'select_language' | translate}}"
+    [(ngModel)]="selectedLanguage" (onChange)="changeLanguage($event)">
+        <ng-template pTemplate="selectedItem">
+            <div *ngIf="selectedLanguage">
+                <img class="d-inline img-flag" src="{{selectedLanguage.imagePath}}"/>
+                <div class="d-inline">{{selectedLanguage.name}}</div>
+            </div>
+        </ng-template>
+        <ng-template let-language pTemplate="item">
+            <div>
+                <img class="d-inline img-flag" src="{{language.imagePath}}"/>
+                <div class="d-inline">{{language.name}}</div>
+            </div>
+        </ng-template>
+    </p-dropdown>
+    </div>
+</div>

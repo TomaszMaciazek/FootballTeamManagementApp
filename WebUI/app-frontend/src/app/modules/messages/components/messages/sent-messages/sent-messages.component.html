@@ -1,0 +1,45 @@
+<messages-toolbar [selectedMessages]="selectedMessages" [mailboxType]="mailboxType"
+  (updatedMessages)="updateMessages($event)" (searchMessages)="search($event)"></messages-toolbar>
+<p-table [value]="messages" [(selection)]="selectedMessages" dataKey="id"
+    responsiveLayout="scroll" styleClass="p-datatable-striped"
+    [rowHover]="true" [paginator]="true" [rows]="rowNumbers" [totalRecords]="totalCount" [rowsPerPageOptions]="rowNumbersOptions"
+    [resizableColumns]="true" [autoLayout]="true" [lazy]="true" (onLazyLoad)="loadMessages($event)">
+    <ng-template pTemplate="caption">
+        <div class="text-center">
+            <h2>{{'messages' | translate}}</h2>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th class="text-center" style="width: 3rem">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th class="text-center" pSortableColumn="Date">
+                {{'send_date' | translate}}
+                <p-sortIcon field="sendDate"></p-sortIcon>
+            </th>
+            <th class="text-center" pSortableColumn="Topic">
+                {{'topic' | translate}}
+                <p-sortIcon field="topic"></p-sortIcon>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-message>
+        <tr class="p-selectable-row">
+            <td>
+                <p-tableCheckbox [value]="message"></p-tableCheckbox>
+            </td>
+            <td (click)="displayMessage(message)" class="text-center">
+                {{message.sendDate | date: 'dd-MM-yyyy HH:mm'}}
+            </td>
+            <td (click)="displayMessage(message)" class="text-center">
+                {{message.topic}}
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td class="text-center" colspan="3">{{'emptymessage' | translate}}</td>
+        </tr>
+    </ng-template>
+</p-table>

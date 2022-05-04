@@ -1,0 +1,78 @@
+<div fxLayout="row">
+    <form [formGroup]="addScoreForm" fxFlex="100">
+        <p-card>
+            <div fxLayout="column">
+                <div fxLayout="row">
+                    <div class="form-group p-2" fxFlex="100">
+                        <h5>{{'player' | translate}}</h5>
+                        <p-dropdown [options]="players" [showClear]="true" formControlName="Player" placeholder="{{'select_player' | translate}}"
+                            autoWidth="false" [style]="{'width':'100%'}" styleClass="mt-2">
+                            <ng-template let-item pTemplate="selectedItem">
+                                <div *ngIf="item">
+                                    <div class="d-inline">
+                                        {{item.name}} ({{item.yearOfBirth}} - 
+                                    <span *ngIf="item.team != null && item.team != undefined">
+                                        {{item.team.name | translate}})
+                                    </span>
+                                    <span *ngIf="!item.team">
+                                        {{'player_without_team' | translate}})
+                                    </span>
+                                    </div>
+                                </div>
+                            </ng-template>
+                            <ng-template let-player pTemplate="item">
+                                <div class="d-inline">
+                                    {{player.name}} ({{player.yearOfBirth}} - 
+                                    <span *ngIf="player.team != null && player.team != undefined">
+                                        {{player.team.name | translate}})
+                                    </span>
+                                    <span *ngIf="!player.team">
+                                        {{'player_without_team' | translate}})
+                                    </span>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                    </div>
+                </div>
+                <div fxLayout="row">
+                    <div class="form-group p-2" fxFlex="100">
+                        <h5>{{'score_type' | translate}}</h5>
+                        <p-dropdown [options]="typeOptions" [showClear]="true" formControlName="ScoreType" placeholder="{{'select_training_score_type' | translate}}"
+                            autoWidth="false" [style]="{'width':'100%'}" styleClass="mt-2">
+                            <ng-template let-item pTemplate="selectedItem">
+                                <div *ngIf="item">
+                                    <div class="d-inline">{{item.label | translate}}</div>
+                                </div>
+                            </ng-template>
+                            <ng-template let-type pTemplate="item">
+                                <div>{{type.label | translate}}</div>
+                            </ng-template>
+                        </p-dropdown>
+                    </div>
+                </div>
+                <div fxLayout="row">
+                    <div class="form-group p-2" fxFlex="100">
+                        <h5>{{'value' | translate}}</h5>
+                        <p-inputNumber formControlName="Value" mode="decimal"
+                            [showButtons]="true" inputId="minmax-buttons"
+                            [min]="1" [max]="10" [step]="0.5"
+                            [style]="{'width':'100%'}" styleClass="mt-2">
+                        </p-inputNumber>
+                    </div>
+                </div>
+            </div>
+            <ng-template pTemplate="footer">
+                <button type="submit" [ngClass.lt-md]="'btn-block'"
+                [ngClass.gt-sm]="'btn-lg ml-3'"
+                class="btn btn-success" (click)="submit()">
+                    {{'save' | translate}}
+                </button>
+                <button type="reset" [ngClass.lt-md]="'btn-block'"
+                [ngClass.gt-sm]="'btn-lg ml-3'"  
+                class="btn btn-danger" (click)="reset()">
+                    {{'clear' | translate}}
+                </button>
+            </ng-template>
+        </p-card>
+    </form>
+</div>

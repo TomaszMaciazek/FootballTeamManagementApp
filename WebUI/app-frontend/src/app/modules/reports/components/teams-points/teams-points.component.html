@@ -1,0 +1,234 @@
+<div class="content-wrapper" *ngIf="teams">
+    <div class="text-center pb-3">
+        <h1>{{'match_points' | translate}}</h1>
+    </div>
+    <div fxLayout="row">
+        <div class="mt-3 text-center" 
+            fxFlex.gt-xs="80" fxFlexOffset.gt-xs="10" 
+            fxFlex.xs="94" fxFlexOffset.xs="3"
+            fxLayout="column">
+            <div fxLayout="row" class="mb-3 mt-3">
+                <div fxFlex="100" fxHide fxShow.lt-md>
+                    <p-toolbar>
+                        <p-selectButton [options]="chartViewOptions" [(ngModel)]="monthlyView"
+                            optionLabel="label" optionValue="value" class="mb-3" [style]="{'width':'100%'}" 
+                            (onChange)="checkView($event)">
+                            <ng-template let-item>
+                                {{item.label | translate}}
+                            </ng-template>
+                        </p-selectButton>
+                        <p-selectButton [options]="chartViewPointOptions" [(ngModel)]="pointsView"
+                            optionLabel="label" optionValue="value" class="mb-3" [style]="{'width':'100%'}" 
+                            (onChange)="checkView($event)">
+                            <ng-template let-item>
+                                {{item.label | translate}}
+                            </ng-template>
+                        </p-selectButton>
+                        <button class="btn btn-warning btn-block btn-lg btn-action" *ngIf="monthlyView" (click)="showFilters = !showFilters">
+                            <i class="fas mr-2" [ngClass]="{'fa-eye': !showFilters, 'fa-eye-slash': showFilters}"></i> 
+                            <span *ngIf="!showFilters">{{'show_filters' | translate}}</span>
+                            <span *ngIf="showFilters">{{'hide_filters' | translate}}</span>
+                        </button>
+                    </p-toolbar>
+                </div>
+                <div fxFlex.gt-sm="100" fxHide fxShow.gt-sm>
+                    <p-toolbar>
+                        <div class="p-toolbar-group-left">
+                            <p-selectButton [options]="chartViewOptions" [(ngModel)]="monthlyView"
+                            optionLabel="label" optionValue="value" (onChange)="checkView($event)">
+                                <ng-template let-item>
+                                    {{item.label | translate}}
+                                </ng-template>
+                            </p-selectButton>
+                        </div>
+                        <div class="p-toolbar-group-right">
+                            <p-selectButton [options]="chartViewPointOptions" [(ngModel)]="pointsView"
+                            optionLabel="label" optionValue="value" (onChange)="checkView($event)">
+                                <ng-template let-item>
+                                    {{item.label | translate}}
+                                </ng-template>
+                            </p-selectButton>
+                            <button role="button" *ngIf="monthlyView" [ngClass.lt-md]="'btn-block'"
+                            class="btn btn-warning btn-lg btn-action ml-3"
+                            (click)="showFilters = !showFilters">
+                                <i class="fas mr-2" [ngClass]="{'fa-eye': !showFilters, 'fa-eye-slash': showFilters}"></i> 
+                                <span *ngIf="!showFilters">{{'show_filters' | translate}}</span>
+                                <span *ngIf="showFilters">{{'hide_filters' | translate}}</span>
+                            </button>
+                        </div>
+                    </p-toolbar>
+                </div>
+            </div>
+            <form fxFlex="100" [formGroup]="form" fxLayout="row" class="mb-3">
+                <p-card fxFlex="100" *ngIf="showFilters">
+                    <div fxLayout="column" fxFlex="100">
+                        <div fxLayout.gt-sm="row" fxLayout.lt-md="column">
+                            <div class="form-group p-2" fxFlex.gt-sm="50">
+                                <h5>{{'from' | translate}}</h5>
+                                <p-calendar [showIcon]="true" dateFormat="dd-mm-yy"
+                                [yearNavigator]="true" yearRange="1900:2100" appendTo="body"
+                                formControlName="Start" baseZIndex="5000" [maxDate]="maxDate"></p-calendar>
+                            </div>
+                            <div class="form-group p-2" fxFlex.gt-sm="50">
+                                <h5>{{'to' | translate}}</h5>
+                                <p-calendar [showIcon]="true" dateFormat="dd-mm-yy"
+                                [yearNavigator]="true" yearRange="1900:2100" appendTo="body"
+                                formControlName="End" baseZIndex="5000" [maxDate]="maxDate"></p-calendar>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ng-template pTemplate="footer">
+                        <div fxLayout="row" fxFlex="100">
+                            <div fxFlex="100" fxHide fxShow.lt-lg>
+                                <button class="btn btn-primary btn-block btn-action" (click)="filter()">
+                                    <i class="fas fa-search"></i>  
+                                    {{'filter' | translate}}
+                                </button>
+                                <button class="btn btn-danger btn-block btn-action" (click)="resetFilter()">
+                                    <i class="fas fa-sync-alt"></i>
+                                    {{'clear' | translate}}
+                                </button>
+                            </div>
+                            <div fxFlex="100" fxHide fxShow.gt-md fxLayoutAlign="end start">
+                                <button role="button" [ngClass.lt-md]="'btn-block'"
+                                class="btn btn-danger btn-action mr-3"
+                                (click)="resetFilter()">
+                                    <i class="fas fa-sync-alt"></i>
+                                    {{'clear' | translate}}
+                                </button>
+                                <button role="button" [ngClass.lt-md]="'btn-block'"
+                                class="btn btn-primary btn-action mr-3"
+                                (click)="filter()">
+                                    <i class="fas fa-search"></i>  
+                                    {{'filter' | translate}}
+                                </button>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-card>
+            </form>
+            <div class="row">
+                <div class="form-group p-2 col-xs-12 col-sm-12 col-md-6 text-left ml-2">
+                    <h5>{{'team' | translate}}</h5>
+                    <p-dropdown [options]="teams" [showClear]="true"
+                    [(ngModel)]="selectedTeam" placeholder="{{'select_team' | translate}}"
+                    filter="true" filterBy="name" (onChange)="onTeamSelect($event)"
+                        autoWidth="false" [style]="{'width':'100%'}" styleClass="mt-2">
+                        <ng-template let-item pTemplate="selectedItem">
+                            <div *ngIf="item">
+                                <div class="d-inline">
+                                    {{item.name}}
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template let-team pTemplate="item">
+                            <div class="d-inline">
+                                {{team.name}}
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                <div class="col-xs-0 col-sm-0 col-md-6"></div>
+            </div>
+            <div class="row" *ngIf="monthlyView && pointsView && selectedTeam">
+                <div class="form-group p-2 col-xs-12 col-sm-12 col-md-6 text-left ml-2">
+                    <h5>{{'match_type' | translate}}</h5>
+                    <p-dropdown [options]="matchTypes" [showClear]="true" [(ngModel)]="selectedMatchType" placeholder="{{'match_type' | translate}}"
+                        autoWidth="false" [style]="{'width':'100%'}" styleClass="mt-2" (onChange)="onTypeSelect($event)">
+                        <ng-template let-item pTemplate="selectedItem">
+                            <div *ngIf="item">
+                                <div class="d-inline">{{item.label | translate}}</div>
+                            </div>
+                        </ng-template>
+                        <ng-template let-type pTemplate="item">
+                            <div>{{type.label | translate}}</div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                <div class="col-xs-0 col-sm-0 col-md-6"></div>
+            </div>
+            <p-chart *ngIf="!monthlyView && !pointsView && selectedTeam" height="50vh" type="bar" [data]="{
+                labels: ['cup_matches_points' | translate, 'league_matches_points' | translate, 'friendly_matches_points' | translate],
+                datasets: [
+                            {
+                                label: 'scored' | translate,
+                                backgroundColor: '#42A5F5',
+                                data: teamMatchesPointsData
+                            },
+                            {
+                                label: 'own_goals' | translate,
+                                backgroundColor: '#9e42f5',
+                                data: teamOwnGoalsData
+                            },
+                        ]
+            }" [options]="basicOptions"></p-chart>
+            <p-chart *ngIf="!monthlyView && pointsView && selectedTeam" height="50vh" type="bar" [data]="{
+                labels: ['in_game_goal' | translate, 'penalty_goal' | translate, 'free_kick_goal' | translate, 'corner_kick_goal' | translate, 'own_goal' | translate],
+                datasets: [
+                            {
+                                label: 'cup_matches_points' | translate,
+                                backgroundColor: '#42A5F5',
+                                data: teamCupMatchesPointsData
+                            },
+                            {
+                                label: 'league_matches_points' | translate,
+                                backgroundColor: '#9e42f5',
+                                data: teamLeagueMatchesPointsData
+                            },
+                            {
+                                label: 'friendly_matches_points' | translate,
+                                backgroundColor: '#7bfc03',
+                                data: teamFriendlyMatchesPointsData
+                            },
+                        ]
+            }" [options]="basicOptions"></p-chart>
+            <p-chart *ngIf="monthlyView && !pointsView && selectedTeam" height="50vh" type="bar" [data]="{
+                labels: months,
+                datasets: [
+                            {
+                                label: 'scored' | translate,
+                                backgroundColor: '#42A5F5',
+                                data: teamMonthlyMatchesPointsData
+                            },
+                            {
+                                label: 'own_goals' | translate,
+                                backgroundColor: '#9e42f5',
+                                data: teamMonthlyOwnGoalsData
+                            },
+                        ]
+            }" [options]="basicOptions"></p-chart>
+
+            <p-chart *ngIf="monthlyView && pointsView && selectedMatchType != null && selectedTeam" height="50vh" type="bar" [data]="{
+                labels: months,
+                datasets: [
+                            {
+                                label: 'in_game_goal' | translate,
+                                backgroundColor: '#42A5F5',
+                                data: teamMonthlyMatchesInGamePointsData
+                            },
+                            {
+                                label: 'penalty_goal' | translate,
+                                backgroundColor: '#9e42f5',
+                                data: teamMonthlyMatchesPenaltyGoalsData
+                            },
+                            {
+                                label: 'free_kick_goal' | translate,
+                                backgroundColor: '#eb9234',
+                                data: teamMonthlyMatchesFreeKickData
+                            },
+                            {
+                                label: 'corner_kick_goal' | translate,
+                                backgroundColor: '#cbe312',
+                                data: teamMonthlyMatchesCornerKickData
+                            },
+                            {
+                                label: 'own_goal' | translate,
+                                backgroundColor: '#e01010',
+                                data: teamMonthlyMatchesOwnGoalsData
+                            }
+                        ]
+            }" [options]="basicOptions"></p-chart>
+        </div>
+    </div>
+</div>

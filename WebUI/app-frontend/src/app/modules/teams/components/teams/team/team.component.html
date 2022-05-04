@@ -1,0 +1,136 @@
+<div class="content-wrapper" *ngIf="team">
+    <p-dialog header="{{'team_add_new' | translate}}"
+    [(visible)]="displayAddPlayersToTeamDialog"
+    [style]="{width: '50vw'}"
+    [modal]="true"
+    [blockScroll]="true">
+        <team-add-player #addPlayers
+        [teamId]="id"
+        (confirmPlayersAdded)="reload($event)"
+        >
+        </team-add-player>
+    </p-dialog>
+    <p-confirmDialog #cd [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}">
+        <ng-template pTemplate="footer">
+            <button type="button" pButton icon="pi pi-times" label="{{'no' | translate}}" (click)="cd.reject()"></button>
+            <button type="button" pButton icon="pi pi-check" label="{{'yes' | translate}}" (click)="cd.accept()"></button>
+        </ng-template>
+    </p-confirmDialog>
+    <div class="text-center pb-3">
+        <h1>{{'team' | translate}} {{team.name}}</h1>
+    </div>
+    <div fxLayout="row" class="pt-3">
+        <div fxLayout="column" class="mt-2"
+            fxFlex.gt-xs="80" fxFlexOffset.gt-xs="10" 
+            fxFlex.xs="94" fxFlexOffset.xs="3"
+        >
+            <div fxLayout="row" class="mb-3" [security]="'players.teams.edit;teams.history'">
+                <div fxFlex.lt-lg="100" fxHide fxShow.lt-lg>
+                    <p-toolbar>
+                        <button class="btn btn-primary btn-block btn-lg btn-action" (click)="showAddPlayersDialog()" [security]="'players.teams.edit'">
+                            <i class="far fa-plus-square"></i>    
+                            {{'add_player_to_team' | translate}}
+                        </button>
+                        <button class="btn btn-info btn-block btn-lg btn-action" [routerLink]="['/teams/history/'+id]" [security]="'teams.history'">
+                            <i class="fas fa-scroll"></i>    
+                            {{'team_history' | translate}}
+                        </button>
+                    </p-toolbar>
+                </div>
+                <div fxFlex.gt-md="100" fxHide fxShow.gt-md>
+                    <p-toolbar>
+                        <div class="p-toolbar-group-left">
+                            <button role="button" [ngClass.lt-md]="'btn-block'" [security]="'players.teams.edit'"
+                            class="btn btn-primary btn-lg btn-action" (click)="showAddPlayersDialog()">
+                                <i class="far fa-plus-square"></i>    
+                                {{'add_player_to_team' | translate}}
+                            </button>
+                        </div>
+                        <div class="p-toolbar-group-right">
+                            <a [routerLink]="['/teams/history/'+id]">
+                                <button role="button" [ngClass.lt-md]="'btn-block'"
+                                class="btn btn-info btn-lg btn-action">
+                                <i class="fas fa-scroll"></i>    
+                                {{'team_history' | translate}}
+                                </button>
+                            </a>
+                        </div>
+                    </p-toolbar>
+                </div>
+            </div>
+            <div class="mb-3 mt-3">
+                <h2>{{'team_main_coach' | translate}}</h2>
+            </div>
+            <div class="mb-3">
+                <div *ngIf="team.mainCoach; else noMainCoach" class="mt-2">
+                    <h3 *ngIf="team.mainCoach.middleName && team.mainCoach.middleName.length > 0; else noMiddleName">
+                        {{team.mainCoach.name}} {{team.mainCoach.middleName}} {{team.mainCoach.surname}}
+                        <a [routerLink]="['/members/coach/'+team.mainCoach.id]">
+                            <button pButton pRipple type="button" icon="fas fa-info" 
+                            class="ml-2 p-button-rounded p-button-info"></button>
+                        </a>
+                    </h3>
+                </div>
+                <ng-template #noMainCoach>
+                    <div class="mt-2">
+                        <h4>{{'team_has_no_main_coach' | translate}}</h4>
+                    </div>
+                </ng-template>
+            </div>
+            <div *ngIf="team.players && team.players.length > 0" class="mt-3 mb-2" 
+                fxFlex.gt-xs="80" fxFlexOffset.gt-xs="10" 
+                fxFlex.xs="94" fxFlexOffset.xs="3"
+                fxLayout="column">
+                <div class="mb-3">
+                    <p-table [value]="team.players" [paginator]="true" [rows]="10" [showCurrentPageReport]="false" 
+                    responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
+                    <ng-template pTemplate="caption">
+                        <div class="text-center">
+                            <h2>{{'players' | translate}}</h2>
+                        </div>
+                    </ng-template>    
+                    <ng-template pTemplate="header">
+                            <tr>
+                                <th class="text-center">{{'player' | translate}}</th>
+                                <th class="text-center">{{'country' | translate}}</th>
+                                <th class="text-center">{{'year_of_birth' | translate}}</th>
+                                <th class="text-center">{{'gender' | translate}}</th>
+                                <th class="text-center">{{'actions' | translate}}</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-player>
+                            <tr>
+                                <td class="text-center">
+                                    <span *ngIf="player.middleName && player.middleName.length > 0; else noPlayerMiddleName">
+                                        {{player.surname}} {{player.name}} {{player.middleName}}
+                                    </span>
+                                    <ng-template #noPlayerMiddleName>
+                                        <span>{{player.surname}} {{player.name}}</span>
+                                    </ng-template>
+                                </td>
+                                <td class="text-center">{{player.country}}</td>
+                                <td class="text-center">{{player.yearOfBirth}}</td>
+                                <td class="text-center">{{genderLabel.get(player.gender) | translate}}</td>
+                                <td class="text-center">
+                                    <a [routerLink]="['/members/player/'+player.id]">
+                                        <button pButton pRipple type="button" icon="fas fa-info" 
+                                        class="p-button-rounded p-button-info"></button>
+                                    </a>
+                                    <button pButton pRipple type="button" icon="pi pi-minus"  [security]="'players.teams.edit'"
+                                    class="p-button-rounded p-button-danger ml-2" (click)="confirmRemove(player.id)"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+            <div *ngIf="!team.players || team.players.length == 0" class="mt-3 mb-2 text-center"
+                fxFlex.gt-xs="80" fxFlexOffset.gt-xs="10" 
+                fxFlex.xs="94" fxFlexOffset.xs="3"
+                fxLayout="column">
+                <h3>{{'no_players' | translate}}</h3>
+            </div>
+        </div>
+        <div fxFlex.gt-xs="10" fxFlex.xs="3"></div>
+    </div>
+</div>

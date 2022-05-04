@@ -1,0 +1,19 @@
+<div id="wrapper" class="d-block">
+  <nav class="sidebar" [ngClass]="{'active': isSidebarActive}">
+    <div class="dismiss mb-3" (click)="hideSidebar()">
+        <i class="fa fa-arrow-left"></i>
+    </div>
+    <app-menu [menuItems]="menuItems" (goToEvent)="goTo($event)"></app-menu>
+  </nav>
+  <div class="overlay" [ngClass]="{'active': isSidebarActive}" (click)="hideSidebar()"></div>
+  <button class="btn btn-primary" id="open-menu" (click)="showSidebar()">
+    <i class="fas fa-align-justify"></i> <span>Menu</span>
+  </button>
+  <div class="content white-bg">
+    <topbar></topbar>
+    <div class="page-content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  <footer></footer>
+</div>

@@ -1,0 +1,141 @@
+<div class="content-wrapper">
+    <div class="text-center pb-3">
+        <h1>{{'tests_assigned_to_me' | translate}}</h1>
+    </div>
+    <div fxLayout="row">
+        <div 
+            fxFlexOffset.lt-lg="10" fxFlex.lt-lg="80"
+            fxFlex.xs="94"fxFlexOffset.xs="3"
+            fxHide fxShow.lt-lg>
+            <p-toolbar>
+                <button class="btn btn-warning btn-block btn-lg btn-action" (click)="showFilters = !showFilters">
+                    <i class="fas mr-2" [ngClass]="{'fa-eye': !showFilters, 'fa-eye-slash': showFilters}"></i> 
+                    <span *ngIf="!showFilters">{{'show_filters' | translate}}</span>
+                    <span *ngIf="showFilters">{{'hide_filters' | translate}}</span>
+                </button>
+            </p-toolbar>
+        </div>
+        <div fxFlex.gt-md="80" fxFlexOffset.gt-md="10"
+            fxHide fxShow.gt-md>
+            <p-toolbar>
+                <div class="p-toolbar-group-left">
+                </div>
+                <div class="p-toolbar-group-right">
+                    <button role="button" [ngClass.lt-md]="'btn-block'"
+                    class="btn btn-warning btn-lg btn-action"
+                    (click)="showFilters = !showFilters">
+                        <i class="fas mr-2" [ngClass]="{'fa-eye': !showFilters, 'fa-eye-slash': showFilters}"></i> 
+                        <span *ngIf="!showFilters">{{'show_filters' | translate}}</span>
+                        <span *ngIf="showFilters">{{'hide_filters' | translate}}</span>
+                    </button>
+                </div>
+            </p-toolbar>
+        </div>
+        <div fxFlex.gt-md="10" fxFlex.lt-lg="10" fxFlex.xs="3"></div>
+    </div>
+    <div fxLayout="row">
+        <div fxFlex.gt-xs="80" fxFlexOffset.gt-xs="10" 
+        fxFlex.xs="94" fxFlexOffset.xs="3"
+        fxLayout="column" class="card mt-2">
+            <form fxFlex="100" [formGroup]="form" fxLayout="row" class="mb-3">
+                <p-card *ngIf="showFilters" fxFlex="100">
+                    <div fxLayout="column" fxFlex="100">
+                        <div fxLayout.gt-sm="row" fxLayout.lt-md="column">
+                            <div class="form-group p-3" fxFlex.gt-sm="50">
+                                <h5 class="mb-3">{{'title' | translate}}</h5>
+                                <input type="text" class="form-control" formControlName="Title"/>
+                            </div>
+                            <div class="form-group p-3" fxFlex.gt-sm="50">
+                                <h5 class="mb-3">{{'status' | translate}}</h5>
+                                <p-selectButton [options]="isCompleatedOptions"
+                                    formControlName="IsCompleated"
+                                    optionLabel="label" optionValue="value">
+                                    <ng-template let-item>
+                                        {{item.label | translate}}
+                                    </ng-template>
+                                </p-selectButton>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <ng-template pTemplate="footer">
+                        <div fxLayout="row" fxFlex="100">
+                            <div fxFlex="100" fxHide fxShow.lt-lg>
+                                <button class="btn btn-primary btn-block btn-action" (click)="filter()">
+                                    <i class="fas fa-search"></i>  
+                                    {{'filter' | translate}}
+                                </button>
+                                <button class="btn btn-danger btn-block btn-action" (click)="resetFilter()">
+                                    <i class="fas fa-sync-alt"></i>
+                                    {{'clear' | translate}}
+                                </button>
+                            </div>
+                            <div fxFlex="100" fxHide fxShow.gt-md fxLayoutAlign="end start">
+                                <button role="button" [ngClass.lt-md]="'btn-block'"
+                                class="btn btn-danger btn-action mr-3"
+                                (click)="resetFilter()">
+                                    <i class="fas fa-sync-alt"></i>
+                                    {{'clear' | translate}}
+                                </button>
+                                <button role="button" [ngClass.lt-md]="'btn-block'"
+                                class="btn btn-primary btn-action mr-3"
+                                (click)="filter()">
+                                    <i class="fas fa-search"></i>  
+                                    {{'filter' | translate}}
+                                </button>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-card>
+            </form>
+            <p-table [value]="results" responsiveLayout="scroll" styleClass="p-datatable-striped"
+                [paginator]="true" [rows]="rowNumbers" [totalRecords]="totalCount" [rowsPerPageOptions]="rowNumbersOptions"
+                [resizableColumns]="true" [autoLayout]="true" fxFlex="100" [lazy]="true" (onLazyLoad)="loadResults($event)">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="text-center" pSortableColumn="Title">
+                            {{'title' | translate}}
+                            <p-sortIcon [field]="title"></p-sortIcon>
+                        </th>
+                        <th class="text-center">
+                            {{'author' | translate}}
+                        </th>
+                        <th class="text-center">
+                            {{'is_compleated_test' | translate}}
+                        </th>
+                        <th class="text-center">
+                            {{'actions' | translate}}
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-result>
+                    <tr>
+                        <td class="text-center">{{result.title}}</td>
+                        <td class="text-center">
+                            <span *ngIf="result.author.middleName && result.author.middleName.length > 0; else noMiddleName">
+                                {{result.author.surname}} {{result.author.name}} {{result.author.middleName}}
+                            </span>
+                            <ng-template #noMiddleName>
+                                <span>{{result.author.surname}} {{result.author.name}}</span>
+                            </ng-template>
+                        </td>
+                        <td class="text-center">
+                            <i class="pi" [ngClass]="{'true-icon pi-check-circle': result.isCompleated, 'false-icon pi-times-circle': !result.isCompleated}"></i>
+                        </td>
+                        <td class="text-center">
+                            <a [routerLink]="['/tests/result/'+result.id]" *ngIf="result.isCompleated">
+                                <button pButton pRipple type="button" icon="fas fa-info" pInputText pTooltip="{{'details' | translate }}" tooltipPosition="top"
+                                class="p-button-rounded p-button-info"></button>
+                            </a>
+                            <a [routerLink]="['/tests/fill/'+result.testId]" *ngIf="!result.isCompleated">
+                                <button pButton pRipple type="button" icon="fas fa-pencil-alt" pInputText pTooltip="{{'fill' | translate }}" tooltipPosition="top"
+                                class="p-button-rounded p-button-info"></button>
+                            </a>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <div fxFlex.gt-xs="10" fxFlex.xs="3"></div>
+    </div>
+</div>

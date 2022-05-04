@@ -1,0 +1,19 @@
+<p-multiSelect  [options]="recipients" filterBy="name,surname,middleName,username"
+    placeholder="{{'select_recipients' | translate}}" [virtualScroll]="true" itemSize="30"
+    autoWidth="false" [style]="{'width':'100%'}" styleClass="mt-2" 
+    appendTo="body" [(ngModel)]="selectedRecipients">
+    <ng-template let-value pTemplate="selectedItems">
+        <mat-chip-list>
+            <mat-chip *ngIf="value == null || value.length == 0">{{'selected' | translate}} 0 {{'recipients_chip' | translate}}</mat-chip>
+            <mat-chip *ngIf="value != null && value.length > 0">{{'selected' | translate}} {{value.length}} {{'recipients_chip' | translate}}</mat-chip>
+        </mat-chip-list>
+    </ng-template>
+    <ng-template let-user pTemplate="item">
+        {{user.name}} {{user.middleName}} {{user.surname}}
+    </ng-template>
+</p-multiSelect >
+<mat-form-field class="mb-3 full-width" appearance="outline">
+<input matInput type="text" required="true" [(ngModel)]="newMessage.topic" [placeholder]="'title' | translate">
+</mat-form-field>
+<p-editor [style]="{'height':'200px'}" required="true" [(ngModel)]="newMessage.content"></p-editor>
+<button mat-raised-button color="primary" (click)="sendMessage()" class="mt-3">{{'send_message' | translate}}</button>

@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+@import 'assets/styles/content';
+@import 'assets/styles/variables';
+@import 'assets/styles/fadeIn';
+@import 'assets/styles/backgrounds';
+@import 'assets/styles/responsive';
+@import 'assets/styles/forms';
+@import 'assets/styles/buttons';
+
+html, body {
+	height: 100%;
+	color: $text-color;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.full-width {
+    width: 100%;
+}
