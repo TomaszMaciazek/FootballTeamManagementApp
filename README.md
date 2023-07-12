@@ -4,7 +4,7 @@ This repository contains SPA Application for collecting informaions about footba
 
 ## This project consist of two parts:
 
-* AASP.NET Core Web API
+* ASP.NET Core Web API
 * Angular Frontend
 
 ## Requirements
